@@ -258,10 +258,10 @@ export const ScrollyVideoCanvas: React.FC<ScrollyVideoCanvasProps> = ({
           ref={videoFrameRef}
           className="absolute top-[72px] sm:top-[82px] bottom-6 inset-x-4 sm:inset-x-8 md:inset-x-12 lg:inset-x-16 max-w-[1200px] mx-auto border border-[#2E2438] rounded-none bg-black overflow-hidden shadow-2xl z-10"
         >
-          {/* Framed Canvas */}
+          {/* Framed Canvas with enhanced contrast & crisp clarity filter */}
           <canvas
             ref={canvasRef}
-            className="w-full h-full block cursor-grab active:cursor-grabbing"
+            className="w-full h-full block cursor-grab active:cursor-grabbing filter contrast-[1.16] saturate-[1.10] brightness-[1.02]"
             aria-label="3D visual animation scrubbing smoothly on scroll"
           />
 

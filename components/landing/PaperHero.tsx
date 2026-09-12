@@ -41,23 +41,24 @@ export const PaperHero = forwardRef<HTMLDivElement, PaperHeroProps>(
             className="w-full flex items-center justify-center my-auto will-change-transform"
           >
             <div className="relative inline-block text-left">
-              {/* Top-Left Sketched Box Note */}
-              <div className="absolute -top-5 sm:-top-7 left-0 sm:-left-32 px-2.5 py-0.5 border border-dashed border-[#9966CC]/60 text-[#7A4BC2] font-pencil text-sm sm:text-base tracking-wider -rotate-2 bg-[#EADFFF]/60 select-none">
+              {/* Top-Left Eyebrow: AGENTIC PRODUCTIVITY (Clean floating italic tracking, matching reference image) */}
+              <div className="text-[11px] sm:text-[13px] md:text-[14px] font-draft-mono italic tracking-[0.24em] text-[#8A52C7] uppercase mb-1 sm:mb-2 select-none">
                 AGENTIC PRODUCTIVITY
               </div>
 
-              {/* Exactly 3 Words in deep Amethyst ink text */}
-              <h1 className="text-[44px] sm:text-[68px] md:text-[84px] lg:text-[100px] font-semibold text-[#1F1730] tracking-[-0.035em] leading-[0.94] font-headline select-none">
+              {/* Exactly 3 Words in deep Amethyst ink with cursive italic serif 'made' */}
+              <h1 className="text-[46px] sm:text-[72px] md:text-[90px] lg:text-[106px] font-bold text-[#1F1730] tracking-[-0.04em] leading-[0.92] font-headline select-none">
                 Productivity, <br />
-                made playable
+                <span className="font-serif-italic font-normal text-[#8A52C7] tracking-[-0.02em] mr-2 sm:mr-3.5 inline-block transform -translate-y-0.5">
+                  made
+                </span>
+                <span>playable</span>
               </h1>
 
-              {/* Right Sketched Annotation pointing with pencil arrow */}
-              <div className="absolute -bottom-1 sm:bottom-2 -right-20 sm:-right-28 flex items-center gap-1.5 text-[#7A4BC2] font-pencil text-xl sm:text-2xl rotate-[-2deg] select-none">
-                <span className="font-bold">~&gt;</span>
-                <span className="border-b border-dashed border-[#9966CC]/60 pb-0.5 uppercase tracking-wider font-bold text-xs sm:text-sm">
-                  WITH LUMI
-                </span>
+              {/* Right Annotation: -> WITH LUMI (Clean arrow & letter-spaced purple text) */}
+              <div className="absolute -bottom-1 sm:bottom-3 -right-20 sm:-right-28 flex items-center gap-1.5 text-[#8A52C7] font-draft-mono text-xs sm:text-sm font-semibold tracking-widest select-none">
+                <span>-&gt;</span>
+                <span className="uppercase">WITH LUMI</span>
               </div>
             </div>
           </div>
