@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { LandingNav } from './LandingNav';
 import { ScrollyVideoCanvas } from './ScrollyVideoCanvas';
+import { PlatformOverview } from './PlatformOverview';
 import { LandingFeatures } from './LandingFeatures';
 import { LandingFaq } from './LandingFaq';
 import { LandingFooter } from './LandingFooter';
@@ -62,8 +63,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterDashboard }) =>
 
       {/* Main Experience */}
       <main className="flex-1 flex flex-col relative">
-        {/* 3D Scrollytelling Experience with Integrated Draft Paper Curtain Hero */}
+        {/* 1. 3D Scrollytelling Experience with Integrated Draft Paper Curtain Hero */}
         <ScrollyVideoCanvas onOpenAuth={() => handleOpenAuth('register')} />
+
+        {/* 2. Platform Overview: Architectural Brief explaining what the platform is */}
+        <PlatformOverview onOpenAuth={() => handleOpenAuth('register')} />
 
         {/* 3. Progression Layers: 4 Systems Features & FAQ */}
         <div className="relative z-20 bg-background shadow-[0_-30px_90px_rgba(0,0,0,0.5)]">
