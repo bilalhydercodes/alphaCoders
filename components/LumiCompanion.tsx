@@ -3,7 +3,9 @@
 import React, { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { sound } from '@/lib/sound';
-import { Sparkles, Heart, Clock, Coffee, Zap } from 'lucide-react';
+import { LumiMascot } from './LumiMascot';
+import { Button } from './ui/Button';
+import { IconHeart, IconEnergy, IconSparkles } from './icons/LumiIcons';
 
 interface LumiCompanionProps {
   onStartFocus: () => void;
@@ -17,7 +19,6 @@ const MOOD_INFO: Record<
     quote: string;
     badge: string;
     badgeBg: string;
-    image: string;
   }
 > = {
   content: {
@@ -26,7 +27,6 @@ const MOOD_INFO: Record<
     quote: 'Here we go again! Small steps make big quests.',
     badge: 'NORMAL DAY',
     badgeBg: 'bg-lavender-soft text-primary',
-    image: '/lumi/extracted/mood-content.png',
   },
   radiant: {
     title: 'Radiant',
@@ -34,7 +34,6 @@ const MOOD_INFO: Record<
     quote: "You're shining! What a streak!",
     badge: 'HIGH STREAK',
     badgeBg: 'bg-amber-100 text-amber-800',
-    image: '/lumi/extracted/mood-radiant.png',
   },
   sleepy: {
     title: 'Sleepy',
@@ -42,7 +41,6 @@ const MOOD_INFO: Record<
     quote: 'Missed you... Take your time. We are ready when you are.',
     badge: 'TAKE A BREATHER',
     badgeBg: 'bg-indigo-100 text-indigo-700',
-    image: '/lumi/extracted/mood-sleepy.png',
   },
   concerned: {
     title: 'Concerned',
@@ -50,7 +48,6 @@ const MOOD_INFO: Record<
     quote: 'Still got time! You can finish your daily bounties!',
     badge: 'STREAK AT RISK',
     badgeBg: 'bg-orange-100 text-orange-800',
-    image: '/lumi/extracted/mood-concerned.png',
   },
   wilting: {
     title: 'Wilting',
@@ -58,7 +55,6 @@ const MOOD_INFO: Record<
     quote: "It's okay... Every adventurer stumbles. Let's start fresh!",
     badge: 'SUPPORTIVE',
     badgeBg: 'bg-purple-100 text-purple-700',
-    image: '/lumi/extracted/mood-wilting.png',
   },
   focused: {
     title: 'Focused',
@@ -66,7 +62,6 @@ const MOOD_INFO: Record<
     quote: 'Focus mode ON! One quest at a time.',
     badge: 'IN A QUEST',
     badgeBg: 'bg-emerald-100 text-emerald-800',
-    image: '/lumi/extracted/mood-focused.png',
   },
   sleeping: {
     title: 'Sleeping',
@@ -74,40 +69,33 @@ const MOOD_INFO: Record<
     quote: 'Good night... Rest well, brave adventurer.',
     badge: 'NIGHT MODE',
     badgeBg: 'bg-slate-200 text-slate-700',
-    image: '/lumi/extracted/mood-sleeping.png',
   },
 };
 
-const REACTION_INFO: Record<string, { title: string; quote: string; image: string }> = {
+const REACTION_INFO: Record<string, { title: string; quote: string }> = {
   levelup: {
     title: 'Level Up!',
     quote: 'You did it! A new level, a brighter you!',
-    image: '/lumi/extracted/reaction-levelup.png',
   },
   achievement: {
     title: 'Achievement Unlocked!',
     quote: 'Milestones matter. You are making real progress!',
-    image: '/lumi/extracted/reaction-achievement.png',
   },
   explore: {
     title: "Let's Explore!",
     quote: 'New places. New bounties. More possibilities!',
-    image: '/lumi/extracted/reaction-explore.png',
   },
   selfcare: {
     title: 'You Deserve This!',
     quote: 'Taking care of yourself is a vital quest too.',
-    image: '/lumi/extracted/reaction-selfcare.png',
   },
   yougotthis: {
     title: 'You Got This!',
     quote: 'A little nudge, a lot of belief. Keep going!',
-    image: '/lumi/extracted/reaction-yougotthis.png',
   },
   focus: {
     title: 'Focus Mode: ON!',
     quote: 'Deep work time. Distractions blocked.',
-    image: '/lumi/extracted/reaction-focus.png',
   },
 };
 
@@ -121,12 +109,12 @@ export const LumiCompanion: React.FC<LumiCompanionProps> = ({ onStartFocus }) =>
   const mood = MOOD_INFO[moodKey];
 
   // If there's an active reaction (e.g. just leveled up or completed self-care)
-  const activeReaction = currentReaction && REACTION_INFO[currentReaction.reaction];
+  const activeReactionKey = currentReaction?.reaction;
+  const activeReaction = activeReactionKey ? REACTION_INFO[activeReactionKey] : null;
 
-  const displayImage = activeReaction ? activeReaction.image : mood.image;
   const displayTitle = activeReaction ? activeReaction.title : mood.title;
   const displayQuote = activeReaction
-    ? (currentReaction.quote || activeReaction.quote)
+    ? (currentReaction?.quote || activeReaction.quote)
     : mood.quote;
 
   const handlePetLumi = () => {
@@ -137,19 +125,19 @@ export const LumiCompanion: React.FC<LumiCompanionProps> = ({ onStartFocus }) =>
   };
 
   return (
-    <aside className="bg-white rounded-lumi border border-primary/15 p-5 shadow-lumi relative overflow-hidden transition-all">
+    <aside className="bg-surface rounded-lumi border border-slate-200/80 p-5 shadow-sm relative overflow-hidden transition-all">
       {/* Background ambient gradient glow */}
-      <div className="absolute top-0 right-0 w-36 h-36 bg-lavender-soft/40 rounded-full blur-2xl pointer-events-none" />
+      <div className="absolute top-0 right-0 w-36 h-36 bg-lavender-soft/30 rounded-full blur-2xl pointer-events-none" />
 
       {/* Header status */}
       <div className="flex items-center justify-between mb-3 relative z-10">
         <div className="flex items-center gap-1.5">
-          <span className="text-xs font-bold text-copy uppercase tracking-wider">
+          <span className="text-xs font-extrabold text-copy uppercase tracking-wider">
             Companion Status
           </span>
         </div>
         <span
-          className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+          className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full ${
             activeReaction ? 'bg-success-soft text-success' : mood.badgeBg
           }`}
         >
@@ -160,72 +148,74 @@ export const LumiCompanion: React.FC<LumiCompanionProps> = ({ onStartFocus }) =>
       {/* Lumi Mascot Display */}
       <div className="relative flex flex-col items-center justify-center my-2 group">
         {/* Dynamic Speech Bubble */}
-        <div className="relative mb-2 px-3 py-2 bg-lavender-soft/80 border border-primary/20 rounded-xl text-xs text-copy font-medium text-center shadow-sm max-w-[240px]">
+        <div className="relative mb-3 px-3.5 py-2.5 bg-background-subtle border border-primary/20 rounded-2xl text-xs text-copy font-semibold text-center shadow-xs max-w-[240px]">
           <span>"{displayQuote}"</span>
-          <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-lavender-soft/80 border-r border-b border-primary/20 rotate-45" />
+          <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-background-subtle border-r border-b border-primary/20 rotate-45" />
         </div>
 
         {/* Mascot Avatar Card */}
         <button
+          type="button"
           onClick={handlePetLumi}
-          className={`relative w-40 h-44 rounded-2xl bg-gradient-to-b from-background to-lavender-soft/30 border border-primary/20 flex items-center justify-center p-2 cursor-pointer shadow-sm hover:shadow-lumi-hover transition-all duration-300 ${
+          className={`relative w-40 h-44 rounded-2xl bg-gradient-to-b from-white to-background border-2 border-slate-200/80 flex items-center justify-center p-2 cursor-pointer shadow-sm hover:border-primary/40 transition-all duration-300 ${
             isPetted ? 'scale-105 ring-4 ring-primary/20' : 'hover:-translate-y-1'
           }`}
           title="Tap Lumi for encouragement!"
           aria-label={`Lumi companion, currently ${displayTitle}. Click to interact.`}
         >
-          <img
-            src={displayImage}
-            alt={`Lumi ${displayTitle}`}
-            className="w-full h-full object-contain drop-shadow-sm transition-transform duration-300 group-hover:scale-105"
-            onError={(e) => {
-              // fallback to master hero
-              (e.target as HTMLImageElement).src = '/lumi/extracted/lumi-hero.png';
-            }}
+          <LumiMascot
+            mood={activeReactionKey || moodKey}
+            size={144}
+            isPetted={isPetted}
           />
 
           {/* Sparkles on hover */}
           <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-            <Sparkles className="w-4 h-4 text-accent animate-spin" />
+            <IconSparkles size={18} className="text-accent" />
           </div>
         </button>
 
-        <p className="text-[11px] text-copy-muted mt-2 text-center">
+        <p className="text-[11px] font-medium text-copy-muted mt-2 text-center">
           Tap Lumi to share a moment!
         </p>
       </div>
 
       {/* Quick Action Buttons */}
-      <div className="mt-4 pt-3 border-t border-primary/10 flex flex-col gap-2">
-        <button
+      <div className="mt-4 pt-3 border-t border-slate-100 flex flex-col gap-2">
+        <Button
           onClick={onStartFocus}
-          className="w-full py-2 px-3 rounded-xl bg-primary text-primary-on font-semibold text-xs flex items-center justify-center gap-2 shadow-sm hover:bg-primary-hover active:scale-95 transition-all"
+          variant="primary"
+          size="md"
+          fullWidth
+          leftIcon={<IconEnergy size={16} />}
         >
-          <Clock className="w-3.5 h-3.5" />
-          <span>Start Focus Mode (Pomodoro)</span>
-        </button>
+          Start Focus Mode (Pomodoro)
+        </Button>
 
         <div className="grid grid-cols-2 gap-2">
-          <button
+          <Button
+            variant="secondary"
+            size="sm"
             onClick={() => {
               sound.playClick();
               triggerLumiReaction('selfcare', 'Hydration, stretching, and rest are powerful quests!');
             }}
-            className="py-1.5 px-2 rounded-xl bg-background-subtle border border-primary/20 text-copy text-[11px] font-medium flex items-center justify-center gap-1 hover:bg-lavender-soft transition-colors"
+            leftIcon={<IconHeart size={14} className="text-danger" />}
           >
-            <Heart className="w-3 h-3 text-rose-500" />
-            <span>Self Care</span>
-          </button>
-          <button
+            Self Care
+          </Button>
+
+          <Button
+            variant="secondary"
+            size="sm"
             onClick={() => {
               sound.playClick();
               triggerLumiReaction('explore', 'Look around the Guild Emporium or challenge a Boss!');
             }}
-            className="py-1.5 px-2 rounded-xl bg-background-subtle border border-primary/20 text-copy text-[11px] font-medium flex items-center justify-center gap-1 hover:bg-lavender-soft transition-colors"
+            leftIcon={<IconEnergy size={14} className="text-accent" />}
           >
-            <Zap className="w-3 h-3 text-accent" />
-            <span>Encourage</span>
-          </button>
+            Encourage
+          </Button>
         </div>
       </div>
     </aside>

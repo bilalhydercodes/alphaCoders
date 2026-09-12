@@ -25,8 +25,11 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
 
   return (
     <button
+      type="button"
       onClick={handleClick}
-      className={`w-full flex items-center justify-between px-4 h-12 rounded-2xl text-sm font-extrabold uppercase tracking-wider transition-all duration-75 cursor-pointer ${
+      aria-label={label}
+      title={label}
+      className={`w-full flex items-center justify-between px-4 lg:px-4 md:px-0 md:justify-center lg:justify-between h-12 rounded-2xl text-sm font-extrabold uppercase tracking-wider transition-all duration-75 cursor-pointer focus-visible:outline-2 focus-visible:outline-primary ${
         isActive
           ? 'bg-lavender-soft text-primary border-2 border-primary/30 shadow-xs'
           : 'bg-transparent text-copy-muted hover:bg-slate-100 hover:text-copy border-2 border-transparent'
@@ -38,11 +41,11 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
           filled={isActive}
           className={isActive ? 'text-primary' : 'text-copy-muted'}
         />
-        <span>{label}</span>
+        <span className="hidden lg:inline">{label}</span>
       </div>
 
       {badge !== undefined && (
-        <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-primary/10 text-primary">
+        <span className="hidden lg:inline px-2 py-0.5 rounded-full text-xs font-bold bg-primary/10 text-primary">
           {badge}
         </span>
       )}

@@ -3,7 +3,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { sound } from '@/lib/sound';
 import { DIFFICULTY_REWARDS } from '@/lib/progression';
-import { X, Sparkles, BookOpen, Dumbbell, Zap, Heart, Plus, Edit2 } from 'lucide-react';
+import { Button } from './ui/Button';
+import {
+  IconClose,
+  IconPlus,
+  IconEdit,
+  IconAttributeIntellect,
+  IconAttributeStrength,
+  IconAttributeAgility,
+  IconAttributeVitality,
+  IconAttributeSpirit,
+  IconXpGem,
+  IconGoldCoin,
+} from './icons/LumiIcons';
 import { Quest } from './QuestBoard';
 
 interface QuestModalProps {
@@ -99,33 +111,37 @@ export const QuestModal: React.FC<QuestModalProps> = ({
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-copy/50 backdrop-blur-sm animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-copy/50 backdrop-blur-xs animate-in fade-in duration-200"
       onKeyDown={(e) => {
         if (e.key === 'Escape') onClose();
       }}
     >
-      <div className="relative w-full max-w-lg bg-white rounded-lumi-lg border border-primary/20 shadow-2xl p-6 sm:p-7 overflow-hidden animate-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-lg bg-surface rounded-3xl border-2 border-slate-200 shadow-2xl p-6 sm:p-7 overflow-hidden animate-in zoom-in-95 duration-200">
         {/* Close Button */}
         <button
+          type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 text-copy-muted hover:text-copy rounded-xl hover:bg-lavender-soft transition-colors cursor-pointer"
+          className="absolute top-4 right-4 p-2 text-copy-muted hover:text-copy rounded-xl hover:bg-slate-100 transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-primary"
           aria-label="Close modal"
         >
-          <X className="w-5 h-5" />
+          <IconClose size={20} />
         </button>
 
         {/* Title */}
-        <div className="flex items-center gap-2 mb-4">
-          <div className="w-8 h-8 rounded-lg bg-lavender-soft text-primary flex items-center justify-center">
-            {editingQuest ? <Edit2 className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+        <div className="flex items-center gap-2.5 mb-4">
+          <div className="w-9 h-9 rounded-xl bg-lavender-soft text-primary flex items-center justify-center">
+            {editingQuest ? <IconEdit size={18} /> : <IconPlus size={18} />}
           </div>
-          <h3 id="modal-title" className="text-lg font-bold text-copy">
+          <h3 id="modal-title" className="text-lg font-black text-copy">
             {editingQuest ? 'Modify Guild Bounty' : 'Post New Guild Bounty'}
           </h3>
         </div>
 
         {error && (
-          <div className="mb-4 p-3 rounded-xl bg-danger-soft border border-danger/20 text-xs font-semibold text-danger">
+          <div
+            role="alert"
+            className="mb-4 p-3 rounded-2xl bg-danger-soft border border-danger/20 text-xs font-bold text-danger"
+          >
             {error}
           </div>
         )}
@@ -133,31 +149,39 @@ export const QuestModal: React.FC<QuestModalProps> = ({
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           {/* Title Input */}
           <div>
-            <label className="block text-xs font-bold text-copy mb-1">
+            <label
+              htmlFor="quest-title-input"
+              className="block text-xs font-bold text-copy mb-1.5"
+            >
               Quest Title <span className="text-danger">*</span>
             </label>
             <input
+              id="quest-title-input"
               ref={inputRef}
               type="text"
               required
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. Read 20 pages of clean architecture"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-primary/20 bg-background text-sm text-copy placeholder:text-copy-muted focus:bg-white focus:border-primary transition-all outline-none"
+              className="w-full px-4 py-2.5 rounded-2xl border-2 border-slate-200 bg-background text-sm font-bold text-copy placeholder:text-copy-muted/60 focus:bg-surface focus:border-primary transition-all outline-none focus-visible:outline-2 focus-visible:outline-primary"
             />
           </div>
 
           {/* Description */}
           <div>
-            <label className="block text-xs font-bold text-copy mb-1">
+            <label
+              htmlFor="quest-desc-input"
+              className="block text-xs font-bold text-copy mb-1.5"
+            >
               Details or Real-World Motivation (Optional)
             </label>
             <textarea
+              id="quest-desc-input"
               rows={2}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Add key notes or goals..."
-              className="w-full px-3.5 py-2 rounded-xl border border-primary/20 bg-background text-sm text-copy placeholder:text-copy-muted focus:bg-white focus:border-primary transition-all outline-none resize-none"
+              className="w-full px-4 py-2 rounded-2xl border-2 border-slate-200 bg-background text-sm font-medium text-copy placeholder:text-copy-muted/60 focus:bg-surface focus:border-primary transition-all outline-none resize-none focus-visible:outline-2 focus-visible:outline-primary"
             />
           </div>
 
@@ -174,14 +198,14 @@ export const QuestModal: React.FC<QuestModalProps> = ({
                   key={t.id}
                   type="button"
                   onClick={() => setType(t.id)}
-                  className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer ${
+                  className={`p-2.5 rounded-2xl border-2 text-left transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-primary ${
                     type === t.id
-                      ? 'bg-lavender-soft border-primary text-primary shadow-sm'
-                      : 'border-gray-200 text-copy-muted hover:border-primary/40'
+                      ? 'bg-lavender-soft/40 border-primary text-primary shadow-xs'
+                      : 'border-slate-200 text-copy-muted hover:border-slate-300'
                   }`}
                 >
                   <p className="text-xs font-bold text-copy">{t.label}</p>
-                  <p className="text-[10px] text-copy-muted">{t.desc}</p>
+                  <p className="text-[10px] text-copy-muted font-medium">{t.desc}</p>
                 </button>
               ))}
             </div>
@@ -194,11 +218,11 @@ export const QuestModal: React.FC<QuestModalProps> = ({
             </label>
             <div className="grid grid-cols-5 gap-1.5">
               {[
-                { id: 'INTELLECT', label: 'Intellect', icon: BookOpen },
-                { id: 'STRENGTH', label: 'Strength', icon: Dumbbell },
-                { id: 'AGILITY', label: 'Agility', icon: Zap },
-                { id: 'VITALITY', label: 'Vitality', icon: Heart },
-                { id: 'SPIRIT', label: 'Spirit', icon: Sparkles },
+                { id: 'INTELLECT', label: 'Intellect', icon: IconAttributeIntellect },
+                { id: 'STRENGTH', label: 'Strength', icon: IconAttributeStrength },
+                { id: 'AGILITY', label: 'Agility', icon: IconAttributeAgility },
+                { id: 'VITALITY', label: 'Vitality', icon: IconAttributeVitality },
+                { id: 'SPIRIT', label: 'Spirit', icon: IconAttributeSpirit },
               ].map((c) => {
                 const Icon = c.icon;
                 const active = category === c.id;
@@ -207,14 +231,14 @@ export const QuestModal: React.FC<QuestModalProps> = ({
                     key={c.id}
                     type="button"
                     onClick={() => setCategory(c.id)}
-                    className={`p-2 rounded-xl border flex flex-col items-center gap-1 transition-all cursor-pointer ${
+                    className={`p-2 rounded-2xl border-2 flex flex-col items-center gap-1 transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-primary ${
                       active
-                        ? 'bg-primary text-primary-on border-primary shadow-sm scale-105'
-                        : 'border-gray-200 text-copy hover:border-primary/40'
+                        ? 'bg-primary text-[#1F1730] border-primary shadow-xs scale-102 font-black'
+                        : 'border-slate-200 text-copy hover:border-slate-300 font-semibold'
                     }`}
                   >
-                    <Icon className="w-4 h-4" />
-                    <span className="text-[10px] font-semibold">{c.label}</span>
+                    <Icon size={16} />
+                    <span className="text-[10px]">{c.label}</span>
                   </button>
                 );
               })}
@@ -225,9 +249,15 @@ export const QuestModal: React.FC<QuestModalProps> = ({
           <div>
             <div className="flex items-center justify-between mb-1.5">
               <label className="text-xs font-bold text-copy">Difficulty & Rewards</label>
-              <div className="flex items-center gap-2 text-xs font-bold">
-                <span className="text-success">+{currentRewards.xp} XP</span>
-                <span className="text-accent">+{currentRewards.gold} GP</span>
+              <div className="flex items-center gap-3 text-xs font-black">
+                <span className="flex items-center gap-1 text-primary">
+                  <IconXpGem size={14} filled />
+                  +{currentRewards.xp} XP
+                </span>
+                <span className="flex items-center gap-1 text-accent">
+                  <IconGoldCoin size={12} filled />
+                  +{currentRewards.gold} GP
+                </span>
               </div>
             </div>
             <div className="grid grid-cols-5 gap-1.5">
@@ -236,10 +266,10 @@ export const QuestModal: React.FC<QuestModalProps> = ({
                   key={d}
                   type="button"
                   onClick={() => setDifficulty(d)}
-                  className={`py-1.5 px-2 rounded-lg text-xs font-semibold capitalize border transition-all cursor-pointer ${
+                  className={`py-1.5 px-2 rounded-xl text-xs font-bold capitalize border-2 transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-primary ${
                     difficulty === d
-                      ? 'bg-lavender-soft border-primary text-primary font-bold'
-                      : 'border-gray-200 text-copy-muted hover:border-primary/30'
+                      ? 'bg-lavender-soft/40 border-primary text-primary'
+                      : 'border-slate-200 text-copy-muted hover:border-slate-300'
                   }`}
                 >
                   {d.toLowerCase()}
@@ -249,21 +279,23 @@ export const QuestModal: React.FC<QuestModalProps> = ({
           </div>
 
           {/* Footer Submit */}
-          <div className="flex items-center justify-end gap-2 pt-3 border-t border-primary/10 mt-2">
-            <button
+          <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-100 mt-2">
+            <Button
               type="button"
+              variant="secondary"
+              size="sm"
               onClick={onClose}
-              className="px-4 py-2 rounded-xl text-xs font-semibold text-copy-muted hover:text-copy hover:bg-gray-100 transition-colors"
             >
               Cancel
-            </button>
-            <button
+            </Button>
+            <Button
               type="submit"
-              disabled={isSubmitting}
-              className="px-5 py-2.5 rounded-xl bg-primary text-primary-on font-bold text-xs shadow-sm hover:bg-primary-hover active:scale-97 transition-all cursor-pointer disabled:opacity-50"
+              variant="primary"
+              size="sm"
+              isLoading={isSubmitting}
             >
               {isSubmitting ? 'Recording...' : editingQuest ? 'Save Changes' : 'Post Bounty'}
-            </button>
+            </Button>
           </div>
         </form>
       </div>

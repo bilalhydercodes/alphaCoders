@@ -24,6 +24,8 @@ import {
   IconShop,
   IconCodex,
 } from '@/components/icons/LumiIcons';
+import { LumiMascot } from '@/components/LumiMascot';
+import { XpArcProvider } from '@/components/XpArcManager';
 
 export default function HomePage() {
   const { user, isLoading, toggleSound } = useAuth();
@@ -91,14 +93,7 @@ export default function HomePage() {
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6">
         <div className="w-36 h-36 mb-4 flex items-center justify-center">
-          <img
-            src="/lumi/extracted/reaction-explore.png"
-            alt="Lumi preparing quests"
-            className="w-full h-full object-contain animate-bounce-subtle drop-shadow-sm"
-            onError={(e) => {
-              (e.target as HTMLImageElement).src = '/lumi/extracted/lumi-avatar.png';
-            }}
-          />
+          <LumiMascot mood="explore" size={130} />
         </div>
         <h2 className="text-lg font-black text-copy">Opening the Adventurer's Codex...</h2>
         <p className="text-xs text-copy-muted font-semibold mt-1">Lumi is preparing your path to mastery.</p>
@@ -112,7 +107,8 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <XpArcProvider>
+      <div className="min-h-screen bg-background flex flex-col">
       {/* 1. Left Fixed Desktop Sidebar (256px wide) */}
       <Sidebar
         activeTab={activeTab}
@@ -120,14 +116,14 @@ export default function HomePage() {
         onOpenShortcuts={() => setIsShortcutsOpen(true)}
       />
 
-      {/* Mobile Bottom Navigation Bar */}
+      {/* Mobile Bottom Navigation Bar (<768px) */}
       <nav
-        className="lg:hidden fixed bottom-0 left-0 right-0 h-16 bg-white border-t-2 border-slate-200 z-40 flex items-center justify-around px-2"
+        className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-surface border-t-2 border-slate-200 z-40 flex items-center justify-around px-2"
         aria-label="Mobile Navigation"
       >
         <button
           onClick={() => setActiveTab('map')}
-          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl ${
+          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl min-h-[44px] justify-center ${
             activeTab === 'map' ? 'text-primary font-black' : 'text-copy-muted'
           }`}
         >
@@ -136,7 +132,7 @@ export default function HomePage() {
         </button>
         <button
           onClick={() => setActiveTab('bounties')}
-          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl ${
+          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl min-h-[44px] justify-center ${
             activeTab === 'bounties' ? 'text-primary font-black' : 'text-copy-muted'
           }`}
         >
@@ -145,7 +141,7 @@ export default function HomePage() {
         </button>
         <button
           onClick={() => setActiveTab('league')}
-          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl ${
+          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl min-h-[44px] justify-center ${
             activeTab === 'league' ? 'text-primary font-black' : 'text-copy-muted'
           }`}
         >
@@ -154,7 +150,7 @@ export default function HomePage() {
         </button>
         <button
           onClick={() => setActiveTab('shop')}
-          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl ${
+          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl min-h-[44px] justify-center ${
             activeTab === 'shop' ? 'text-primary font-black' : 'text-copy-muted'
           }`}
         >
@@ -163,7 +159,7 @@ export default function HomePage() {
         </button>
         <button
           onClick={() => setActiveTab('codex')}
-          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl ${
+          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl min-h-[44px] justify-center ${
             activeTab === 'codex' ? 'text-primary font-black' : 'text-copy-muted'
           }`}
         >
@@ -172,8 +168,8 @@ export default function HomePage() {
         </button>
       </nav>
 
-      {/* 2. Main Content Viewport (Indented 256px on desktop) */}
-      <div className="lg:pl-[256px] min-h-screen pb-20 lg:pb-10 flex flex-col">
+      {/* 2. Main Content Viewport (Indented 72px on tablet, 256px on desktop) */}
+      <div className="md:pl-[72px] lg:pl-[256px] min-h-screen pb-20 md:pb-10 flex flex-col">
         <div className="max-w-[1080px] w-full mx-auto px-4 sm:px-8 pt-4 flex-1 flex flex-col">
           {/* Top Status Header */}
           <UserProgressHeader onOpenFocus={() => setIsFocusTimerOpen(true)} />
@@ -260,5 +256,6 @@ export default function HomePage() {
         onClose={() => setIsShortcutsOpen(false)}
       />
     </div>
+    </XpArcProvider>
   );
 }

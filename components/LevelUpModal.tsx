@@ -3,7 +3,15 @@
 import React, { useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti';
 import { sound } from '@/lib/sound';
-import { Sparkles, Trophy, Award, ArrowRight, Shield } from 'lucide-react';
+import { LumiMascot } from './LumiMascot';
+import { Button } from './ui/Button';
+import {
+  IconLeague,
+  IconSparkles,
+  IconGoldCoin,
+  IconShield,
+  IconArrowRight,
+} from './icons/LumiIcons';
 
 interface LevelUpModalProps {
   isOpen: boolean;
@@ -74,7 +82,7 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
       <div
         ref={modalRef}
         tabIndex={-1}
-        className="relative w-full max-w-md bg-white rounded-lumi-lg border-2 border-primary/40 shadow-2xl p-6 sm:p-8 flex flex-col items-center text-center overflow-hidden outline-none animate-in zoom-in-95 duration-300"
+        className="relative w-full max-w-md bg-surface rounded-2xl border-2 border-primary/40 shadow-2xl p-6 sm:p-8 flex flex-col items-center text-center overflow-hidden outline-none animate-in zoom-in-95 duration-300"
       >
         {/* Decorative rays */}
         <div className="absolute -top-24 -left-24 w-72 h-72 bg-accent/20 rounded-full blur-3xl pointer-events-none" />
@@ -82,20 +90,13 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
 
         {/* Level badge header */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/20 border border-accent text-accent-dark font-extrabold text-sm mb-3">
-          <Trophy className="w-4 h-4 text-accent fill-accent" />
+          <IconLeague size={18} className="text-accent fill-accent" />
           <span>LEVEL UP RECOGNITION</span>
         </div>
 
-        {/* Big celebrating Lumi */}
-        <div className="relative w-48 h-48 my-2 flex items-center justify-center">
-          <img
-            src="/lumi/extracted/reaction-levelup.png"
-            alt="Lumi Celebrating Level Up"
-            className="w-full h-full object-contain animate-bounce-subtle drop-shadow-md"
-            onError={(e) => {
-              (e.target as HTMLImageElement).src = '/lumi/extracted/lumi-hero.png';
-            }}
-          />
+        {/* Big celebrating Lumi vector mascot */}
+        <div className="relative my-3 flex items-center justify-center">
+          <LumiMascot mood="celebrating" size={170} />
         </div>
 
         {/* Congratulatory Text */}
@@ -111,36 +112,38 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
 
         {/* Milestone Rewards Grid */}
         <div className="grid grid-cols-2 gap-3 w-full my-5">
-          <div className="p-3 rounded-xl bg-background border border-primary/15 flex flex-col items-center">
-            <span className="text-xs text-copy-muted font-medium">Attribute Boost</span>
-            <div className="flex items-center gap-1 mt-1 text-sm font-bold text-copy">
-              <Sparkles className="w-3.5 h-3.5 text-primary" />
+          <div className="p-3.5 rounded-2xl bg-background border border-primary/15 flex flex-col items-center">
+            <span className="text-xs text-copy-muted font-bold">Attribute Boost</span>
+            <div className="flex items-center gap-1.5 mt-1 text-sm font-extrabold text-copy">
+              <IconSparkles size={16} className="text-primary" />
               <span className="capitalize">+{statGained.points} {statGained.attribute}</span>
             </div>
           </div>
-          <div className="p-3 rounded-xl bg-background border border-primary/15 flex flex-col items-center">
-            <span className="text-xs text-copy-muted font-medium">Bounty Gold</span>
-            <div className="flex items-center gap-1 mt-1 text-sm font-bold text-copy">
-              <Award className="w-3.5 h-3.5 text-accent" />
+          <div className="p-3.5 rounded-2xl bg-background border border-primary/15 flex flex-col items-center">
+            <span className="text-xs text-copy-muted font-bold">Bounty Gold</span>
+            <div className="flex items-center gap-1.5 mt-1 text-sm font-extrabold text-copy">
+              <IconGoldCoin size={16} className="text-accent" />
               <span>+{goldEarned} GP</span>
             </div>
           </div>
         </div>
 
         {/* HP Restored indicator */}
-        <div className="flex items-center gap-2 text-xs font-semibold text-success bg-success-soft px-3 py-1.5 rounded-full mb-6">
-          <Shield className="w-3.5 h-3.5" />
+        <div className="flex items-center gap-2 text-xs font-bold text-success bg-success-soft px-3.5 py-2 rounded-full mb-6">
+          <IconShield size={16} className="text-success" />
           <span>Health (HP) fully restored to maximum!</span>
         </div>
 
         {/* Continue Button */}
-        <button
+        <Button
           onClick={onClose}
-          className="w-full py-3 px-6 rounded-xl bg-primary text-primary-on font-bold text-sm flex items-center justify-center gap-2 shadow-amethyst-glow hover:bg-primary-hover active:scale-97 transition-all cursor-pointer"
+          variant="primary"
+          size="lg"
+          fullWidth
+          rightIcon={<IconArrowRight size={18} />}
         >
-          <span>Continue Journey</span>
-          <ArrowRight className="w-4 h-4" />
-        </button>
+          Continue Journey
+        </Button>
       </div>
     </div>
   );

@@ -4,9 +4,10 @@ import React from 'react';
 import { useAuth } from '@/context/AuthContext';
 import {
   IconEnergy,
-  IconStreak,
-  IconGold,
-  IconXp,
+  IconStreakFlame,
+  IconGoldCoin,
+  IconXpGem,
+  IconHeart,
 } from './icons/LumiIcons';
 
 interface UserProgressHeaderProps {
@@ -19,21 +20,30 @@ export const UserProgressHeader: React.FC<UserProgressHeaderProps> = ({ onOpenFo
   if (!user) return null;
 
   const xpPercent = Math.min(100, Math.round((user.xp / (user.xpNeeded || 100)) * 100));
+  const userHp = (user as any).hp ?? 100;
+  const userMaxHp = (user as any).maxHp ?? 100;
 
   return (
-    <header className="sticky top-0 z-30 bg-background/90 backdrop-blur-md pb-4 pt-2">
+    <header className="sticky top-0 z-30 bg-background/95 backdrop-blur-md pb-4 pt-2">
       <div className="flex items-center justify-between gap-3 max-w-full">
         {/* Level & XP Gauge */}
-        <div className="flex items-center gap-2.5 bg-white border-2 border-slate-200 rounded-2xl px-3.5 py-1.5 shadow-xs">
-          <div className="w-7 h-7 rounded-xl bg-primary text-primary-on flex items-center justify-center font-black text-xs">
+        <div
+          className="flex items-center gap-2.5 bg-surface border-2 border-slate-200 rounded-2xl px-3.5 py-1.5 shadow-xs min-h-[44px]"
+          role="progressbar"
+          aria-valuenow={xpPercent}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label={`Level ${user.level} Progress: ${xpPercent}%`}
+        >
+          <div className="w-8 h-8 rounded-xl bg-primary text-[#1F1730] flex items-center justify-center font-black text-xs shrink-0">
             {user.level}
           </div>
           <div className="flex flex-col">
             <div className="flex items-center justify-between text-[11px] font-extrabold text-copy mb-0.5">
-              <span>LEVEL {user.level}</span>
+              <span>LVL {user.level}</span>
               <span className="text-primary ml-2">{xpPercent}%</span>
             </div>
-            <div className="w-24 sm:w-28 h-2 bg-lavender-soft rounded-full overflow-hidden border border-primary/20">
+            <div className="w-20 sm:w-28 h-2 bg-lavender-soft rounded-full overflow-hidden border border-primary/20">
               <div
                 className="h-full bg-primary rounded-full transition-all duration-300"
                 style={{ width: `${xpPercent}%` }}
@@ -43,42 +53,58 @@ export const UserProgressHeader: React.FC<UserProgressHeaderProps> = ({ onOpenFo
         </div>
 
         {/* Currency & Vitals Group */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          {/* Health Heart */}
+          <div
+            className="flex items-center gap-1.5 bg-surface border-2 border-slate-200 rounded-2xl px-3 py-1.5 shadow-xs min-h-[44px]"
+            title={`Health: ${userHp}/${userMaxHp} HP`}
+            aria-label={`Health: ${userHp}/${userMaxHp} HP`}
+          >
+            <IconHeart size={20} filled className="text-danger" />
+            <span className="text-xs font-black text-copy hidden sm:inline">{userHp}</span>
+          </div>
+
           {/* Energy / Focus Points */}
           <button
+            type="button"
             onClick={onOpenFocus}
-            className="flex items-center gap-1.5 bg-white border-2 border-slate-200 hover:border-indigo-300 rounded-2xl px-3 py-1.5 shadow-xs transition-all cursor-pointer"
-            title="Focus Energy (25m Pomodoro Sprint)"
+            className="flex items-center gap-1.5 bg-surface border-2 border-slate-200 hover:border-primary/40 rounded-2xl px-3 py-1.5 shadow-xs min-h-[44px] transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-primary"
+            title="Focus Energy (Start Pomodoro Sprint)"
+            aria-label="Focus Energy"
           >
-            <IconEnergy size={20} filled className="text-indigo-600" />
+            <IconEnergy size={20} filled className="text-primary" />
             <span className="text-xs font-black text-copy">5/5</span>
           </button>
 
-          {/* Streak Flame */}
+          {/* Streak Flame (with animated breathing) */}
           <div
-            className="flex items-center gap-1.5 bg-white border-2 border-slate-200 rounded-2xl px-3 py-1.5 shadow-xs"
+            className="flex items-center gap-1.5 bg-surface border-2 border-slate-200 rounded-2xl px-3 py-1.5 shadow-xs min-h-[44px]"
             title={`${user.streak} Day Guild Streak`}
+            aria-label={`${user.streak} Day Streak`}
           >
-            <IconStreak size={20} filled className="text-amber-500 animate-pulse-subtle" />
+            <IconStreakFlame size={20} filled className="text-accent animate-flame-breathe" />
             <span className="text-xs font-black text-copy">{user.streak}d</span>
           </div>
 
           {/* Gold Coins */}
           <div
-            className="flex items-center gap-1.5 bg-white border-2 border-accent/40 rounded-2xl px-3 py-1.5 shadow-xs"
+            className="flex items-center gap-1.5 bg-surface border-2 border-accent/40 rounded-2xl px-3 py-1.5 shadow-xs min-h-[44px]"
             title="Bounty Gold (GP)"
+            aria-label={`${user.gold} Gold Coins`}
           >
-            <IconGold size={20} filled className="text-accent" />
+            <IconGoldCoin size={20} filled className="text-accent" />
             <span className="text-xs font-black text-copy">{user.gold}</span>
           </div>
 
-          {/* XP Gems */}
+          {/* XP Gems - Target for Ballistic Arc */}
           <div
-            className="hidden sm:flex items-center gap-1.5 bg-white border-2 border-primary/30 rounded-2xl px-3 py-1.5 shadow-xs"
+            id="header-xp-pill"
+            className="flex items-center gap-1.5 bg-surface border-2 border-primary/30 rounded-2xl px-3 py-1.5 shadow-xs min-h-[44px] transition-transform duration-200"
             title="Experience Points (XP)"
+            aria-label={`${user.xp} Experience Points`}
           >
-            <IconXp size={20} filled className="text-primary" />
-            <span className="text-xs font-black text-primary">{user.xp} XP</span>
+            <IconXpGem size={20} filled className="text-primary" />
+            <span className="text-xs font-black text-primary">{user.xp}</span>
           </div>
         </div>
       </div>

@@ -2,8 +2,7 @@
 
 import React from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { IconChest, IconXp, IconCheck } from './icons/LumiIcons';
-import { Sparkles, Trophy } from 'lucide-react';
+import { IconTarget, IconCheck } from './icons/LumiIcons';
 
 export const DailyGoalsPanel: React.FC = () => {
   const { user } = useAuth();
@@ -46,10 +45,10 @@ export const DailyGoalsPanel: React.FC = () => {
   const completedCount = goals.filter((g) => g.percent >= 100).length;
 
   return (
-    <div className="bg-white rounded-2xl border-2 border-slate-200 p-5 shadow-xs">
+    <div className="bg-surface rounded-2xl border-2 border-slate-200 p-5 shadow-xs">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <IconChest size={22} filled className="text-accent" />
+          <IconTarget size={22} className="text-primary" />
           <h3 className="text-sm font-black text-copy uppercase tracking-wider">
             Daily Goals
           </h3>
@@ -67,9 +66,11 @@ export const DailyGoalsPanel: React.FC = () => {
               <div className="flex items-center justify-between text-xs font-bold text-copy">
                 <div className="flex items-center gap-1.5">
                   {isDone ? (
-                    <IconCheck size={14} filled className="text-success" />
+                    <span className="animate-spring-check inline-flex">
+                      <IconCheck size={14} filled className="text-success" />
+                    </span>
                   ) : (
-                    <span className="w-2 h-2 rounded-full bg-slate-300" />
+                    <span className="w-2 h-2 rounded-full bg-slate-300 inline-block" />
                   )}
                   <span>{g.title}</span>
                 </div>
@@ -78,8 +79,15 @@ export const DailyGoalsPanel: React.FC = () => {
                 </span>
               </div>
 
-              {/* Progress Bar */}
-              <div className="w-full h-2 rounded-full bg-slate-100 overflow-hidden border border-slate-200">
+              {/* Progress Bar with Accessibility */}
+              <div
+                className="w-full h-2 rounded-full bg-slate-100 overflow-hidden border border-slate-200"
+                role="progressbar"
+                aria-valuenow={g.percent}
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-label={`${g.title}: ${g.percent}%`}
+              >
                 <div
                   className={`h-full rounded-full transition-all duration-500 ${
                     isDone ? 'bg-success' : 'bg-primary'

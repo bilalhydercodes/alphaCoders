@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { X, Keyboard, Command } from 'lucide-react';
+import { IconClose, IconKeyboard } from './icons/LumiIcons';
 
 interface KeyboardShortcutsModalProps {
   isOpen: boolean;
@@ -16,12 +16,13 @@ export const KeyboardShortcutsModal: React.FC<KeyboardShortcutsModalProps> = ({
 
   const shortcuts = [
     { key: 'Q', description: 'Post new bounty (New Quest modal)' },
-    { key: '1', description: 'Navigate to Quests Board tab' },
-    { key: '2', description: 'Navigate to Character Codex & Stats tab' },
-    { key: '3', description: 'Navigate to Guild Emporium (Shop) tab' },
-    { key: '4', description: 'Navigate to Dungeon Raid Boss tab' },
+    { key: '1', description: 'Navigate to Quest Map' },
+    { key: '2', description: 'Navigate to Bounties tab' },
+    { key: '3', description: 'Navigate to Guild League tab' },
+    { key: '4', description: 'Navigate to Guild Emporium (Shop)' },
+    { key: '5', description: 'Navigate to Character Codex & Stats' },
     { key: 'F', description: 'Open Focus Mode Pomodoro timer' },
-    { key: 'M', description: 'Toggle procedural Web Audio chimes (Mute/Unmute)' },
+    { key: 'M', description: 'Toggle procedural chimes (Mute/Unmute)' },
     { key: 'Esc', description: 'Close any active modal or menu' },
     { key: '?', description: 'Display this keyboard shortcuts cheatsheet' },
     { key: 'Tab', description: 'Navigate through accessible interactive elements' },
@@ -32,41 +33,42 @@ export const KeyboardShortcutsModal: React.FC<KeyboardShortcutsModalProps> = ({
       role="dialog"
       aria-modal="true"
       aria-labelledby="shortcuts-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-copy/50 backdrop-blur-sm animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-copy/50 backdrop-blur-xs animate-in fade-in duration-200"
       onKeyDown={(e) => {
         if (e.key === 'Escape') onClose();
       }}
     >
-      <div className="relative w-full max-w-md bg-white rounded-lumi-lg border border-primary/20 shadow-2xl p-6 sm:p-7 animate-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-md bg-surface rounded-3xl border-2 border-slate-200 shadow-2xl p-6 sm:p-7 animate-in zoom-in-95 duration-200">
         <button
+          type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 text-copy-muted hover:text-copy rounded-xl hover:bg-lavender-soft transition-colors cursor-pointer"
+          className="absolute top-4 right-4 p-2 text-copy-muted hover:text-copy rounded-xl hover:bg-slate-100 transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-primary"
           aria-label="Close keyboard shortcuts"
         >
-          <X className="w-5 h-5" />
+          <IconClose size={20} />
         </button>
 
         <div className="flex items-center gap-2.5 mb-4">
-          <div className="w-8 h-8 rounded-lg bg-lavender-soft text-primary flex items-center justify-center">
-            <Keyboard className="w-4 h-4" />
+          <div className="w-9 h-9 rounded-xl bg-lavender-soft text-primary flex items-center justify-center">
+            <IconKeyboard size={20} />
           </div>
-          <h3 id="shortcuts-title" className="text-base font-bold text-copy">
+          <h3 id="shortcuts-title" className="text-base font-black text-copy">
             Keyboard Navigation & Hotkeys
           </h3>
         </div>
 
-        <p className="text-xs text-copy-muted mb-4">
-          Life RPG is built to be 100% accessible via keyboard navigation. Use these shortcuts for swift guild operations:
+        <p className="text-xs text-copy-muted mb-4 font-medium">
+          Life RPG is built to be accessible via keyboard tab traversal. Use these shortcuts for swift guild navigation:
         </p>
 
         <div className="flex flex-col gap-2 max-h-[340px] overflow-y-auto pr-1">
           {shortcuts.map((s) => (
             <div
               key={s.key}
-              className="flex items-center justify-between p-2.5 rounded-xl bg-background border border-primary/10 text-xs"
+              className="flex items-center justify-between p-2.5 rounded-2xl bg-background border border-slate-200 text-xs"
             >
-              <span className="text-copy font-medium">{s.description}</span>
-              <kbd className="px-2 py-1 rounded bg-white border border-primary/20 font-mono text-[11px] font-bold text-primary shadow-xs">
+              <span className="text-copy font-bold">{s.description}</span>
+              <kbd className="px-2.5 py-1 rounded-xl bg-surface border-2 border-slate-200 font-mono text-[11px] font-black text-primary shadow-2xs">
                 {s.key}
               </kbd>
             </div>

@@ -3,8 +3,15 @@
 import React, { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { sound } from '@/lib/sound';
-import { ArrowRight, UserCheck } from 'lucide-react';
-import { IconShield, IconStreak, IconHeart } from './icons/LumiIcons';
+import { Button } from './ui/Button';
+import { LumiMascot } from './LumiMascot';
+import {
+  IconShield,
+  IconStreakFlame,
+  IconHeart,
+  IconArrowRight,
+  IconUser,
+} from './icons/LumiIcons';
 
 export const AuthScreen: React.FC = () => {
   const { login, register } = useAuth();
@@ -69,7 +76,7 @@ export const AuthScreen: React.FC = () => {
       {/* Background ambient gradient glow */}
       <div className="fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-lavender-soft/30 rounded-full blur-3xl pointer-events-none" />
 
-      <main className="w-full max-w-4xl bg-white rounded-3xl border-2 border-slate-200 shadow-xl overflow-hidden grid grid-cols-1 md:grid-cols-2 relative z-10">
+      <main className="w-full max-w-4xl bg-surface rounded-3xl border-2 border-slate-200 shadow-xl overflow-hidden grid grid-cols-1 md:grid-cols-2 relative z-10">
         {/* Left Column: Hero & Companion Art */}
         <div className="bg-slate-50/70 p-8 sm:p-12 flex flex-col justify-between border-b md:border-b-0 md:border-r-2 border-slate-200">
           <div>
@@ -83,35 +90,28 @@ export const AuthScreen: React.FC = () => {
             </h1>
 
             <p className="text-sm text-copy-muted mt-4 leading-relaxed font-semibold">
-              Lumi is your supportive companion on a bigger journey. It turns your everyday tasks into adventures, cheers for your progress, and reminds you that a better you is always within reach.
+              Lumi is your supportive companion on a bigger journey. It turns everyday habits into rewarding quests, cheers for your milestones, and keeps you moving forward.
             </p>
 
             <div className="flex flex-col gap-3 mt-6">
               <div className="flex items-center gap-3 text-xs font-bold text-copy">
-                <IconShield size={18} filled className="text-primary" />
+                <IconShield size={18} filled className="text-primary shrink-0" />
                 <span>True relational persistence with secure server-side anti-cheat</span>
               </div>
               <div className="flex items-center gap-3 text-xs font-bold text-copy">
-                <IconStreak size={18} filled className="text-accent" />
+                <IconStreakFlame size={18} filled className="text-accent shrink-0 animate-flame-breathe" />
                 <span>Daily streak multipliers & non-linear leveling curves</span>
               </div>
               <div className="flex items-center gap-3 text-xs font-bold text-copy">
-                <IconHeart size={18} filled className="text-rose-500" />
-                <span>7 dynamic companion moods reflecting your real-world journey</span>
+                <IconHeart size={18} filled className="text-danger shrink-0" />
+                <span>Dynamic vector companion moods reacting to your real journey</span>
               </div>
             </div>
           </div>
 
-          {/* Hero Mascot Illustration */}
+          {/* Hero Mascot Vector */}
           <div className="relative mt-8 flex items-center justify-center">
-            <img
-              src="/lumi/extracted/lumi-hero.png"
-              alt="Lumi waving"
-              className="w-52 h-auto object-contain drop-shadow-md animate-float"
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = '/lumi/extracted/mood-content.png';
-              }}
-            />
+            <LumiMascot mood="radiant" size={190} />
           </div>
         </div>
 
@@ -126,8 +126,8 @@ export const AuthScreen: React.FC = () => {
                 setIsLoginMode(true);
                 setError('');
               }}
-              className={`flex-1 py-2.5 text-xs font-black uppercase tracking-wider rounded-xl transition-all cursor-pointer ${
-                isLoginMode ? 'bg-white text-copy shadow-xs' : 'text-copy-muted hover:text-copy'
+              className={`flex-1 py-2.5 text-xs font-black uppercase tracking-wider rounded-xl transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-primary ${
+                isLoginMode ? 'bg-surface text-copy shadow-xs' : 'text-copy-muted hover:text-copy'
               }`}
             >
               Sign In
@@ -139,17 +139,21 @@ export const AuthScreen: React.FC = () => {
                 setIsLoginMode(false);
                 setError('');
               }}
-              className={`flex-1 py-2.5 text-xs font-black uppercase tracking-wider rounded-xl transition-all cursor-pointer ${
-                !isLoginMode ? 'bg-white text-copy shadow-xs' : 'text-copy-muted hover:text-copy'
+              className={`flex-1 py-2.5 text-xs font-black uppercase tracking-wider rounded-xl transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-primary ${
+                !isLoginMode ? 'bg-surface text-copy shadow-xs' : 'text-copy-muted hover:text-copy'
               }`}
             >
               Create Account
             </button>
           </div>
 
-          {/* Error Message with Shake */}
+          {/* Error Message with Shake and ARIA alert */}
           {error && (
-            <div className={`mb-4 p-3.5 rounded-2xl bg-rose-50 border-2 border-rose-200 text-xs font-bold text-danger ${shake ? 'animate-shake' : ''}`}>
+            <div
+              role="alert"
+              aria-live="assertive"
+              className={`mb-4 p-3.5 rounded-2xl bg-danger-soft border-2 border-danger/30 text-xs font-bold text-danger ${shake ? 'animate-shake' : ''}`}
+            >
               {error}
             </div>
           )}
@@ -157,70 +161,87 @@ export const AuthScreen: React.FC = () => {
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             {!isLoginMode && (
               <div>
-                <label className="block text-xs font-black uppercase tracking-wider text-copy mb-1.5">
+                <label
+                  htmlFor="auth-username"
+                  className="block text-xs font-black uppercase tracking-wider text-copy mb-1.5"
+                >
                   Adventurer Name
                 </label>
                 <input
+                  id="auth-username"
                   type="text"
                   required
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="e.g. StarKnight"
-                  className="w-full h-12 px-4 rounded-2xl border-2 border-slate-200 bg-slate-50 text-sm font-bold text-copy placeholder:text-copy-muted/60 focus:bg-white focus:border-primary outline-none transition-all"
+                  className="w-full h-12 px-4 rounded-2xl border-2 border-slate-200 bg-slate-50 text-sm font-bold text-copy placeholder:text-copy-muted/60 focus:bg-surface focus:border-primary outline-none transition-all focus-visible:outline-2 focus-visible:outline-primary"
                 />
               </div>
             )}
 
             <div>
-              <label className="block text-xs font-black uppercase tracking-wider text-copy mb-1.5">
+              <label
+                htmlFor="auth-email"
+                className="block text-xs font-black uppercase tracking-wider text-copy mb-1.5"
+              >
                 {isLoginMode ? 'Email or Username' : 'Email Address'}
               </label>
               <input
+                id="auth-email"
                 type={isLoginMode ? 'text' : 'email'}
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={isLoginMode ? 'adventurer@guild.com or username' : 'adventurer@guild.com'}
-                className="w-full h-12 px-4 rounded-2xl border-2 border-slate-200 bg-slate-50 text-sm font-bold text-copy placeholder:text-copy-muted/60 focus:bg-white focus:border-primary outline-none transition-all"
+                className="w-full h-12 px-4 rounded-2xl border-2 border-slate-200 bg-slate-50 text-sm font-bold text-copy placeholder:text-copy-muted/60 focus:bg-surface focus:border-primary outline-none transition-all focus-visible:outline-2 focus-visible:outline-primary"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-black uppercase tracking-wider text-copy mb-1.5">
+              <label
+                htmlFor="auth-password"
+                className="block text-xs font-black uppercase tracking-wider text-copy mb-1.5"
+              >
                 Password
               </label>
               <input
+                id="auth-password"
                 type="password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full h-12 px-4 rounded-2xl border-2 border-slate-200 bg-slate-50 text-sm font-bold text-copy placeholder:text-copy-muted/60 focus:bg-white focus:border-primary outline-none transition-all"
+                className="w-full h-12 px-4 rounded-2xl border-2 border-slate-200 bg-slate-50 text-sm font-bold text-copy placeholder:text-copy-muted/60 focus:bg-surface focus:border-primary outline-none transition-all focus-visible:outline-2 focus-visible:outline-primary"
               />
             </div>
 
             {/* 3D Tactile Submit Button */}
-            <button
+            <Button
               type="submit"
-              disabled={isSubmitting}
-              className="w-full h-12 mt-2 rounded-2xl btn-3d-primary font-black text-sm uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+              variant="primary"
+              size="lg"
+              fullWidth
+              isLoading={isSubmitting}
+              className="mt-2"
+              rightIcon={<IconArrowRight size={18} />}
             >
-              <span>{isSubmitting ? 'Entering Codex...' : isLoginMode ? 'Enter the Guild' : 'Begin Your Journey'}</span>
-              <ArrowRight className="w-4 h-4 stroke-[3]" />
-            </button>
+              {isLoginMode ? 'Enter the Guild' : 'Begin Your Journey'}
+            </Button>
           </form>
 
           {/* 1-Click Instant Demo Button */}
           <div className="mt-6 pt-5 border-t-2 border-slate-100">
-            <button
+            <Button
               type="button"
-              onClick={handleDemoLogin}
+              variant="accent"
+              size="md"
+              fullWidth
               disabled={isSubmitting}
-              className="w-full h-11 rounded-2xl btn-3d-accent font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer"
+              onClick={handleDemoLogin}
+              leftIcon={<IconUser size={18} />}
             >
-              <UserCheck className="w-4 h-4 stroke-[2.5]" />
-              <span>1-Click Demo Explorer Login</span>
-            </button>
+              1-Click Demo Explorer Login
+            </Button>
             <p className="text-[11px] text-copy-muted text-center mt-2 font-medium">
               Immediate evaluation account pre-seeded with quests and gear.
             </p>

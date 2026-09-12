@@ -1,11 +1,18 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { QuestMapNode, MapNodeData } from './QuestMapNode';
 import { sound } from '@/lib/sound';
 import { useAuth } from '@/context/AuthContext';
-import { Sparkles, BookOpen, Dumbbell, Heart, Trophy, Check, ArrowRight, X } from 'lucide-react';
-import { IconCheck, IconXp, IconGold } from './icons/LumiIcons';
+import { useXpArc } from './XpArcManager';
+import { Button } from './ui/Button';
+import {
+  IconCheck,
+  IconXpGem,
+  IconGoldCoin,
+  IconClose,
+  IconArrowRight,
+} from './icons/LumiIcons';
 
 interface QuestMapProps {
   onCompleteQuestModal: (node: MapNodeData) => void;
@@ -13,9 +20,10 @@ interface QuestMapProps {
 
 export const QuestMap: React.FC<QuestMapProps> = ({ onCompleteQuestModal }) => {
   const { user, refreshUser, updateUserOptimistic, triggerLumiReaction } = useAuth();
+  const { triggerXpArc } = useXpArc();
   const [selectedNode, setSelectedNode] = useState<MapNodeData | null>(null);
+  const activeNodeElRef = useRef<HTMLElement | null>(null);
 
-  // Dynamic nodes derived from user level and activity
   const userLevel = user?.level || 1;
 
   const units = [
@@ -23,7 +31,7 @@ export const QuestMap: React.FC<QuestMapProps> = ({ onCompleteQuestModal }) => {
       id: 'unit-1',
       number: 1,
       title: "The Scholar's Awakening",
-      description: "Build deep mental clarity, study habits, and morning focus.",
+      description: 'Build deep mental clarity, study habits, and morning focus.',
       themeColor: 'from-primary to-[#7A4BC2]',
       nodes: [
         {
@@ -66,7 +74,7 @@ export const QuestMap: React.FC<QuestMapProps> = ({ onCompleteQuestModal }) => {
       number: 2,
       title: 'The Temple of Vigor',
       description: 'Strengthen physical endurance, posture, and core stamina.',
-      themeColor: 'from-emerald-600 to-teal-700',
+      themeColor: 'from-[#5C3E8A] to-primary',
       nodes: [
         {
           id: 'u2-1',
@@ -104,7 +112,8 @@ export const QuestMap: React.FC<QuestMapProps> = ({ onCompleteQuestModal }) => {
     },
   ];
 
-  const handleNodeClick = (node: MapNodeData) => {
+  const handleNodeClick = (node: MapNodeData, element: HTMLElement) => {
+    activeNodeElRef.current = element;
     setSelectedNode(node);
   };
 
@@ -113,6 +122,9 @@ export const QuestMap: React.FC<QuestMapProps> = ({ onCompleteQuestModal }) => {
 
     sound.playQuestComplete();
     sound.playCoin();
+
+    // Trigger Ballistic Arc to header
+    triggerXpArc(selectedNode.xpReward, activeNodeElRef.current);
 
     // Optimistic user update
     updateUserOptimistic((prev) => ({
@@ -124,7 +136,6 @@ export const QuestMap: React.FC<QuestMapProps> = ({ onCompleteQuestModal }) => {
     triggerLumiReaction('achievement', `Node completed! +${selectedNode.xpReward} XP gained!`);
 
     try {
-      // Create and complete quest server-side
       const res = await fetch('/api/quests', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -151,7 +162,7 @@ export const QuestMap: React.FC<QuestMapProps> = ({ onCompleteQuestModal }) => {
     <div className="flex flex-col items-center w-full max-w-xl mx-auto pb-16">
       {units.map((unit) => (
         <section key={unit.id} className="w-full flex flex-col items-center mb-12">
-          {/* Unit Banner (Duolingo-inspired high-contrast banner) */}
+          {/* Unit Banner */}
           <div
             className={`w-full rounded-2xl bg-gradient-to-r ${unit.themeColor} text-white p-5 sm:p-6 shadow-sm flex items-center justify-between gap-4 mb-6`}
           >
@@ -192,20 +203,21 @@ export const QuestMap: React.FC<QuestMapProps> = ({ onCompleteQuestModal }) => {
             if (e.key === 'Escape') setSelectedNode(null);
           }}
         >
-          <div className="relative w-full max-w-md bg-white rounded-3xl border-2 border-slate-200 shadow-2xl p-6 sm:p-7 flex flex-col items-center text-center animate-in zoom-in-95 duration-200">
+          <div className="relative w-full max-w-md bg-surface rounded-3xl border-2 border-slate-200 shadow-2xl p-6 sm:p-7 flex flex-col items-center text-center animate-in zoom-in-95 duration-200">
             <button
+              type="button"
               onClick={() => setSelectedNode(null)}
-              className="absolute top-4 right-4 p-2 text-copy-muted hover:text-copy rounded-xl hover:bg-slate-100 transition-colors cursor-pointer"
-              aria-label="Close"
+              className="absolute top-4 right-4 p-2 text-copy-muted hover:text-copy rounded-xl hover:bg-slate-100 transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-primary"
+              aria-label="Close modal"
             >
-              <X className="w-5 h-5" />
+              <IconClose size={20} />
             </button>
 
             <div className="w-16 h-16 rounded-full bg-lavender-soft border-2 border-primary/30 flex items-center justify-center text-primary mb-3">
               {selectedNode.status === 'completed' ? (
                 <IconCheck size={32} filled className="text-success" />
               ) : (
-                <IconXp size={32} filled className="text-primary" />
+                <IconXpGem size={32} filled className="text-primary" />
               )}
             </div>
 
@@ -219,28 +231,30 @@ export const QuestMap: React.FC<QuestMapProps> = ({ onCompleteQuestModal }) => {
 
             <div className="flex items-center gap-4 my-5 p-3 rounded-2xl bg-slate-50 border border-slate-200 w-full justify-center">
               <div className="flex items-center gap-1.5 font-black text-sm text-primary">
-                <IconXp size={20} filled />
+                <IconXpGem size={20} filled />
                 <span>+{selectedNode.xpReward} XP</span>
               </div>
               <div className="flex items-center gap-1.5 font-black text-sm text-accent">
-                <IconGold size={20} filled />
+                <IconGoldCoin size={20} filled />
                 <span>+{selectedNode.goldReward} GP</span>
               </div>
             </div>
 
             {selectedNode.status === 'completed' ? (
               <div className="w-full py-3 rounded-2xl bg-success-soft border border-success/30 text-success font-black text-sm flex items-center justify-center gap-2">
-                <Check className="w-4 h-4" />
+                <IconCheck size={18} />
                 <span>Already Claimed!</span>
               </div>
             ) : (
-              <button
+              <Button
+                variant="primary"
+                size="lg"
+                fullWidth
                 onClick={handleCompleteActiveNode}
-                className="w-full py-3.5 px-6 rounded-2xl btn-3d-primary font-black text-sm uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer"
+                rightIcon={<IconArrowRight size={18} />}
               >
-                <span>Complete Quest</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
+                Complete Quest
+              </Button>
             )}
           </div>
         </div>

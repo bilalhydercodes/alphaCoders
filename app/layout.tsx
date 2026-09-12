@@ -7,6 +7,7 @@ const nunito = Nunito({
   subsets: ['latin'],
   weight: ['400', '600', '700', '800', '900'],
   display: 'swap',
+  variable: '--font-nunito',
 });
 
 export const metadata: Metadata = {
@@ -36,7 +37,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${nunito.className} min-h-screen bg-background text-copy antialiased selection:bg-primary/20 selection:text-copy`}>
+      <body className={`${nunito.variable} ${nunito.className} min-h-screen bg-background text-copy antialiased selection:bg-primary/20 selection:text-copy`}>
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>

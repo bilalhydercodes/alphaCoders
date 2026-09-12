@@ -2,8 +2,7 @@
 
 import React from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { IconLeague, IconXp } from './icons/LumiIcons';
-import { Trophy, TrendingUp, Shield } from 'lucide-react';
+import { IconLeague, IconXpGem, IconCheck } from './icons/LumiIcons';
 
 export const GuildLeague: React.FC = () => {
   const { user } = useAuth();
@@ -24,9 +23,9 @@ export const GuildLeague: React.FC = () => {
   return (
     <div className="flex flex-col gap-6 w-full max-w-xl mx-auto pb-12">
       {/* League Banner */}
-      <div className="bg-gradient-to-r from-primary to-[#7A4BC2] text-white p-6 sm:p-7 rounded-3xl shadow-sm flex flex-col sm:flex-row items-center justify-between gap-5 text-center sm:text-left">
+      <div className="bg-gradient-to-r from-primary to-[#7A4BC2] text-white p-6 sm:p-7 rounded-3xl shadow-xs flex flex-col sm:flex-row items-center justify-between gap-5 text-center sm:text-left">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-white/20 border-2 border-white/30 flex items-center justify-center flex-shrink-0">
+          <div className="w-14 h-14 rounded-2xl bg-white/20 border-2 border-white/30 flex items-center justify-center shrink-0">
             <IconLeague size={36} filled className="text-accent" />
           </div>
           <div>
@@ -40,20 +39,20 @@ export const GuildLeague: React.FC = () => {
           </div>
         </div>
 
-        <div className="px-4 py-2 rounded-2xl bg-white/10 border border-white/20 text-center flex-shrink-0">
+        <div className="px-4 py-2 rounded-2xl bg-white/10 border border-white/20 text-center shrink-0">
           <span className="text-[10px] font-bold text-white/80 block uppercase">YOUR RANK</span>
           <span className="text-xl font-black text-white">#3</span>
         </div>
       </div>
 
-      {/* Promotion Zone Notice */}
-      <div className="flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-emerald-50 border-2 border-emerald-200 text-emerald-800 text-xs font-bold">
-        <TrendingUp className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+      {/* Promotion Zone Notice (Strict success tokens) */}
+      <div className="flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-success-soft border border-success/30 text-success text-xs font-bold">
+        <IconCheck size={16} filled className="shrink-0 text-success" />
         <span>You are currently in the Promotion Zone! Keep logging bounties to stay ahead.</span>
       </div>
 
       {/* Leaderboard Table */}
-      <div className="bg-white rounded-3xl border-2 border-slate-200 overflow-hidden shadow-xs">
+      <div className="bg-surface rounded-3xl border-2 border-slate-200 overflow-hidden shadow-xs">
         <div className="p-4 border-b-2 border-slate-100 flex items-center justify-between text-xs font-black text-copy-muted uppercase tracking-wider">
           <span>Adventurer</span>
           <span>Weekly XP</span>
@@ -65,7 +64,7 @@ export const GuildLeague: React.FC = () => {
               key={player.name}
               className={`flex items-center justify-between p-4 transition-colors ${
                 player.isUser
-                  ? 'bg-lavender-soft/60 font-black'
+                  ? 'bg-lavender-soft/40 font-black'
                   : 'hover:bg-slate-50 font-bold'
               }`}
             >
@@ -78,14 +77,14 @@ export const GuildLeague: React.FC = () => {
                       : player.rank === 2
                       ? 'text-slate-400 text-base'
                       : player.rank === 3
-                      ? 'text-amber-700 text-base'
+                      ? 'text-accent/80 text-base'
                       : 'text-slate-400'
                   }`}
                 >
                   {player.rank}
                 </span>
 
-                <div className="w-9 h-9 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center font-black text-xs text-copy flex-shrink-0">
+                <div className="w-9 h-9 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center font-black text-xs text-copy shrink-0">
                   {player.name.charAt(0)}
                 </div>
 
@@ -93,7 +92,7 @@ export const GuildLeague: React.FC = () => {
                   <div className="flex items-center gap-2">
                     <p className="text-xs sm:text-sm text-copy truncate">{player.name}</p>
                     {player.isUser && (
-                      <span className="px-1.5 py-0.5 rounded text-[10px] font-black bg-primary text-primary-on">
+                      <span className="px-1.5 py-0.5 rounded text-[10px] font-black bg-primary text-[#1F1730]">
                         YOU
                       </span>
                     )}
@@ -105,8 +104,8 @@ export const GuildLeague: React.FC = () => {
               </div>
 
               {/* XP */}
-              <div className="flex items-center gap-1.5 text-xs font-black text-primary flex-shrink-0">
-                <IconXp size={16} filled />
+              <div className="flex items-center gap-1.5 text-xs font-black text-primary shrink-0">
+                <IconXpGem size={16} filled />
                 <span>{player.xp} XP</span>
               </div>
             </div>

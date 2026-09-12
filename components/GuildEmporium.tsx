@@ -3,7 +3,13 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { sound } from '@/lib/sound';
-import { Coins, Sparkles, ShoppingBag, Shield, Heart, Zap, Check } from 'lucide-react';
+import { Button } from './ui/Button';
+import {
+  IconGoldCoin,
+  IconEmporium,
+  IconSparkles,
+  IconClose,
+} from './icons/LumiIcons';
 
 export const GuildEmporium: React.FC = () => {
   const { user, refreshUser, updateUserOptimistic, triggerLumiReaction } = useAuth();
@@ -77,29 +83,29 @@ export const GuildEmporium: React.FC = () => {
   return (
     <div className="flex flex-col gap-6">
       {/* Header Banner */}
-      <div className="bg-white rounded-lumi border border-primary/15 p-6 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="bg-surface rounded-2xl border-2 border-slate-200 p-6 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-amber-50 border border-amber-200 flex items-center justify-center text-accent flex-shrink-0">
-            <ShoppingBag className="w-6 h-6 text-accent" />
+          <div className="w-12 h-12 rounded-2xl bg-lavender-soft border-2 border-primary/20 flex items-center justify-center text-primary shrink-0">
+            <IconEmporium size={24} filled />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-copy">The Guild Emporium</h2>
+            <h2 className="text-xl font-extrabold text-copy">The Guild Emporium</h2>
             <p className="text-xs text-copy-muted mt-0.5">
-              Spend your hard-earned Bounty Gold on adventurer gear, consumables, and Lumi accessories.
+              Spend hard-earned Bounty Gold on adventurer gear, consumables, and Lumi accessories.
             </p>
           </div>
         </div>
 
         {/* Currency Display */}
-        <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-accent text-primary-on font-extrabold text-sm shadow-sm">
-          <Coins className="w-4 h-4" />
+        <div className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-accent text-[#1F1730] font-black text-sm shadow-xs shrink-0">
+          <IconGoldCoin size={18} filled />
           <span>{user.gold} GP Available</span>
         </div>
       </div>
 
       {message && (
         <div
-          className={`p-3.5 rounded-xl border text-xs font-semibold flex items-center justify-between ${
+          className={`p-3.5 rounded-2xl border text-xs font-bold flex items-center justify-between ${
             message.type === 'success'
               ? 'bg-success-soft border-success/30 text-success'
               : 'bg-danger-soft border-danger/30 text-danger'
@@ -107,10 +113,12 @@ export const GuildEmporium: React.FC = () => {
         >
           <span>{message.text}</span>
           <button
+            type="button"
             onClick={() => setMessage(null)}
-            className="text-[11px] underline font-bold ml-3 cursor-pointer"
+            className="p-1 text-current hover:opacity-75 transition-opacity cursor-pointer focus-visible:outline-2 focus-visible:outline-primary"
+            aria-label="Dismiss message"
           >
-            Dismiss
+            <IconClose size={16} />
           </button>
         </div>
       )}
@@ -124,16 +132,16 @@ export const GuildEmporium: React.FC = () => {
           return (
             <div
               key={item.id}
-              className="bg-white rounded-lumi border border-primary/15 p-5 shadow-lumi-card hover:shadow-lumi hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between gap-4"
+              className="bg-surface rounded-2xl border-2 border-slate-200 p-5 shadow-xs hover:border-primary/40 transition-all duration-200 flex flex-col justify-between gap-4"
             >
               <div>
                 {/* Top Badge & Cost */}
                 <div className="flex items-center justify-between gap-2 mb-2">
-                  <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-lavender-soft text-primary uppercase tracking-wide">
+                  <span className="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-lavender-soft text-primary uppercase tracking-wide">
                     {item.category.replace('_', ' ')}
                   </span>
-                  <div className="flex items-center gap-1 font-extrabold text-xs text-accent">
-                    <Coins className="w-3.5 h-3.5" />
+                  <div className="flex items-center gap-1 font-black text-xs text-accent">
+                    <IconGoldCoin size={14} filled />
                     <span>{item.cost} GP</span>
                   </div>
                 </div>
@@ -145,26 +153,25 @@ export const GuildEmporium: React.FC = () => {
 
                 {/* Stat Modifiers */}
                 {item.statModifier && (
-                  <div className="mt-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-background border border-primary/15 text-[11px] font-semibold text-primary">
-                    <Sparkles className="w-3 h-3 text-accent" />
+                  <div className="mt-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-background border border-primary/15 text-[11px] font-bold text-primary">
+                    <IconSparkles size={12} className="text-primary" />
                     <span>Buff: {item.statModifier.replace(/[{"}]/g, '').replace(':', ': +')}</span>
                   </div>
                 )}
               </div>
 
-              {/* Purchase Button */}
-              <button
+              {/* Purchase Button using shared Button component */}
+              <Button
+                variant={canAfford ? 'primary' : 'secondary'}
+                size="sm"
+                fullWidth
+                disabled={!canAfford || isBuying}
+                isLoading={isBuying}
                 onClick={() => handleBuy(item)}
-                disabled={isBuying}
-                className={`w-full py-2.5 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer ${
-                  canAfford
-                    ? 'bg-primary text-primary-on hover:bg-primary-hover active:scale-97'
-                    : 'bg-gray-100 text-copy-muted border border-gray-200 hover:bg-gray-200'
-                }`}
+                leftIcon={<IconGoldCoin size={14} filled className={canAfford ? 'text-[#1F1730]' : 'text-accent'} />}
               >
-                <Coins className="w-3.5 h-3.5" />
-                <span>{isBuying ? 'Purchasing...' : canAfford ? 'Buy Item' : 'Need More GP'}</span>
-              </button>
+                {canAfford ? 'Buy Item' : 'Need More GP'}
+              </Button>
             </div>
           );
         })}

@@ -8,15 +8,19 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['var(--font-nunito)', 'Nunito', 'system-ui', '-apple-system', 'sans-serif'],
+      },
       colors: {
+        // Strict 9 UI Tokens
         primary: {
-          DEFAULT: "#9966CC", // Amethyst
-          hover: "#8752BE",
+          DEFAULT: "#9966CC", // Brand amethyst
+          hover: "#8B54C2",
           active: "#7A4BC2",
           on: "#1F1730",
         },
         background: {
-          DEFAULT: "#F8F8FF", // Ghost White
+          DEFAULT: "#F8F8FF", // Ghost White canvas
           subtle: "#F0EFFF",
         },
         surface: {
@@ -25,66 +29,43 @@ const config: Config = {
         },
         copy: {
           DEFAULT: "#2E2438", // Main text
-          muted: "#7A6F8C", // Secondary hints / captions
+          muted: "#7A6F8C",   // Secondary hints & timestamps
           onPrimary: "#1F1730",
         },
         accent: {
-          DEFAULT: "#F5B700", // Gold - rewards / currency only!
+          DEFAULT: "#F5B700", // Gold currency ONLY
           hover: "#E0A800",
-          soft: "#FEF7DF",
+          dark: "#D49E00",
         },
         success: {
-          DEFAULT: "#4FCE6B", // XP gain / positive checkmark
+          DEFAULT: "#4FCE6B", // XP gain / positive feedback
           soft: "#E8F8EC",
+          dark: "#3BA853",
         },
         danger: {
-          DEFAULT: "#E5484D", // Penalties, HP loss
+          DEFAULT: "#E5484D", // Negative deltas & boss damage
           soft: "#FDECEE",
+          dark: "#B82D32",
         },
         lavender: {
           soft: "#EADFFF",
           muted: "#DCC7FF",
         },
-        blush: {
-          pink: "#F3C6E6",
-        },
-        lumi: {
-          deep: "#3C2E63",
-          purple: "#7A4BC2",
-          amethyst: "#9966CC",
-        },
       },
       spacing: {
-        "2.5": "10px",
-        "5": "20px",
-        "7.5": "30px",
-        "10": "40px",
+        // 8pt Grid
+        "1": "4px",
+        "2": "8px",
+        "3": "12px",
+        "4": "16px",
+        "6": "24px",
+        "8": "32px",
+        "12": "48px",
+        "16": "64px",
       },
       borderRadius: {
         "lumi": "16px",
         "lumi-lg": "24px",
-      },
-      boxShadow: {
-        "lumi": "0 4px 20px -2px rgba(153, 102, 204, 0.12)",
-        "lumi-card": "0 2px 12px -1px rgba(60, 46, 99, 0.08)",
-        "lumi-hover": "0 8px 30px -4px rgba(153, 102, 204, 0.2)",
-        "gold-glow": "0 0 15px rgba(245, 183, 0, 0.4)",
-        "amethyst-glow": "0 0 18px rgba(153, 102, 204, 0.45)",
-      },
-      animation: {
-        "pulse-subtle": "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        "float": "float 3s ease-in-out infinite",
-        "bounce-subtle": "bounce-subtle 1.5s ease-in-out infinite",
-      },
-      keyframes: {
-        float: {
-          "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-6px)" },
-        },
-        "bounce-subtle": {
-          "0%, 100%": { transform: "translateY(0) scale(1)" },
-          "50%": { transform: "translateY(-3px) scale(1.02)" },
-        },
       },
     },
   },
