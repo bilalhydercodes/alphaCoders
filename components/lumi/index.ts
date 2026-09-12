@@ -8,3 +8,8 @@ export * from './LumiSpeechBubble';
 export * from './LumiDebugPanel';
 export * from './LumiMoodResolver';
 export * from './LumiEventQueue';
+export * from './LumiAnchor';
+export * from './LumiConfig';
+export * from './LumiMovement';
+export * from './LumiAnimator';
+export * from './LumiBehaviorBrain';

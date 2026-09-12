@@ -14,13 +14,38 @@ export type LumiMoment =
   | 'EXPLORE'
   | 'SELF_CARE'
   | 'YOU_GOT_THIS'
+  | 'FOCUS_START'
   | 'FOCUS'
   | 'WELCOME'
-  | 'COIN_EARNED'
+  | 'EMPTY_STATE'
+  | 'THINKING'
+  | 'CONFUSED'
   | 'STREAK_MILESTONE'
   | 'SHOP_TRY_ON'
+  | 'COIN_CATCH'
+  | 'COIN_EARNED'
   | 'REST_DAY'
   | 'ERROR';
+
+export type LumiBehavior =
+  | 'IDLE'
+  | 'BLINK'
+  | 'LOOK_AROUND'
+  | 'LOOK_AT_USER'
+  | 'LOOK_AT_QUEST'
+  | 'WALK'
+  | 'RUN'
+  | 'SIT'
+  | 'STAND'
+  | 'STRETCH'
+  | 'YAWN'
+  | 'WAVE'
+  | 'JUMP'
+  | 'CHECK_BACKPACK'
+  | 'READ'
+  | 'REST'
+  | 'THINK'
+  | 'SLEEP';
 
 export type LumiAnimation =
   | 'idle'
@@ -28,17 +53,36 @@ export type LumiAnimation =
   | 'lookAround'
   | 'walk'
   | 'run'
-  | 'jump'
-  | 'wave'
   | 'sit'
   | 'stand'
-  | 'sleep'
-  | 'wake'
-  | 'thinking'
-  | 'focus'
+  | 'jump'
+  | 'wave'
   | 'cheer'
+  | 'focus'
+  | 'sleep'
+  | 'stretch'
+  | 'yawn'
+  | 'thinking'
+  | 'happy'
+  | 'sad'
+  | 'confused'
+  | 'rest'
+  | 'read'
+  | 'point'
+  | 'coinCatch'
+  | 'achievement'
+  | 'tryOn'
   | 'levelUp'
-  | 'tryOn';
+  | 'streakCelebrate';
+
+export type LumiZone =
+  | 'HOME_ZONE'
+  | 'QUEST_ZONE'
+  | 'DAILY_GOALS_ZONE'
+  | 'BOSS_ZONE'
+  | 'FOCUS_ZONE'
+  | 'CODEX_ZONE'
+  | 'EMPORIUM_ZONE';
 
 export type LumiSpatialAnchor =
   | 'home'
@@ -46,7 +90,9 @@ export type LumiSpatialAnchor =
   | 'focus'
   | 'shop'
   | 'codex'
-  | 'empty';
+  | 'empty'
+  | 'boss'
+  | 'daily_goals';
 
 export type LumiParticleType =
   | 'none'
@@ -56,6 +102,31 @@ export type LumiParticleType =
   | 'confetti'
   | 'radiant';
 
+export type LumiAttentionTargetType =
+  | 'cursor'
+  | 'quest'
+  | 'xp_bar'
+  | 'boss'
+  | 'shop_item'
+  | 'daily_goals'
+  | 'user'
+  | 'none';
+
+export interface LumiAttentionTarget {
+  type: LumiAttentionTargetType;
+  position?: [number, number, number]; // WebGL coordinates
+  weight: number; // 0 to 1
+  label?: string;
+}
+
+export interface LumiZoneBounds {
+  name: LumiZone;
+  allowedMin: [number, number]; // [x, z] in normalized local coordinates
+  allowedMax: [number, number];
+  preferredSpot: [number, number, number]; // [x, y, z]
+  avoidAreas?: { min: [number, number]; max: [number, number] }[];
+}
+
 export interface LumiEventItem {
   id: string;
   moment: LumiMoment;
@@ -64,6 +135,8 @@ export interface LumiEventItem {
   duration: number; // in milliseconds
   particleType?: LumiParticleType;
   animationOverride?: LumiAnimation;
+  distanceTier?: 'nearby' | 'medium' | 'far';
+  targetAnchor?: string;
   createdAt: number;
 }
 

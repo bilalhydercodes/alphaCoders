@@ -136,6 +136,8 @@ export const GuildEmporium: React.FC = () => {
           return (
             <div
               key={item.id}
+              onMouseEnter={() => lumi.lookAt({ type: 'shop_item', label: item.name, weight: 0.8 })}
+              onMouseLeave={() => lumi.lookAt(null)}
               className="bg-surface rounded-2xl border-2 border-slate-200 p-5 shadow-xs hover:border-primary/40 transition-all duration-200 flex flex-col justify-between gap-4"
             >
               <div>

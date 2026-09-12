@@ -33,8 +33,13 @@ export const FocusTimerModal: React.FC<FocusTimerModalProps> = ({
 
   useEffect(() => {
     if (isOpen) {
-      triggerLumiReaction('focus', 'Focus mode ON! Distractions blocked.');
-      lumi.react('FOCUS', 'Focus mode ON! Distractions blocked.');
+      triggerLumiReaction('focus', 'Focus sanctuary engaged. Distractions locked out!');
+      lumi.setMood('FOCUSED');
+      lumi.setZone('FOCUS_ZONE');
+      lumi.react('FOCUS_START', 'Focus sanctuary engaged. Distractions locked out!');
+    } else {
+      lumi.setMood('CONTENT');
+      lumi.setZone('HOME_ZONE');
     }
   }, [isOpen]);
 

@@ -26,7 +26,7 @@ import {
 } from '@/components/icons/LumiIcons';
 import { LumiMascot } from '@/components/LumiMascot';
 import { XpArcProvider } from '@/components/XpArcManager';
-import { LumiProvider, LumiDebugPanel } from '@/components/lumi';
+import { LumiProvider, LumiDebugPanel, useLumi, NAVIGATION_INTENTS } from '@/components/lumi';
 
 export default function HomePage() {
   const { user, isLoading, toggleSound } = useAuth();
@@ -114,7 +114,75 @@ export default function HomePage() {
   return (
     <LumiProvider>
       <XpArcProvider>
-        <div className="min-h-screen bg-background flex flex-col">
+        <DashboardContent
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          isQuestModalOpen={isQuestModalOpen}
+          setIsQuestModalOpen={setIsQuestModalOpen}
+          editingQuest={editingQuest}
+          setEditingQuest={setEditingQuest}
+          isFocusTimerOpen={isFocusTimerOpen}
+          setIsFocusTimerOpen={setIsFocusTimerOpen}
+          isShortcutsOpen={isShortcutsOpen}
+          setIsShortcutsOpen={setIsShortcutsOpen}
+          levelUpData={levelUpData}
+          setLevelUpData={setLevelUpData}
+          refreshTrigger={refreshTrigger}
+          setRefreshTrigger={setRefreshTrigger}
+        />
+      </XpArcProvider>
+    </LumiProvider>
+  );
+}
+
+interface DashboardContentProps {
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+  isQuestModalOpen: boolean;
+  setIsQuestModalOpen: (open: boolean) => void;
+  editingQuest: Quest | null;
+  setEditingQuest: (q: Quest | null) => void;
+  isFocusTimerOpen: boolean;
+  setIsFocusTimerOpen: (open: boolean) => void;
+  isShortcutsOpen: boolean;
+  setIsShortcutsOpen: (open: boolean) => void;
+  levelUpData: any;
+  setLevelUpData: (data: any) => void;
+  refreshTrigger: number;
+  setRefreshTrigger: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const DashboardContent: React.FC<DashboardContentProps> = ({
+  activeTab,
+  setActiveTab,
+  isQuestModalOpen,
+  setIsQuestModalOpen,
+  editingQuest,
+  setEditingQuest,
+  isFocusTimerOpen,
+  setIsFocusTimerOpen,
+  isShortcutsOpen,
+  setIsShortcutsOpen,
+  levelUpData,
+  setLevelUpData,
+  refreshTrigger,
+  setRefreshTrigger,
+}) => {
+  const { setZone, react: lumiReact } = useLumi();
+
+  // Sync activeTab with Lumi navigation intents
+  useEffect(() => {
+    const intent = NAVIGATION_INTENTS[activeTab];
+    if (intent) {
+      setZone(intent.zone);
+      if (intent.speechHint) {
+        lumiReact('EXPLORE', intent.speechHint);
+      }
+    }
+  }, [activeTab, setZone, lumiReact]);
+
+  return (
+    <div className="min-h-screen bg-background flex flex-col">
       {/* 1. Left Fixed Desktop Sidebar (256px wide) */}
       <Sidebar
         activeTab={activeTab}
@@ -257,13 +325,11 @@ export default function HomePage() {
         onTimerComplete={() => setRefreshTrigger((prev) => prev + 1)}
       />
 
-        <KeyboardShortcutsModal
-          isOpen={isShortcutsOpen}
-          onClose={() => setIsShortcutsOpen(false)}
-        />
-        <LumiDebugPanel />
-      </div>
-      </XpArcProvider>
-    </LumiProvider>
+      <KeyboardShortcutsModal
+        isOpen={isShortcutsOpen}
+        onClose={() => setIsShortcutsOpen(false)}
+      />
+      <LumiDebugPanel />
+    </div>
   );
-}
+};

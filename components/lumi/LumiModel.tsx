@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, useEffect } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
 import { useLumi } from './LumiContext';
+import { LumiAttentionTarget } from './LumiTypes';
 
 const MODEL_PATH = '/assets/lumi/model-1789210678434.glb';
 
@@ -17,16 +18,19 @@ export const LumiModel: React.FC<LumiModelProps> = ({ interactive = true }) => {
     mood,
     animation,
     cursorTarget,
+    attentionTarget,
     isPetted,
     reducedMotion,
+    movementController,
+    animator,
   } = useLumi();
 
   // Root group references
   const groupRef = useRef<THREE.Group>(null);
   const modelAnchorRef = useRef<THREE.Group>(null);
 
-  // Load the 3D GLB model
-  const { scene } = useGLTF(MODEL_PATH);
+  // Load the 3D GLB model and any skeletal animations
+  const { scene, animations } = useGLTF(MODEL_PATH);
 
   // Clone scene so multiple canvas instances can render independently
   const clonedScene = useMemo(() => {
@@ -70,80 +74,58 @@ export const LumiModel: React.FC<LumiModelProps> = ({ interactive = true }) => {
     };
   }, [clonedScene]);
 
-  // Animation timing state
-  const animTime = useRef(0);
-  const spinAngle = useRef(0);
-  const hopHeight = useRef(0);
+  // Initialize skeletal mixer if rigged clips are present (Layer 1)
+  useEffect(() => {
+    if (animations && animations.length > 0 && clonedScene) {
+      animator.initMixer(clonedScene, animations);
+      animator.play(animation);
+    }
+  }, [clonedScene, animations, animator, animation]);
 
-  // Frame animation loop: applies subtle grounded breathing, gaze tracking, pet hops, and celebratory spins
-  useFrame((state, delta) => {
+  // Frame animation loop: coordinates movement controller and layered procedural animator
+  useFrame((_, delta) => {
     if (!groupRef.current || !modelAnchorRef.current) return;
 
-    animTime.current += delta;
-    const t = animTime.current;
+    // 1. Update Locomotion / Spatial Movement
+    const moveState = movementController.update(delta);
 
-    // 1. Subtle Grounded Breathing (Zero Levitation: only 0.008 units subtle breath)
-    const breatheSpeed = mood === 'SLEEPY' ? 1.2 : mood === 'FOCUSED' ? 1.6 : 2.2;
-    const breatheAmp = mood === 'SLEEPY' ? 0.004 : mood === 'FOCUSED' ? 0.006 : 0.008;
-    const breatheY = reducedMotion ? 0 : Math.sin(t * breatheSpeed) * breatheAmp;
-
-    // 2. Petting Hop Reaction
-    if (isPetted) {
-      hopHeight.current = THREE.MathUtils.lerp(hopHeight.current, 0.09, delta * 12);
-    } else {
-      hopHeight.current = THREE.MathUtils.lerp(hopHeight.current, 0, delta * 8);
+    // 2. Resolve Attention Target (Cursor vs Explicit Focus Anchor)
+    let activeAttention: LumiAttentionTarget | null = attentionTarget;
+    if (!activeAttention && interactive && !reducedMotion) {
+      activeAttention = {
+        type: 'cursor',
+        position: [cursorTarget.x, cursorTarget.y, 1],
+        weight: 0.8,
+      };
     }
 
-    groupRef.current.position.y = breatheY + hopHeight.current;
-
-    // 3. Celebratory Spin Animation (Level Up / Claim / Try-on)
-    if (animation === 'cheer' || animation === 'levelUp' || animation === 'tryOn') {
-      spinAngle.current += delta * 6.5;
-    } else {
-      spinAngle.current = THREE.MathUtils.lerp(spinAngle.current, 0, delta * 6);
-    }
-
-    // 4. Gaze Tracking (Lumi turns head/body towards mouse pointer)
-    // Model original face points toward -Z, so default facing angle is Math.PI (180 deg)
-    const baseRotationY = Math.PI;
-    const gazeY = !reducedMotion && interactive ? cursorTarget.x * 0.45 : 0;
-    const gazeX = !reducedMotion && interactive ? -cursorTarget.y * 0.22 : 0;
-
-    // Mood-specific tilts
-    const moodTiltZ =
-      mood === 'CONCERNED' || mood === 'WILTING'
-        ? Math.sin(t * 1.5) * 0.06 - 0.05
-        : mood === 'SLEEPY'
-        ? 0.04
-        : 0;
-
-    const targetRotY = baseRotationY + gazeY + spinAngle.current;
-    const targetRotX = gazeX + (mood === 'SLEEPY' ? 0.08 : 0);
-    const targetRotZ = moodTiltZ;
-
-    modelAnchorRef.current.rotation.y = THREE.MathUtils.lerp(
-      modelAnchorRef.current.rotation.y,
-      targetRotY,
-      delta * 8
-    );
-    modelAnchorRef.current.rotation.x = THREE.MathUtils.lerp(
-      modelAnchorRef.current.rotation.x,
-      targetRotX,
-      delta * 6
-    );
-    modelAnchorRef.current.rotation.z = THREE.MathUtils.lerp(
-      modelAnchorRef.current.rotation.z,
-      targetRotZ,
-      delta * 6
+    // 3. Update Procedural Dynamics (Layer 2 & Layer 3)
+    const animState = animator.update(
+      delta,
+      mood,
+      moveState.isMoving,
+      moveState.isRunning,
+      moveState.stepPhase,
+      activeAttention,
+      reducedMotion
     );
 
-    // 5. Subtle Squash & Stretch on Hop
-    if (isPetted) {
-      const squash = 1 + Math.sin(t * 15) * 0.05;
-      groupRef.current.scale.set(targetScale * (2 - squash), targetScale * squash, targetScale * (2 - squash));
-    } else {
-      groupRef.current.scale.set(targetScale, targetScale, targetScale);
-    }
+    // 4. Apply Spatial Positions (X & Z from movement, Y from breathing/hop/step)
+    groupRef.current.position.x = moveState.position[0] + animState.positionOffset.x;
+    groupRef.current.position.y = animState.positionOffset.y;
+    groupRef.current.position.z = moveState.position[2] + animState.positionOffset.z;
+
+    // 5. Apply Orientations (Facing user base Math.PI + turn heading + attention gaze + posture tilt)
+    modelAnchorRef.current.rotation.y = moveState.rotationY + animState.rotationOffset.y;
+    modelAnchorRef.current.rotation.x = animState.rotationOffset.x;
+    modelAnchorRef.current.rotation.z = animState.rotationOffset.z;
+
+    // 6. Apply Squash & Stretch Scaling
+    groupRef.current.scale.set(
+      targetScale * animState.scaleOffset.x,
+      targetScale * animState.scaleOffset.y,
+      targetScale * animState.scaleOffset.z
+    );
   });
 
   return (

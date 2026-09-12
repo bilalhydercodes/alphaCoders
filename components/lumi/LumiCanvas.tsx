@@ -55,7 +55,7 @@ export const LumiCanvas: React.FC<LumiCanvasProps> = ({
       <Canvas
         camera={{ position: cameraPosition, fov: 34 }}
         dpr={[1, 1.8]}
-        shadows
+        shadows="percentage"
         gl={{
           antialias: true,
           alpha: true,

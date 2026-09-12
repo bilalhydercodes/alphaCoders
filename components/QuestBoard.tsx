@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useXpArc } from './XpArcManager';
-import { useLumi, LumiPresenter } from './lumi';
+import { useLumi, LumiPresenter, LumiAnchor } from './lumi';
 import { sound } from '@/lib/sound';
 import confetti from 'canvas-confetti';
 import { Button } from './ui/Button';
@@ -76,7 +76,12 @@ export const QuestBoard: React.FC<QuestBoardProps> = ({
 }) => {
   const { refreshUser, updateUserOptimistic, triggerLumiReaction } = useAuth();
   const { triggerXpArc } = useXpArc();
-  const { react: lumiReact } = useLumi();
+  const {
+    react: lumiReact,
+    lookAt,
+    moveToAnchor,
+    returnHome,
+  } = useLumi();
   const [quests, setQuests] = useState<Quest[]>([]);
   const [activeTypeTab, setActiveTypeTab] = useState<'ALL' | 'DAILY' | 'TODO' | 'HABIT'>('ALL');
   const [activeCategory, setActiveCategory] = useState<string>('ALL');
@@ -104,6 +109,10 @@ export const QuestBoard: React.FC<QuestBoardProps> = ({
   const handleCompleteQuest = async (quest: Quest, e: React.MouseEvent<HTMLButtonElement>) => {
     if (completingId || quest.isCompleted) return;
     setCompletingId(quest.id);
+
+    // 1. Lumi attends and turns towards quest anchor
+    lookAt({ type: 'quest', label: quest.title, weight: 1.0 });
+    moveToAnchor(`quest-${quest.id}`, false);
 
     // Audio chime immediately
     sound.playQuestComplete();
@@ -160,6 +169,12 @@ export const QuestBoard: React.FC<QuestBoardProps> = ({
       triggerLumiReaction('achievement', 'Bounty completed! Glory to the Guild!');
       lumiReact('QUEST_COMPLETE', `Bounty completed! +${quest.xpReward} XP gained!`);
     }
+
+    // Return home smoothly after celebration
+    setTimeout(() => {
+      returnHome();
+      lookAt(null);
+    }, 2200);
 
     try {
       const res = await fetch(`/api/quests/${quest.id}/complete`, {
@@ -316,124 +331,127 @@ export const QuestBoard: React.FC<QuestBoardProps> = ({
             const isCompleting = completingId === quest.id;
 
             return (
-              <article
-                key={quest.id}
-                className={`bg-surface rounded-2xl border transition-all duration-200 p-4 flex items-center justify-between gap-4 shadow-xs hover:border-primary/40 ${
-                  quest.isCompleted
-                    ? 'opacity-65 bg-background-subtle border-slate-200'
-                    : 'border-slate-200'
-                }`}
-              >
-                {/* Left: Interactive Checkbox & Details */}
-                <div className="flex items-center gap-3.5 min-w-0">
-                  {/* Checkbox with tactile active scale */}
-                  <button
-                    type="button"
-                    onClick={(e) => handleCompleteQuest(quest, e)}
-                    disabled={quest.isCompleted || isCompleting}
-                    className={`w-10 h-10 rounded-xl border-2 flex items-center justify-center transition-all cursor-pointer shrink-0 active:scale-90 focus-visible:outline-2 focus-visible:outline-primary ${
-                      quest.isCompleted
-                        ? 'bg-success border-success text-white shadow-xs'
-                        : isCompleting
-                        ? 'bg-success/20 border-success animate-pulse'
-                        : 'border-slate-300 hover:border-primary hover:bg-lavender-soft/40 shadow-xs'
-                    }`}
-                    aria-label={`Mark quest "${quest.title}" as complete`}
-                  >
-                    {quest.isCompleted && (
-                      <span className="animate-spring-check inline-flex">
-                        <IconCheck size={20} filled className="text-white" />
-                      </span>
-                    )}
-                  </button>
-
-                  {/* Title and tags */}
-                  <div className="flex flex-col min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <h4
-                        className={`text-sm font-bold ${
-                          quest.isCompleted ? 'text-copy-muted line-through' : 'text-copy'
-                        }`}
-                      >
-                        {quest.title}
-                      </h4>
-
-                      {/* Monochromatic Category tag: WCAG AAA compliance (>7.4:1 contrast) */}
-                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black border border-primary/30 bg-lavender-soft text-[#492673]">
-                        <CatIcon size={12} className="text-[#522B80]" />
-                        <span>{cat.label}</span>
-                      </span>
-
-                      {/* Difficulty tag */}
-                      <span
-                        className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${diff.bg}`}
-                      >
-                        {diff.label}
-                      </span>
-                    </div>
-
-                    {quest.description && (
-                      <p className="text-xs text-copy-muted line-clamp-1 mt-0.5">
-                        {quest.description}
-                      </p>
-                    )}
-
-                    {/* Streak & Type Subtext */}
-                    <div className="flex items-center gap-3 text-[11px] text-copy-muted mt-1">
-                      <span className="font-bold text-primary">
-                        {quest.type === 'DAILY'
-                          ? 'Daily Quest'
-                          : quest.type === 'HABIT'
-                          ? 'Core Habit'
-                          : 'To-Do Bounty'}
-                      </span>
-                      {quest.streakCount > 0 && (
-                        <span className="flex items-center gap-1 text-[#875800] font-black">
-                          <IconStreakFlame size={14} filled className="text-accent animate-flame-breathe" />
-                          <span>{quest.streakCount}d streak</span>
+              <LumiAnchor key={quest.id} id={`quest-${quest.id}`} category="quest" className="w-full">
+                <article
+                  onMouseEnter={() => lookAt({ type: 'quest', label: quest.title, weight: 0.8 })}
+                  onMouseLeave={() => lookAt(null)}
+                  className={`bg-surface rounded-2xl border transition-all duration-200 p-4 flex items-center justify-between gap-4 shadow-xs hover:border-primary/40 ${
+                    quest.isCompleted
+                      ? 'opacity-65 bg-background-subtle border-slate-200'
+                      : 'border-slate-200'
+                  }`}
+                >
+                  {/* Left: Interactive Checkbox & Details */}
+                  <div className="flex items-center gap-3.5 min-w-0">
+                    {/* Checkbox with tactile active scale */}
+                    <button
+                      type="button"
+                      onClick={(e) => handleCompleteQuest(quest, e)}
+                      disabled={quest.isCompleted || isCompleting}
+                      className={`w-10 h-10 rounded-xl border-2 flex items-center justify-center transition-all cursor-pointer shrink-0 active:scale-90 focus-visible:outline-2 focus-visible:outline-primary ${
+                        quest.isCompleted
+                          ? 'bg-success border-success text-white shadow-xs'
+                          : isCompleting
+                          ? 'bg-success/20 border-success animate-pulse'
+                          : 'border-slate-300 hover:border-primary hover:bg-lavender-soft/40 shadow-xs'
+                      }`}
+                      aria-label={`Mark quest "${quest.title}" as complete`}
+                    >
+                      {quest.isCompleted && (
+                        <span className="animate-spring-check inline-flex">
+                          <IconCheck size={20} filled className="text-white" />
                         </span>
                       )}
+                    </button>
+
+                    {/* Title and tags */}
+                    <div className="flex flex-col min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h4
+                          className={`text-sm font-bold ${
+                            quest.isCompleted ? 'text-copy-muted line-through' : 'text-copy'
+                          }`}
+                        >
+                          {quest.title}
+                        </h4>
+
+                        {/* Monochromatic Category tag: WCAG AAA compliance (>7.4:1 contrast) */}
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black border border-primary/30 bg-lavender-soft text-[#492673]">
+                          <CatIcon size={12} className="text-[#522B80]" />
+                          <span>{cat.label}</span>
+                        </span>
+
+                        {/* Difficulty tag */}
+                        <span
+                          className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${diff.bg}`}
+                        >
+                          {diff.label}
+                        </span>
+                      </div>
+
+                      {quest.description && (
+                        <p className="text-xs text-copy-muted line-clamp-1 mt-0.5">
+                          {quest.description}
+                        </p>
+                      )}
+
+                      {/* Streak & Type Subtext */}
+                      <div className="flex items-center gap-3 text-[11px] text-copy-muted mt-1">
+                        <span className="font-bold text-primary">
+                          {quest.type === 'DAILY'
+                            ? 'Daily Quest'
+                            : quest.type === 'HABIT'
+                            ? 'Core Habit'
+                            : 'To-Do Bounty'}
+                        </span>
+                        {quest.streakCount > 0 && (
+                          <span className="flex items-center gap-1 text-[#875800] font-black">
+                            <IconStreakFlame size={14} filled className="text-accent animate-flame-breathe" />
+                            <span>{quest.streakCount}d streak</span>
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Right: Reward Badges & Actions */}
-                <div className="flex items-center gap-2 shrink-0">
-                  {/* Rewards chip (WCAG AA compliant gold text) */}
-                  <div className="hidden sm:flex flex-col items-end text-right">
-                    <span className="flex items-center gap-1 text-xs font-black text-primary">
-                      <IconXpGem size={14} filled />
-                      +{quest.xpReward} XP
-                    </span>
-                    <span className="flex items-center gap-1 text-[11px] font-black text-[#875800]">
-                      <IconGoldCoin size={12} filled className="text-accent" />
-                      +{quest.goldReward} GP
-                    </span>
+                  {/* Right: Reward Badges & Actions */}
+                  <div className="flex items-center gap-2 shrink-0">
+                    {/* Rewards chip (WCAG AA compliant gold text) */}
+                    <div className="hidden sm:flex flex-col items-end text-right">
+                      <span className="flex items-center gap-1 text-xs font-black text-primary">
+                        <IconXpGem size={14} filled />
+                        +{quest.xpReward} XP
+                      </span>
+                      <span className="flex items-center gap-1 text-[11px] font-black text-[#875800]">
+                        <IconGoldCoin size={12} filled className="text-accent" />
+                        +{quest.goldReward} GP
+                      </span>
+                    </div>
+
+                    {/* Edit button */}
+                    <button
+                      type="button"
+                      onClick={() => onOpenEditModal(quest)}
+                      className="p-2 rounded-xl text-copy-muted hover:text-primary hover:bg-slate-100 transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-primary"
+                      title="Edit quest"
+                      aria-label={`Edit ${quest.title}`}
+                    >
+                      <IconEdit size={16} />
+                    </button>
+
+                    {/* Delete button */}
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteQuest(quest.id)}
+                      className="p-2 rounded-xl text-copy-muted hover:text-danger hover:bg-danger-soft transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-primary"
+                      title="Delete quest"
+                      aria-label={`Delete ${quest.title}`}
+                    >
+                      <IconTrash size={16} />
+                    </button>
                   </div>
-
-                  {/* Edit button */}
-                  <button
-                    type="button"
-                    onClick={() => onOpenEditModal(quest)}
-                    className="p-2 rounded-xl text-copy-muted hover:text-primary hover:bg-slate-100 transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-primary"
-                    title="Edit quest"
-                    aria-label={`Edit ${quest.title}`}
-                  >
-                    <IconEdit size={16} />
-                  </button>
-
-                  {/* Delete button */}
-                  <button
-                    type="button"
-                    onClick={() => handleDeleteQuest(quest.id)}
-                    className="p-2 rounded-xl text-copy-muted hover:text-danger hover:bg-danger-soft transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-primary"
-                    title="Delete quest"
-                    aria-label={`Delete ${quest.title}`}
-                  >
-                    <IconTrash size={16} />
-                  </button>
-                </div>
-              </article>
+                </article>
+              </LumiAnchor>
             );
           })}
         </div>
