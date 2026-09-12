@@ -149,11 +149,16 @@ export async function POST(req: Request) {
       },
     });
 
+    const host = req.headers.get('host') || '';
+    const isLocalhost = host.includes('localhost') || host.includes('127.0.0.1') || host.includes('192.168.');
+    const isProduction = process.env.NODE_ENV === 'production';
+    const isSecure = isProduction && !isLocalhost;
+
     response.cookies.set({
       name: COOKIE_NAME,
       value: token,
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: isSecure,
       sameSite: 'lax',
       maxAge: 60 * 60 * 24 * 7, // 7 days
       path: '/',

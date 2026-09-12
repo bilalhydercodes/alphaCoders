@@ -60,60 +60,77 @@ export async function POST(req: Request) {
 
     const isGuestQuery =
       cleanIdentifier.toLowerCase() === 'guest' || cleanIdentifier.toLowerCase() === 'guest@liferpg.com';
+    const isDemoQuery =
+      cleanIdentifier.toLowerCase() === 'demo' || cleanIdentifier.toLowerCase() === 'demo@liferpg.com';
 
-    if (!user && isGuestQuery) {
-      const passwordHash = await hashPassword('guest123');
-      user = await prisma.user.create({
-        data: {
-          username: 'guest',
-          email: 'guest@liferpg.com',
-          passwordHash,
-          title: 'Guest Adventurer',
-          level: 1,
-          xp: 0,
-          gold: 50,
-          hp: 100,
-          maxHp: 100,
-          streak: 1,
-          companionMood: 'content',
-          bio: 'Exploring as an honored guest!',
-          avatarEmoji: '🧙',
-          stats: {
-            create: {
-              strength: 5,
-              intellect: 5,
-              agility: 5,
-              vitality: 5,
-              spirit: 5,
+    if (!user && (isGuestQuery || isDemoQuery)) {
+      const defaultPass = isDemoQuery ? 'demo123' : 'guest123';
+      const defaultUser = isDemoQuery ? 'demo' : 'guest';
+      const defaultEmail = isDemoQuery ? 'demo@liferpg.com' : 'guest@liferpg.com';
+      const passwordHash = await hashPassword(defaultPass);
+      try {
+        user = await prisma.user.create({
+          data: {
+            username: defaultUser,
+            email: defaultEmail,
+            passwordHash,
+            title: isDemoQuery ? 'Master Adventurer' : 'Guest Adventurer',
+            level: 1,
+            xp: 0,
+            gold: 50,
+            hp: 100,
+            maxHp: 100,
+            streak: 1,
+            companionMood: 'content',
+            bio: 'Exploring as an honored guest!',
+            avatarEmoji: '🧙',
+            stats: {
+              create: {
+                strength: 5,
+                intellect: 5,
+                agility: 5,
+                vitality: 5,
+                spirit: 5,
+              },
+            },
+            quests: {
+              create: [
+                {
+                  title: 'Morning Glass of Water',
+                  description: 'Drink a full glass of cool fresh water to rehydrate your body.',
+                  category: 'VITALITY',
+                  difficulty: 'TRIVIAL',
+                  type: 'DAILY',
+                  xpReward: 10,
+                  goldReward: 5,
+                },
+                {
+                  title: '25-Minute Deep Focus Session',
+                  description: 'Work on your primary coding, studying, or reading project with zero distractions.',
+                  category: 'INTELLECT',
+                  difficulty: 'MEDIUM',
+                  type: 'DAILY',
+                  xpReward: 50,
+                  goldReward: 25,
+                },
+              ],
             },
           },
-          quests: {
-            create: [
-              {
-                title: 'Morning Glass of Water',
-                description: 'Drink a full glass of cool fresh water to rehydrate your body.',
-                category: 'VITALITY',
-                difficulty: 'TRIVIAL',
-                type: 'DAILY',
-                xpReward: 10,
-                goldReward: 5,
-              },
-              {
-                title: '25-Minute Deep Focus Session',
-                description: 'Work on your primary coding, studying, or reading project with zero distractions.',
-                category: 'INTELLECT',
-                difficulty: 'MEDIUM',
-                type: 'DAILY',
-                xpReward: 50,
-                goldReward: 25,
-              },
+          include: {
+            stats: true,
+          },
+        });
+      } catch {
+        user = await prisma.user.findFirst({
+          where: {
+            OR: [
+              { username: defaultUser },
+              { email: defaultEmail },
             ],
           },
-        },
-        include: {
-          stats: true,
-        },
-      });
+          include: { stats: true },
+        });
+      }
     }
 
     if (!user) {
@@ -191,11 +208,16 @@ export async function POST(req: Request) {
       },
     });
 
+    const host = req.headers.get('host') || '';
+    const isLocalhost = host.includes('localhost') || host.includes('127.0.0.1') || host.includes('192.168.');
+    const isProduction = process.env.NODE_ENV === 'production';
+    const isSecure = isProduction && !isLocalhost;
+
     response.cookies.set({
       name: COOKIE_NAME,
       value: token,
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: isSecure,
       sameSite: 'lax',
       maxAge: 60 * 60 * 24 * 7,
       path: '/',

@@ -175,35 +175,41 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
   };
 
   const handleGuestLogin = async () => {
+    if (isSubmitting) return;
     setError('');
     setSuccessMsg('');
     setIsSubmitting(true);
     sound.playClick();
-    const guestRes = await loginAsGuest();
-    if (!guestRes.success) {
-      // Fallback to standard guest user
-      const fallback = await login('guest', 'guest123');
-      if (!fallback.success) {
-        const demoFallback = await login('demo', 'demo123');
-        if (!demoFallback.success) {
-          triggerError(guestRes.error || 'Guest access currently unavailable');
-          setIsSubmitting(false);
-          return;
+    try {
+      const guestRes = await loginAsGuest();
+      if (!guestRes.success) {
+        // Fallback to standard guest user
+        const fallback = await login('guest', 'guest123');
+        if (!fallback.success) {
+          const demoFallback = await login('demo', 'demo123');
+          if (!demoFallback.success) {
+            triggerError(guestRes.error || 'Guest access currently unavailable. Please try again.');
+            setIsSubmitting(false);
+            return;
+          }
         }
       }
+      setSuccessMsg('Guest session initialized! Entering realm...');
+      sound.playQuestComplete();
+      setTimeout(() => {
+        if (typeof window !== 'undefined') {
+          sessionStorage.setItem('liferpg_active_view', 'dashboard');
+        }
+        if (onSuccess) {
+          onSuccess();
+        } else if (typeof window !== 'undefined') {
+          window.location.href = '/?view=dashboard';
+        }
+      }, 400);
+    } catch {
+      triggerError('Unable to connect to guest session. Please try again.');
+      setIsSubmitting(false);
     }
-    setSuccessMsg('Guest session initialized! Entering realm...');
-    sound.playQuestComplete();
-    setTimeout(() => {
-      if (typeof window !== 'undefined') {
-        sessionStorage.setItem('liferpg_active_view', 'dashboard');
-      }
-      if (onSuccess) {
-        onSuccess();
-      } else if (typeof window !== 'undefined') {
-        window.location.href = '/?view=dashboard';
-      }
-    }, 400);
   };
 
   // Quick helper to fill test accounts

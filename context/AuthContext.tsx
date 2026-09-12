@@ -123,6 +123,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (!res.ok) {
         return { success: false, error: data.error || 'Login failed' };
       }
+      if (data.user) {
+        setUser(data.user);
+      }
       await refreshUser();
       sound.playClick();
       return { success: true };
@@ -140,6 +143,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const data = await res.json();
       if (!res.ok) {
         return { success: false, error: data.error || 'Guest access failed' };
+      }
+      if (data.user) {
+        setUser(data.user);
       }
       await refreshUser();
       sound.playClick();
@@ -159,6 +165,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const data = await res.json();
       if (!res.ok) {
         return { success: false, error: data.error || 'Registration failed' };
+      }
+      if (data.user) {
+        setUser(data.user);
       }
       await refreshUser();
       sound.playLevelUp();
