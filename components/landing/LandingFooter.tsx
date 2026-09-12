@@ -2,6 +2,21 @@
 
 import React from 'react';
 
+import dynamic from 'next/dynamic';
+
+const FooterLumi3D = dynamic(
+  () => import('./FooterLumi3D').then((mod) => mod.FooterLumi3D),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="w-full max-w-[340px] h-[260px] flex flex-col items-center justify-center text-white/70 font-draft-mono text-xs">
+        <div className="w-48 h-6 bg-white/20 rounded-full blur-xs mb-4 animate-pulse" />
+        <span>Summoning Lumi 3D...</span>
+      </div>
+    ),
+  }
+);
+
 interface LandingFooterProps {
   onOpenAuth?: (mode?: 'login' | 'register') => void;
 }
@@ -85,19 +100,9 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onOpenAuth }) => {
               </div>
             </div>
 
-            {/* Right Column: Adorable Lumi Adventurer Mascot with Cloud Pedestal (5 Cols) */}
+            {/* Right Column: Interactive 3D Lumi Character (1789210678434.glb) (5 Cols) */}
             <div className="lg:col-span-5 flex flex-col items-center justify-center relative">
-              {/* Soft dreamy cloud pedestal behind & under Lumi */}
-              <div className="relative flex flex-col items-center group">
-                <div className="absolute inset-0 bg-white/20 rounded-full blur-2xl transform scale-90 pointer-events-none" />
-                <img
-                  src="/images/lumi-footer.png"
-                  alt="Lumi Adventurer Mascot with backpack and purple scarf"
-                  className="relative z-10 w-56 sm:w-64 md:w-72 h-auto object-contain drop-shadow-[0_16px_28px_rgba(31,23,48,0.25)] hover:scale-105 transition-transform duration-300 pointer-events-auto select-none"
-                />
-                {/* Cloud puff shadow under Lumi's feet */}
-                <div className="w-48 sm:w-56 h-6 bg-white/25 rounded-full blur-xs -mt-3 relative z-0" />
-              </div>
+              <FooterLumi3D />
             </div>
           </div>
 
