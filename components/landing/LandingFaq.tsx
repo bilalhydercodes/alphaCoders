@@ -36,11 +36,7 @@ const FAQ_ITEMS: FaqItem[] = [
   },
 ];
 
-interface LandingFaqProps {
-  embedded?: boolean;
-}
-
-export const LandingFaq: React.FC<LandingFaqProps> = ({ embedded }) => {
+export const LandingFaq: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   // Generate FAQPage JSON-LD for Google & AI Answer Engines
@@ -58,15 +54,7 @@ export const LandingFaq: React.FC<LandingFaqProps> = ({ embedded }) => {
   };
 
   return (
-    <div
-      id="faq"
-      className={`relative w-full ${
-        embedded
-          ? 'py-12 sm:py-20 px-4 sm:px-10 bg-[#FAF8F5]'
-          : 'py-24 px-4 sm:px-8 bg-background'
-      } scroll-mt-20`}
-      aria-label="Frequently Asked Questions"
-    >
+    <section id="faq" className="py-24 px-4 sm:px-8 bg-background" aria-label="Frequently Asked Questions">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -128,6 +116,6 @@ export const LandingFaq: React.FC<LandingFaqProps> = ({ embedded }) => {
           })}
         </div>
       </div>
-    </div>
+    </section>
   );
 };

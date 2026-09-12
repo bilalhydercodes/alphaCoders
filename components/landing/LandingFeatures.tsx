@@ -18,19 +18,11 @@ import {
   IconStreakFlame,
 } from '../icons/LumiIcons';
 
-interface LandingFeaturesProps {
-  embedded?: boolean;
-}
-
-export const LandingFeatures: React.FC<LandingFeaturesProps> = ({ embedded }) => {
+export const LandingFeatures: React.FC = () => {
   return (
-    <div
+    <section
       id="features"
-      className={`relative w-full ${
-        embedded
-          ? 'py-12 sm:py-20 px-4 sm:px-10 md:px-14 bg-white'
-          : 'py-24 px-4 sm:px-8 bg-surface border-t-2 border-b-2 border-slate-200/80'
-      } scroll-mt-20`}
+      className="py-24 px-4 sm:px-8 bg-surface border-t-2 border-b-2 border-slate-200/80 scroll-mt-20"
       aria-label="Core RPG Features"
     >
       <div className="max-w-[1240px] mx-auto">
@@ -215,6 +207,6 @@ export const LandingFeatures: React.FC<LandingFeaturesProps> = ({ embedded }) =>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };

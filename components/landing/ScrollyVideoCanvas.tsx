@@ -202,10 +202,7 @@ export const ScrollyVideoCanvas: React.FC<ScrollyVideoCanvasProps> = ({
         if (curtainRef.current) {
           curtainRef.current.style.transform = 'translateY(0%)';
         }
-        if (videoFrameRef.current) {
-          videoFrameRef.current.style.top = `${initialTop}px`;
-        }
-        // Scrub 2-3 frames from frame 20 to 23
+        // Scrub 2-3 frames from frame 20 to 23 (video frame remains completely still)
         targetFrameRef.current = Math.round(START_FRAME + p1 * 3);
       } else if (progress < 0.30) {
         // Stage 2: Paper section and text sync and move up scroll animation (curtain lifts)
@@ -216,23 +213,16 @@ export const ScrollyVideoCanvas: React.FC<ScrollyVideoCanvasProps> = ({
         if (curtainRef.current) {
           curtainRef.current.style.transform = `translateY(-${p2 * 100}%)`;
         }
-        if (videoFrameRef.current) {
-          const currentTop = initialTop - p2 * (initialTop - targetTop);
-          videoFrameRef.current.style.top = `${currentTop}px`;
-        }
-        // Hold frame at 23 during curtain movement
+        // Hold frame at 23 during curtain movement (video frame remains completely still)
         targetFrameRef.current = 23;
       } else {
-        // Stage 3: Curtain is off-screen, video frames scrub from 23 to 184
+        // Stage 3: Curtain is off-screen, video frames scrub from 23 to 184 (video frame remains completely still)
         const p3 = (progress - 0.30) / 0.70;
         if (textRef.current) {
           textRef.current.style.transform = 'translateY(-60px)';
         }
         if (curtainRef.current) {
           curtainRef.current.style.transform = 'translateY(-100%)';
-        }
-        if (videoFrameRef.current) {
-          videoFrameRef.current.style.top = `${targetTop}px`;
         }
         // Scrub frames 23 -> 184
         targetFrameRef.current = Math.round(23 + p3 * (END_FRAME - 23));
@@ -267,13 +257,13 @@ export const ScrollyVideoCanvas: React.FC<ScrollyVideoCanvasProps> = ({
           onOpenAuth={onOpenAuth}
         />
 
-        {/* Framed 3D Video Screen with Draft Paper Margins & Borders */}
+        {/* Framed 3D Video Screen with Draft Paper Margins & Borders (Completely still, no stretch/movement) */}
         <div
           ref={videoFrameRef}
-          className="absolute inset-x-3 sm:inset-x-6 md:inset-x-12 lg:inset-x-16 max-w-[1360px] mx-auto border border-[#262524] rounded-none bg-black overflow-hidden shadow-2xl z-10"
+          className="absolute inset-x-4 sm:inset-x-8 md:inset-x-12 lg:inset-x-16 max-w-[1200px] mx-auto border border-[#262524] rounded-none bg-black overflow-hidden shadow-2xl z-10"
           style={{
             top: '50vh',
-            bottom: '16px',
+            bottom: '24px',
           }}
         >
           {/* Framed Canvas */}
