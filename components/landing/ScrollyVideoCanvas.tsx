@@ -189,10 +189,6 @@ export const ScrollyVideoCanvas: React.FC<ScrollyVideoCanvasProps> = ({
       const progress = Math.max(0, Math.min(1, scrolled / scrollableDistance));
       setScrollProgress(progress);
 
-      const isMobile = window.innerWidth < 640;
-      const targetTop = isMobile ? 74 : 80;
-      const initialTop = window.innerHeight * 0.5;
-
       if (progress <= 0.12) {
         // Stage 1: Text moves up first with 2-3 frames scrub
         const p1 = progress / 0.12;
@@ -257,14 +253,10 @@ export const ScrollyVideoCanvas: React.FC<ScrollyVideoCanvasProps> = ({
           onOpenAuth={onOpenAuth}
         />
 
-        {/* Framed 3D Video Screen with Draft Paper Margins & Borders (Completely still, no stretch/movement) */}
+        {/* Framed 3D Video Screen with Draft Paper Margins & Borders (Full height, completely still) */}
         <div
           ref={videoFrameRef}
-          className="absolute inset-x-4 sm:inset-x-8 md:inset-x-12 lg:inset-x-16 max-w-[1200px] mx-auto border border-[#2E2438] rounded-none bg-black overflow-hidden shadow-2xl z-10"
-          style={{
-            top: '50vh',
-            bottom: '24px',
-          }}
+          className="absolute top-[72px] sm:top-[82px] bottom-6 inset-x-4 sm:inset-x-8 md:inset-x-12 lg:inset-x-16 max-w-[1200px] mx-auto border border-[#2E2438] rounded-none bg-black overflow-hidden shadow-2xl z-10"
         >
           {/* Framed Canvas */}
           <canvas

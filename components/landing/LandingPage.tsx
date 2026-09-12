@@ -68,8 +68,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterDashboard }) =>
         {/* 2. Platform Overview: Architectural Brief explaining what the platform is */}
         <PlatformOverview onOpenAuth={() => handleOpenAuth('register')} />
 
-        {/* 3. Progression Layers: 4 Systems Features & FAQ */}
-        <div className="relative z-20 bg-draft-paper">
+        {/* 3. Progression Layers: Features (Dark Amethyst) & FAQ (Light Draft Paper) */}
+        <div className="relative z-20">
           <LandingFeatures />
           <LandingFaq />
         </div>

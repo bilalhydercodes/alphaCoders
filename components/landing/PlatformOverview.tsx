@@ -87,9 +87,6 @@ export const PlatformOverview: React.FC<PlatformOverviewProps> = ({ onOpenAuth }
           </button>
         </div>
       </div>
-
-      {/* Seamless bottom blend into next section */}
-      <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-b from-transparent via-[#F8F8FF]/80 to-[#F8F8FF] pointer-events-none z-0" />
     </section>
   );
 };

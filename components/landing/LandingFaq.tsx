@@ -59,18 +59,18 @@ export const LandingFaq: React.FC = () => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      <div className="max-w-[1200px] mx-auto">
-        <div className="max-w-3xl mb-12">
+      <div className="max-w-[880px] mx-auto">
+        <div className="text-center mb-14">
           <h2 className="text-3xl sm:text-5xl font-semibold text-[#1F1730] tracking-[-0.035em] leading-[1.06] font-headline">
             Frequently asked questions
           </h2>
-          <p className="text-base sm:text-lg text-[#5C5070] font-medium mt-3 leading-relaxed">
+          <p className="text-base sm:text-lg text-[#5C5070] font-medium mt-3 leading-relaxed max-w-xl mx-auto">
             Everything you need to know about quests, character progression, and Lumi.
           </p>
         </div>
 
         {/* Accordion List */}
-        <div className="flex flex-col gap-3.5 max-w-4xl">
+        <div className="flex flex-col gap-3.5 w-full">
           {FAQ_ITEMS.map((item, idx) => {
             const isOpen = openIndex === idx;
 
