@@ -47,6 +47,7 @@ interface QuestBoardProps {
     goldEarned: number;
     statGained: { attribute: string; points: number };
   }) => void;
+  onOpenFocus?: () => void;
 }
 
 // Strict Discipline: All 5 attributes use text + primary and their bespoke geometric icon
@@ -73,8 +74,9 @@ export const QuestBoard: React.FC<QuestBoardProps> = ({
   onOpenCreateModal,
   onOpenEditModal,
   onTriggerLevelUp,
+  onOpenFocus,
 }) => {
-  const { refreshUser, updateUserOptimistic, triggerLumiReaction } = useAuth();
+  const { refreshUser, updateUserOptimistic, triggerLumiReaction, user } = useAuth();
   const { triggerXpArc } = useXpArc();
   const {
     react: lumiReact,
@@ -135,6 +137,11 @@ export const QuestBoard: React.FC<QuestBoardProps> = ({
       });
     } catch {
       // ignore
+    }
+
+    // Auto-start focus timer if setting is enabled
+    if (user?.focusModeAuto && onOpenFocus) {
+      setTimeout(() => onOpenFocus(), 800);
     }
 
     // Trigger Ballistic Arc directly to header XP pill
@@ -431,7 +438,13 @@ export const QuestBoard: React.FC<QuestBoardProps> = ({
                     {/* Edit button */}
                     <button
                       type="button"
-                      onClick={() => onOpenEditModal(quest)}
+                      onClick={() => {
+                        onOpenEditModal(quest);
+                        // Auto-start focus timer if setting is enabled
+                        if (user?.focusModeAuto && onOpenFocus) {
+                          setTimeout(() => onOpenFocus(), 500);
+                        }
+                      }}
                       className="p-2 rounded-xl text-copy-muted hover:text-primary hover:bg-slate-100 transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-primary"
                       title="Edit quest"
                       aria-label={`Edit ${quest.title}`}

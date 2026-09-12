@@ -21,6 +21,7 @@ export const KeyboardShortcutsModal: React.FC<KeyboardShortcutsModalProps> = ({
     { key: '3', description: 'Navigate to Guild League tab' },
     { key: '4', description: 'Navigate to Guild Emporium (Shop)' },
     { key: '5', description: 'Navigate to Character Codex & Stats' },
+    { key: '6', description: 'Navigate to Adventurer Profile & Chronicles' },
     { key: 'F', description: 'Open Focus Mode Pomodoro timer' },
     { key: 'M', description: 'Toggle procedural chimes (Mute/Unmute)' },
     { key: 'Esc', description: 'Close any active modal or menu' },

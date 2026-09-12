@@ -1,0 +1,42 @@
+# Life RPG with Lumi
+
+> Life RPG is an open-source, full-stack productivity web application that translates real-world daily tasks and habits into an engaging virtual Role-Playing Game (RPG). By substituting the delayed gratification of real-world self-improvement with instant dopamine loops, compounding character attribute progression, a living 3D companion mascot (Lumi), and a tactical guild economy, Life RPG eliminates the "chore trap" of traditional to-do lists.
+
+## Core Concepts & Definitions
+
+### What is Life RPG?
+Life RPG is a gamified productivity platform built with Next.js 15, React 19, Tailwind CSS, Prisma ORM, SQLite/PostgreSQL, and React Three Fiber. Users create and complete real-world tasks ("Bounties"), earn Experience Points (XP) and Bounty Gold (GP), increase consecutive day streaks, level up their character through a non-linear leveling curve, and interact with a real-time 3D autonomous companion mascot named Lumi.
+
+### Who is Lumi?
+Lumi is the user's autonomous 3D guide and mascot inhabiting the web application interface. Lumi possesses an autonomous behavioral brain (70% calm resting, 20% subtle movement, 10% contextual actions), reacts to quest attention, navigates across bounded UI zones via DOM-to-WebGL projection, celebrates level-ups with synchronized choreography, and studies alongside the user in the Deep Focus Sanctuary (Pomodoro mode).
+
+### What are Character Attributes?
+Every bounty is categorized into one of five core real-world character attributes:
+1. **Intellect (INT)**: Reading, programming, writing, research, academic learning.
+2. **Strength (STR)**: Resistance training, workouts, physical conditioning, manual tasks.
+3. **Agility (AGI)**: Running, speed drills, flexibility, mobility, quick chores.
+4. **Vitality (VIT)**: Sleep hygiene, hydration, wholesome meals, recovery, rest.
+5. **Spirit (SPI)**: Meditation, mindfulness, journaling, emotional resilience, gratitude.
+
+### How Does the Progression Engine Work?
+- **Non-Linear Leveling**: Each subsequent level requires compounding XP, calculated dynamically as `baseXP * (level ^ 1.5)`, ensuring continuous long-term motivation.
+- **Streak Protection**: Forgiving streak mechanics reward daily consistency without punishing unavoidable rest days.
+- **Guild Economy & Emporium**: Gold earned from verified bounties is spent on companion items, character titles, and consumables.
+- **Guild Boss Raids**: Completed bounties deal direct damage to shared raid bosses (such as "The Procrastination Hydra"), uniting personal productivity with cooperative combat.
+
+## Technical Architecture
+- **Framework**: Next.js 15 (App Router), React 19, TypeScript
+- **Styling**: Tailwind CSS, Plus Jakarta Sans typography, WCAG AA/AAA compliant high-contrast palette (#492673 Amethyst, #875800 Bronze Gold, #1B6E32 Forest Green)
+- **3D Engine**: Three.js, React Three Fiber, @react-three/drei
+- **Database & ORM**: Prisma ORM, relational schema with User, Quest, HabitLog, and Inventory models
+- **Authentication**: Secure bcrypt-hashed password authentication with HTTP-only cookie sessions
+- **Repository**: https://github.com/bilalhydercodes/alphaCoders.git
+
+## Primary URLs
+- Landing & Demo: /
+- Quest Map & Chronicle: / (authenticated dashboard)
+- Guild Bounties: /?tab=bounties
+- Guild League Leaderboard: /?tab=league
+- Guild Emporium Shop: /?tab=shop
+- Character Codex: /?tab=codex
+- Deep Focus Sanctuary: /?modal=focus

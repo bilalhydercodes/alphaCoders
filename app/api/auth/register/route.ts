@@ -4,8 +4,13 @@ import { prisma } from '@/lib/prisma';
 import { hashPassword, signToken, COOKIE_NAME } from '@/lib/auth';
 
 const RegisterSchema = z.object({
-  email: z.string().email('Invalid email address'),
-  username: z.string().min(3, 'Username must be at least 3 characters').max(20),
+  email: z.string().trim().toLowerCase().email('Please enter a valid email address'),
+  username: z
+    .string()
+    .trim()
+    .min(3, 'Adventurer name must be at least 3 characters')
+    .max(20, 'Adventurer name cannot exceed 20 characters')
+    .regex(/^[a-zA-Z0-9_-]+$/, 'Adventurer name can only contain letters, numbers, underscores, and hyphens'),
   password: z.string().min(6, 'Password must be at least 6 characters'),
 });
 
@@ -22,17 +27,32 @@ export async function POST(req: Request) {
     }
 
     const { email, username, password } = result.data;
+    const cleanUsername = username.trim();
+    const cleanEmail = email.trim().toLowerCase();
 
-    // Check existing
-    const existing = await prisma.user.findFirst({
+    // Check existing candidates with SQLite case-insensitivity safety
+    const candidates = await prisma.user.findMany({
       where: {
-        OR: [{ email: email.toLowerCase() }, { username: username.toLowerCase() }],
+        OR: [
+          { email: cleanEmail },
+          { username: { contains: cleanUsername } },
+        ],
       },
+      take: 20,
     });
 
-    if (existing) {
+    const emailMatch = candidates.find((u) => u.email.toLowerCase() === cleanEmail);
+    if (emailMatch) {
       return NextResponse.json(
-        { error: 'An adventurer with that email or username already exists' },
+        { error: 'An adventurer with this email address already exists. Try signing in!' },
+        { status: 409 }
+      );
+    }
+
+    const usernameMatch = candidates.find((u) => u.username.toLowerCase() === cleanUsername.toLowerCase());
+    if (usernameMatch) {
+      return NextResponse.json(
+        { error: 'This adventurer name is already claimed. Please choose another moniker.' },
         { status: 409 }
       );
     }
@@ -42,8 +62,8 @@ export async function POST(req: Request) {
     // Create user with starter stats and starter quests
     const user = await prisma.user.create({
       data: {
-        email: email.toLowerCase(),
-        username,
+        email: cleanEmail,
+        username: cleanUsername,
         passwordHash,
         level: 1,
         xp: 0,

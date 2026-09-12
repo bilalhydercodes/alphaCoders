@@ -1,5 +1,5 @@
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -21,8 +21,17 @@ model User {
   streak         Int             @default(0)
   lastActiveDate DateTime?
   companionMood  String          @default("content")
+  bio            String?
+  avatarEmoji    String          @default("🧙")
+  bestStreak     Int             @default(0)
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
+  
+  // Settings
+  notificationsEnabled Boolean  @default(true)
+  dailyReminders       Boolean  @default(true)
+  focusModeAuto        Boolean  @default(false)
+  privacyMode          Boolean  @default(false)
 
   stats          CharacterStats?
   quests         Quest[]

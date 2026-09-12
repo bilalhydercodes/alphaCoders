@@ -9,6 +9,8 @@ import {
   IconLeague,
   IconShop,
   IconCodex,
+  IconProfile,
+  IconSettings,
   IconVolumeOn,
   IconVolumeMuted,
   IconHelp,
@@ -20,6 +22,7 @@ interface SidebarProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
   onOpenShortcuts: () => void;
+  onViewLanding?: () => void;
   bountyCount?: number;
 }
 
@@ -27,6 +30,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   activeTab,
   setActiveTab,
   onOpenShortcuts,
+  onViewLanding,
   bountyCount,
 }) => {
   const { user, logout, isMuted, toggleSound } = useAuth();
@@ -83,6 +87,21 @@ export const Sidebar: React.FC<SidebarProps> = ({
             isActive={activeTab === 'codex'}
             onClick={() => setActiveTab('codex')}
           />
+          <SidebarItem
+            label="Profile"
+            icon={IconProfile}
+            isActive={activeTab === 'profile'}
+            onClick={() => setActiveTab('profile')}
+          />
+          
+          <div className="border-t-2 border-slate-100 my-2" />
+          
+          <SidebarItem
+            label="Settings"
+            icon={IconSettings}
+            isActive={activeTab === 'settings'}
+            onClick={() => setActiveTab('settings')}
+          />
         </nav>
       </div>
 
@@ -117,16 +136,21 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         {/* User Card */}
-        <div className="flex items-center justify-center lg:justify-between p-2 rounded-xl bg-slate-50 border border-slate-200">
-          <div className="flex items-center gap-2.5 min-w-0">
-            <div className="w-8 h-8 rounded-full bg-primary text-[#1F1730] flex items-center justify-center font-extrabold text-xs shrink-0">
-              {user.username.charAt(0).toUpperCase()}
+        <div className="flex items-center justify-center lg:justify-between p-2 rounded-xl bg-slate-50 border border-slate-200 hover:border-primary/40 transition-colors">
+          <button
+            type="button"
+            onClick={() => setActiveTab('profile')}
+            className="flex items-center gap-2.5 min-w-0 text-left cursor-pointer flex-1 focus:outline-none"
+            title="View Profile"
+          >
+            <div className="w-8 h-8 rounded-full bg-lavender-soft text-base flex items-center justify-center font-extrabold shrink-0 border border-primary/30">
+              {user.avatarEmoji || user.username.charAt(0).toUpperCase()}
             </div>
             <div className="min-w-0 hidden lg:block">
               <p className="text-xs font-extrabold text-copy truncate">{user.username}</p>
               <p className="text-[10px] font-semibold text-primary truncate">Lv. {user.level} · {user.title}</p>
             </div>
-          </div>
+          </button>
 
           <button
             type="button"

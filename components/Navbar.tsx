@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { LumiMascot } from './LumiMascot';
+import { LumiPresenter } from './lumi/LumiPresenter';
 import {
   IconVolumeOn,
   IconVolumeMuted,
@@ -51,7 +51,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenShortcuts, activeTab, setA
           {/* Brand & Companion title */}
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-lavender-soft flex items-center justify-center border-2 border-primary/30 shadow-xs overflow-hidden shrink-0">
-              <LumiMascot mood="content" size={36} />
+              <LumiPresenter variant="mini" height={40} showSpeech={false} interactive={false} className="w-full h-full" />
             </div>
             <div>
               <div className="flex items-center gap-1.5">

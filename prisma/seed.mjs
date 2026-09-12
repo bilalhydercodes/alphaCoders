@@ -1,11 +1,50 @@
 import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
 
 async function main() {
   console.log('Seeding Life RPG database...');
 
-  // 1. Seed Shop Items
+  // 1. Seed Demo User
+  const demoUser = await prisma.user.findFirst({ where: { username: 'demo' } });
+  if (!demoUser) {
+    const passwordHash = await bcrypt.hash('demo123', 10);
+    const user = await prisma.user.create({
+      data: {
+        email: 'demo@liferpg.com',
+        username: 'demo',
+        passwordHash,
+        title: 'Novice Adventurer',
+        level: 1,
+        xp: 0,
+        gold: 50,
+        hp: 100,
+        maxHp: 100,
+        streak: 0,
+        companionMood: 'content',
+        bio: 'Ready to embark on an epic journey!',
+        avatarEmoji: '🧙',
+        bestStreak: 0,
+      },
+    });
+    
+    // Create character stats for demo user
+    await prisma.characterStats.create({
+      data: {
+        userId: user.id,
+        strength: 5,
+        intellect: 5,
+        agility: 5,
+        vitality: 5,
+        spirit: 5,
+      },
+    });
+    
+    console.log('Created demo user: demo / demo123');
+  }
+
+  // 3. Seed Shop Items
   const items = [
     {
       name: 'Amethyst Silk Scarf',
@@ -89,7 +128,7 @@ async function main() {
     }
   }
 
-  // 2. Seed Dungeon Bosses
+  // 4. Seed Dungeon Bosses
   const bosses = [
     {
       name: 'The Sloth Behemoth',

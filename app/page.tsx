@@ -11,6 +11,8 @@ import { QuestBoard, Quest } from '@/components/QuestBoard';
 import { GuildLeague } from '@/components/GuildLeague';
 import { GuildEmporium } from '@/components/GuildEmporium';
 import { CharacterCodex } from '@/components/CharacterCodex';
+import { ProfileSection } from '@/components/ProfileSection';
+import { Settings } from '@/components/Settings';
 import { DailyGoalsPanel } from '@/components/DailyGoalsPanel';
 import { DungeonRaid } from '@/components/DungeonRaid';
 import { QuestModal } from '@/components/QuestModal';
@@ -23,13 +25,17 @@ import {
   IconLeague,
   IconShop,
   IconCodex,
+  IconProfile,
+  IconSettings,
 } from '@/components/icons/LumiIcons';
+import { LandingPage } from '@/components/landing/LandingPage';
 import { LumiMascot } from '@/components/LumiMascot';
 import { XpArcProvider } from '@/components/XpArcManager';
 import { LumiProvider, LumiDebugPanel, useLumi, NAVIGATION_INTENTS } from '@/components/lumi';
 
 export default function HomePage() {
   const { user, isLoading, toggleSound } = useAuth();
+  const [viewMode, setViewMode] = useState<'landing' | 'dashboard'>('landing');
   const [activeTab, setActiveTab] = useState<string>('map');
   const [isQuestModalOpen, setIsQuestModalOpen] = useState(false);
   const [editingQuest, setEditingQuest] = useState<Quest | null>(null);
@@ -42,6 +48,49 @@ export default function HomePage() {
     statGained: { attribute: string; points: number };
   } | null>(null);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
+
+  // Sync viewMode with query parameter (?view=landing or ?view=dashboard) or persisted session
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const queryView = params.get('view');
+      if (queryView === 'dashboard') {
+        setViewMode('dashboard');
+        sessionStorage.setItem('liferpg_active_view', 'dashboard');
+      } else if (queryView === 'landing') {
+        setViewMode('landing');
+        sessionStorage.setItem('liferpg_active_view', 'landing');
+      } else {
+        const saved = sessionStorage.getItem('liferpg_active_view');
+        if (saved === 'dashboard') {
+          setViewMode('dashboard');
+        } else {
+          setViewMode('landing');
+          sessionStorage.setItem('liferpg_active_view', 'landing');
+        }
+      }
+    }
+  }, []);
+
+  const handleEnterDashboard = () => {
+    setViewMode('dashboard');
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('liferpg_active_view', 'dashboard');
+      const url = new URL(window.location.href);
+      url.searchParams.set('view', 'dashboard');
+      window.history.replaceState(null, '', url.toString());
+    }
+  };
+
+  const handleViewLanding = () => {
+    setViewMode('landing');
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('liferpg_active_view', 'landing');
+      const url = new URL(window.location.href);
+      url.searchParams.delete('view');
+      window.history.replaceState(null, '', url.pathname + url.hash);
+    }
+  };
 
   // Global keyboard shortcuts
   useEffect(() => {
@@ -73,6 +122,10 @@ export default function HomePage() {
         setActiveTab('shop');
       } else if (e.key === '5') {
         setActiveTab('codex');
+      } else if (e.key === '6') {
+        setActiveTab('profile');
+      } else if (e.key === '7') {
+        setActiveTab('settings');
       } else if (e.key === 'm' || e.key === 'M') {
         e.preventDefault();
         toggleSound();
@@ -102,11 +155,25 @@ export default function HomePage() {
     );
   }
 
-  // Not authenticated -> Show Auth & Landing Screen
+  // Determine whether to display Landing Page or Dashboard
+  const showLanding = viewMode === 'landing' || (!user && viewMode !== 'dashboard');
+
+  if (showLanding) {
+    return (
+      <LumiProvider>
+        <LandingPage onEnterDashboard={handleEnterDashboard} />
+      </LumiProvider>
+    );
+  }
+
+  // If user navigated directly to dashboard mode but is unauthenticated, show AuthScreen
   if (!user) {
     return (
       <LumiProvider>
-        <AuthScreen />
+        <AuthScreen
+          onClose={handleViewLanding}
+          onSuccess={handleEnterDashboard}
+        />
       </LumiProvider>
     );
   }
@@ -117,6 +184,7 @@ export default function HomePage() {
         <DashboardContent
           activeTab={activeTab}
           setActiveTab={setActiveTab}
+          onViewLanding={handleViewLanding}
           isQuestModalOpen={isQuestModalOpen}
           setIsQuestModalOpen={setIsQuestModalOpen}
           editingQuest={editingQuest}
@@ -138,6 +206,7 @@ export default function HomePage() {
 interface DashboardContentProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
+  onViewLanding?: () => void;
   isQuestModalOpen: boolean;
   setIsQuestModalOpen: (open: boolean) => void;
   editingQuest: Quest | null;
@@ -155,6 +224,7 @@ interface DashboardContentProps {
 const DashboardContent: React.FC<DashboardContentProps> = ({
   activeTab,
   setActiveTab,
+  onViewLanding,
   isQuestModalOpen,
   setIsQuestModalOpen,
   editingQuest,
@@ -188,6 +258,7 @@ const DashboardContent: React.FC<DashboardContentProps> = ({
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         onOpenShortcuts={() => setIsShortcutsOpen(true)}
+        onViewLanding={onViewLanding}
       />
 
       {/* Mobile Bottom Navigation Bar (<768px) */}
@@ -233,12 +304,30 @@ const DashboardContent: React.FC<DashboardContentProps> = ({
         </button>
         <button
           onClick={() => setActiveTab('codex')}
-          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl min-h-[44px] justify-center ${
+          className={`flex flex-col items-center gap-1 py-1 px-2 rounded-xl min-h-[44px] justify-center ${
             activeTab === 'codex' ? 'text-primary font-black' : 'text-copy-muted'
           }`}
         >
           <IconCodex size={20} filled={activeTab === 'codex'} />
           <span className="text-[10px] font-bold">Codex</span>
+        </button>
+        <button
+          onClick={() => setActiveTab('profile')}
+          className={`flex flex-col items-center gap-1 py-1 px-2 rounded-xl min-h-[44px] justify-center ${
+            activeTab === 'profile' ? 'text-primary font-black' : 'text-copy-muted'
+          }`}
+        >
+          <IconProfile size={20} filled={activeTab === 'profile'} />
+          <span className="text-[10px] font-bold">Profile</span>
+        </button>
+        <button
+          onClick={() => setActiveTab('settings')}
+          className={`flex flex-col items-center gap-1 py-1 px-2 rounded-xl min-h-[44px] justify-center ${
+            activeTab === 'settings' ? 'text-primary font-black' : 'text-copy-muted'
+          }`}
+        >
+          <IconSettings size={20} filled={activeTab === 'settings'} />
+          <span className="text-[10px] font-bold">Settings</span>
         </button>
       </nav>
 
@@ -250,8 +339,14 @@ const DashboardContent: React.FC<DashboardContentProps> = ({
 
           {/* 3. Responsive 2-Column Grid: Center Feed + Sticky Right Rail */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-4 items-start flex-1">
-            {/* Center Canvas (7 columns on desktop) */}
-            <main className="lg:col-span-7 flex flex-col">
+            {/* Center Canvas */}
+            <main
+              className={`${
+                activeTab === 'settings' || activeTab === 'profile'
+                  ? 'lg:col-span-12 max-w-4xl mx-auto w-full'
+                  : 'lg:col-span-7'
+              } flex flex-col`}
+            >
               {activeTab === 'map' && (
                 <QuestMap onCompleteQuestModal={() => setIsQuestModalOpen(true)} />
               )}
@@ -268,6 +363,7 @@ const DashboardContent: React.FC<DashboardContentProps> = ({
                     setIsQuestModalOpen(true);
                   }}
                   onTriggerLevelUp={(data) => setLevelUpData(data)}
+                  onOpenFocus={() => setIsFocusTimerOpen(true)}
                 />
               )}
 
@@ -276,23 +372,29 @@ const DashboardContent: React.FC<DashboardContentProps> = ({
               {activeTab === 'shop' && <GuildEmporium />}
 
               {activeTab === 'codex' && <CharacterCodex />}
+
+              {activeTab === 'profile' && <ProfileSection />}
+
+              {activeTab === 'settings' && <Settings />}
             </main>
 
-            {/* Right Sticky Rail (5 columns on desktop) */}
-            <aside className="lg:col-span-5 flex flex-col gap-6 lg:sticky lg:top-20">
-              {/* Lumi Mascot Companion Card */}
-              <LumiCompanion onStartFocus={() => setIsFocusTimerOpen(true)} />
+            {/* Right Sticky Rail (hidden on Settings and Profile to match full-width reference layout) */}
+            {activeTab !== 'settings' && activeTab !== 'profile' && (
+              <aside className="lg:col-span-5 flex flex-col gap-6 lg:sticky lg:top-20">
+                {/* Lumi Mascot Companion Card */}
+                <LumiCompanion onStartFocus={() => setIsFocusTimerOpen(true)} />
 
-              {/* Daily Goals Mini-Challenge Card */}
-              <DailyGoalsPanel />
+                {/* Daily Goals Mini-Challenge Card */}
+                <DailyGoalsPanel />
 
-              {/* Active Dungeon Raid Summary */}
-              {activeTab !== 'codex' && (
-                <div className="bg-white rounded-2xl border-2 border-slate-200 p-5 shadow-xs">
-                  <DungeonRaid />
-                </div>
-              )}
-            </aside>
+                {/* Active Dungeon Raid Summary */}
+                {activeTab !== 'codex' && (
+                  <div className="bg-white rounded-2xl border-2 border-slate-200 p-5 shadow-xs">
+                    <DungeonRaid />
+                  </div>
+                )}
+              </aside>
+            )}
           </div>
         </div>
       </div>

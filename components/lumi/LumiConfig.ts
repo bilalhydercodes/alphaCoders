@@ -325,6 +325,11 @@ export const NAVIGATION_INTENTS: Record<
     initialBehavior: 'SIT',
     speechHint: 'Opening your adventurer chronicle.',
   },
+  settings: {
+    zone: 'HOME_ZONE',
+    initialBehavior: 'IDLE',
+    speechHint: 'Adjusting your adventure preferences.',
+  },
 };
 
 // Standard Rigged Animation Clip Names (Layer 1 Skeletal Mapping)

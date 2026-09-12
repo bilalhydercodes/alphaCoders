@@ -11,23 +11,88 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'Life RPG with Lumi · Chronicles of Mastery',
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://life-rpg.app'),
+  title: 'Life RPG with Lumi · Level Up Your Real Life',
   description:
-    'Transform everyday productivity, habits, and chores into an engaging RPG progression adventure with your supportive companion Lumi.',
+    'Bridge the delayed gratification gap. Turn real-world habits, study sprints, and fitness into an engaging RPG progression with your autonomous 3D companion Lumi.',
   keywords: [
     'Life RPG',
-    'Habit Tracker',
     'Gamified Productivity',
-    'Lumi',
-    'Task Manager',
-    'RPG Progression',
+    'Habit Tracker RPG',
+    '3D Lumi Companion',
+    'Task Manager Game',
+    'ADHD Productivity Tool',
+    'Pomodoro Focus Sanctuary',
+    'Self Improvement RPG',
   ],
   authors: [{ name: 'Life RPG Adventurers Guild' }],
+  openGraph: {
+    title: 'Life RPG with Lumi · Turn Daily Habits into an Epic Quest',
+    description:
+      'Ditch the chore trap. Earn XP, train 5 real-world attributes, and celebrate every milestone with your living 3D companion Lumi.',
+    url: 'https://life-rpg.app',
+    siteName: 'Life RPG',
+    images: [
+      {
+        url: '/frames/frame_185.webp',
+        width: 1280,
+        height: 720,
+        alt: 'Life RPG with 3D Lumi companion celebrating real-world task completion',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Life RPG with Lumi · Level Up Your Real Life',
+    description:
+      'Transform mundane to-do lists into rewarding RPG progression with instant feedback loops and a living 3D companion.',
+    images: ['/frames/frame_185.webp'],
+  },
+  alternates: {
+    canonical: '/',
+  },
 };
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
+  themeColor: '#9966CC',
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'SoftwareApplication',
+      '@id': 'https://life-rpg.app/#software',
+      name: 'Life RPG with Lumi',
+      applicationCategory: 'ProductivityApplication',
+      operatingSystem: 'Web, iOS, Android, macOS, Windows',
+      offers: {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'USD',
+      },
+      description:
+        'Transform real-world daily tasks, habits, and self-improvement into an immersive RPG adventure with immediate dopamine loops and a 3D living mascot.',
+      featureList: [
+        'Non-linear RPG leveling progression engine',
+        '5 Real-life character attributes: Intellect, Strength, Agility, Vitality, Spirit',
+        'Autonomous 3D companion mascot (Lumi) with real-time reactive behaviors',
+        'Tactile bounty logging with instant XP arcs and sound feedback',
+        'Guild Boss raids and Emporium gold economy',
+        'Deep Focus Sanctuary Pomodoro timer',
+      ],
+    },
+    {
+      '@type': 'Organization',
+      '@id': 'https://life-rpg.app/#organization',
+      name: 'Life RPG Guild',
+      url: 'https://life-rpg.app',
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -37,6 +102,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className={`${plusJakartaSans.variable} ${plusJakartaSans.className} min-h-screen bg-background text-copy antialiased selection:bg-primary/20 selection:text-copy`}>
         <AuthProvider>{children}</AuthProvider>
       </body>

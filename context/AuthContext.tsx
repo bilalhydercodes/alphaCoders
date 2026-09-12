@@ -41,9 +41,18 @@ export interface User {
   hp: number;
   maxHp: number;
   streak: number;
+  bestStreak?: number;
   companionMood: string;
+  bio?: string | null;
+  avatarEmoji?: string;
+  createdAt?: string;
   stats?: CharacterStats;
   inventory?: InventoryItem[];
+  // Settings
+  notificationsEnabled?: boolean;
+  dailyReminders?: boolean;
+  focusModeAuto?: boolean;
+  privacyMode?: boolean;
 }
 
 interface AuthContextType {
@@ -52,6 +61,7 @@ interface AuthContextType {
   isMuted: boolean;
   toggleSound: () => void;
   login: (identifier: string, pass: string) => Promise<{ success: boolean; error?: string }>;
+  loginAsGuest: () => Promise<{ success: boolean; error?: string }>;
   register: (username: string, email: string, pass: string) => Promise<{ success: boolean; error?: string }>;
   logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
@@ -121,6 +131,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const loginAsGuest = async () => {
+    try {
+      const res = await fetch('/api/auth/guest', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        return { success: false, error: data.error || 'Guest access failed' };
+      }
+      await refreshUser();
+      sound.playClick();
+      return { success: true };
+    } catch {
+      return { success: false, error: 'Network communication failure' };
+    }
+  };
+
   const register = async (username: string, email: string, pass: string) => {
     try {
       const res = await fetch('/api/auth/register', {
@@ -162,6 +190,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         isMuted,
         toggleSound,
         login,
+        loginAsGuest,
         register,
         logout,
         refreshUser,

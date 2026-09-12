@@ -99,6 +99,7 @@ export async function POST(
           xp: progression.newXp + extraXp,
           gold: { increment: progression.goldEarned + extraGold },
           streak: progression.streakUpdated.currentStreak,
+          bestStreak: Math.max(((user as any).bestStreak ?? 0), progression.streakUpdated.currentStreak),
           lastActiveDate: now,
           companionMood,
         },

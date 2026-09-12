@@ -41,7 +41,7 @@ export const LumiCanvas: React.FC<LumiCanvasProps> = ({
   // Camera distance and height calibrated for centered character (head at +0.65, feet at -0.65)
   const cameraPosition: [number, number, number] =
     variant === 'mini'
-      ? [0, -0.05, 2.5]
+      ? [0, -0.05, 3.5]
       : variant === 'modal'
       ? [0, -0.05, 2.7]
       : variant === 'pedestal'
@@ -121,9 +121,9 @@ export const LumiCanvas: React.FC<LumiCanvasProps> = ({
           {/* Soft Contact Shadow beneath Lumi's feet */}
           <ContactShadows
             position={[0, variant === 'pedestal' ? -0.648 : -0.65, 0]}
-            opacity={0.55}
-            scale={1.8}
-            blur={1.6}
+            opacity={variant === 'mini' ? 0.3 : 0.55}
+            scale={variant === 'mini' ? 1.2 : 1.8}
+            blur={variant === 'mini' ? 2.0 : 1.6}
             far={1.2}
             color="#1F1730"
           />
