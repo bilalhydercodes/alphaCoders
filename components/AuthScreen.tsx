@@ -6,8 +6,6 @@ import { sound } from '@/lib/sound';
 import { Button } from './ui/Button';
 import { LumiPresenter } from './lumi';
 import {
-  IconShield,
-  IconStreakFlame,
   IconHeart,
   IconArrowRight,
   IconUser,
@@ -196,7 +194,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
   };
 
   const content = (
-    <main className="w-full max-w-4xl bg-surface rounded-3xl border-2 border-slate-200 shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2 relative z-10">
+    <main className="w-full max-w-4xl bg-surface rounded-3xl border-2 border-slate-200 shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2 relative z-10 font-headline">
       {/* Top right close button */}
       {onClose && (
         <button
@@ -213,54 +211,38 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
       <div className="bg-slate-50/80 p-6 sm:p-10 flex flex-col justify-between border-b md:border-b-0 md:border-r-2 border-slate-200">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-[11px] font-black uppercase tracking-widest text-primary bg-primary/10 px-2.5 py-0.5 rounded-full">
+            <span className="text-[11px] font-bold uppercase tracking-widest text-[#7A4BC2] bg-[#EADFFF]/60 px-3 py-1 rounded-full font-draft-mono">
               The Adventurer’s Guild
             </span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl font-black text-copy tracking-tight mt-3 leading-tight">
-            Level up your real life,{' '}
-            <span className="text-primary block">one small quest at a time.</span>
+          <h1 className="text-2xl sm:text-3xl font-bold text-[#1F1730] tracking-tight mt-3.5 leading-tight font-headline">
+            Level up your real life, <br />
+            <span className="text-[#9966CC]">one small quest at a time.</span>
           </h1>
-
-          <p className="text-xs sm:text-sm text-copy-muted mt-3 leading-relaxed font-medium">
-            Lumi turns everyday tasks into RPG quests, boosts your streaks, and keeps you moving forward.
-          </p>
-
-          <div className="flex flex-col gap-2.5 mt-5">
-            <div className="flex items-center gap-2.5 text-xs font-bold text-copy">
-              <IconShield size={16} filled className="text-primary shrink-0" />
-              <span>True relational persistence with secure server anti-cheat</span>
-            </div>
-            <div className="flex items-center gap-2.5 text-xs font-bold text-copy">
-              <IconStreakFlame size={16} filled className="text-accent shrink-0 animate-flame-breathe" />
-              <span>Daily streak multipliers & non-linear leveling curves</span>
-            </div>
-            <div className="flex items-center gap-2.5 text-xs font-bold text-copy">
-              <IconHeart size={16} filled className="text-danger shrink-0" />
-              <span>Real-time interactive 3D companion cheering your progress</span>
-            </div>
-          </div>
         </div>
 
-        {/* Dynamic 3D Mascot Companion & Speech Bubble */}
-        <div className="relative mt-4 flex flex-col items-center justify-center">
+        {/* Dynamic 3D Mascot Companion & Speech Bubble (Enlarged to fill space) */}
+        <div className="relative mt-6 my-auto flex flex-col items-center justify-center">
           {/* Ambient Speech Bubble */}
-          <div className="mb-2 px-3.5 py-2 bg-white rounded-2xl border-2 border-slate-200/90 shadow-sm text-xs font-bold text-copy max-w-[260px] text-center relative animate-in fade-in">
+          <div className="mb-2 px-4 py-2.5 bg-white rounded-2xl border-2 border-slate-200/90 shadow-sm text-xs font-bold text-[#2E2438] max-w-[280px] text-center relative animate-in fade-in font-headline">
             {companionMessage}
             <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-x-8 border-x-transparent border-t-8 border-t-white" />
           </div>
 
           <div className="w-full flex items-center justify-center pointer-events-auto">
-            <LumiPresenter variant="dashboard" height={190} showSpeech={false} interactive={true} />
+            <LumiPresenter variant="auth" height={280} showSpeech={false} interactive={true} />
           </div>
+          <p className="text-[11px] font-semibold text-copy-muted mt-1 text-center font-headline tracking-wide">
+            Tap Lumi to share a moment!
+          </p>
         </div>
       </div>
 
       {/* Right Column: Clean Form & 3D Tactile Action Buttons */}
       <div className="p-6 sm:p-10 flex flex-col justify-center">
         {/* Mode Switcher Tabs */}
-        <div className="flex rounded-2xl bg-slate-100 p-1 border border-slate-200 mb-5">
+        <div className="flex rounded-2xl bg-slate-100 p-1 border border-slate-200 mb-5 font-headline">
           <button
             type="button"
             onClick={() => {
@@ -269,8 +251,8 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
               setError('');
               setSuccessMsg('');
             }}
-            className={`flex-1 py-2 text-xs font-black uppercase tracking-wider rounded-xl transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-primary ${
-              isLoginMode ? 'bg-surface text-copy shadow-xs' : 'text-copy-muted hover:text-copy'
+            className={`flex-1 py-2.5 text-xs font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-primary ${
+              isLoginMode ? 'bg-surface text-[#1F1730] shadow-xs' : 'text-copy-muted hover:text-[#1F1730]'
             }`}
           >
             Sign In
@@ -283,8 +265,8 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
               setError('');
               setSuccessMsg('');
             }}
-            className={`flex-1 py-2 text-xs font-black uppercase tracking-wider rounded-xl transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-primary ${
-              !isLoginMode ? 'bg-surface text-copy shadow-xs' : 'text-copy-muted hover:text-copy'
+            className={`flex-1 py-2.5 text-xs font-bold uppercase tracking-wider rounded-xl transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-primary ${
+              !isLoginMode ? 'bg-surface text-[#1F1730] shadow-xs' : 'text-copy-muted hover:text-[#1F1730]'
             }`}
           >
             Create Account
@@ -296,7 +278,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
           <div
             role="alert"
             aria-live="assertive"
-            className={`mb-4 p-3 rounded-2xl bg-danger-soft border-2 border-danger/30 text-xs font-bold text-danger ${
+            className={`mb-4 p-3 rounded-2xl bg-danger-soft border-2 border-danger/30 text-xs font-semibold text-danger font-headline ${
               shake ? 'animate-shake' : ''
             }`}
           >
@@ -309,26 +291,26 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
           <div
             role="status"
             aria-live="polite"
-            className="mb-4 p-3 rounded-2xl bg-emerald-50 border-2 border-emerald-300 text-xs font-bold text-emerald-800 flex items-center gap-2 animate-in fade-in"
+            className="mb-4 p-3 rounded-2xl bg-emerald-50 border-2 border-emerald-300 text-xs font-semibold text-emerald-800 flex items-center gap-2 animate-in fade-in font-headline"
           >
             <IconCheck size={16} className="text-emerald-600 shrink-0" />
             <span>{successMsg}</span>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3.5">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-3.5 font-headline">
           {/* Create Account: Adventurer Name */}
           {!isLoginMode && (
             <div>
-              <div className="flex items-center justify-between mb-1">
+              <div className="flex items-center justify-between mb-1.5">
                 <label
                   htmlFor="auth-username"
-                  className="text-xs font-black uppercase tracking-wider text-copy"
+                  className="text-xs font-bold uppercase tracking-wider text-[#2E2438]"
                 >
                   Adventurer Name
                 </label>
                 <span
-                  className={`text-[10px] font-bold ${
+                  className={`text-[10px] font-bold font-draft-mono ${
                     username.trim().length >= 3 ? 'text-emerald-600' : 'text-copy-muted'
                   }`}
                 >
@@ -348,22 +330,22 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
                   if (error) setError('');
                 }}
                 placeholder="e.g. StarKnight"
-                className="w-full h-11 px-4 rounded-2xl border-2 border-slate-200 bg-slate-50 text-sm font-bold text-copy placeholder:text-copy-muted/50 focus:bg-surface focus:border-primary outline-none transition-all"
+                className="w-full h-11 px-4 rounded-2xl border-2 border-slate-200 bg-slate-50 text-sm font-semibold text-[#1F1730] placeholder:text-copy-muted/50 placeholder:font-normal focus:bg-surface focus:border-primary outline-none transition-all"
               />
             </div>
           )}
 
           {/* Email or Username (Login) / Email Address (Register) */}
           <div>
-            <div className="flex items-center justify-between mb-1">
+            <div className="flex items-center justify-between mb-1.5">
               <label
                 htmlFor="auth-email"
-                className="text-xs font-black uppercase tracking-wider text-copy"
+                className="text-xs font-bold uppercase tracking-wider text-[#2E2438]"
               >
                 {isLoginMode ? 'Email or Adventurer Name' : 'Email Address'}
               </label>
               {isLoginMode && (
-                <span className="text-[10px] font-medium text-copy-muted">
+                <span className="text-[11px] font-medium text-copy-muted">
                   Email or username
                 </span>
               )}
@@ -381,22 +363,22 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
                 if (error) setError('');
               }}
               placeholder={isLoginMode ? 'arthur@guild.com or hero123' : 'adventurer@guild.com'}
-              className="w-full h-11 px-4 rounded-2xl border-2 border-slate-200 bg-slate-50 text-sm font-bold text-copy placeholder:text-copy-muted/50 focus:bg-surface focus:border-primary outline-none transition-all"
+              className="w-full h-11 px-4 rounded-2xl border-2 border-slate-200 bg-slate-50 text-sm font-semibold text-[#1F1730] placeholder:text-copy-muted/50 placeholder:font-normal focus:bg-surface focus:border-primary outline-none transition-all"
             />
           </div>
 
           {/* Password Field */}
           <div>
-            <div className="flex items-center justify-between mb-1">
+            <div className="flex items-center justify-between mb-1.5">
               <label
                 htmlFor="auth-password"
-                className="text-xs font-black uppercase tracking-wider text-copy"
+                className="text-xs font-bold uppercase tracking-wider text-[#2E2438]"
               >
                 {isLoginMode ? 'Password' : 'Create Password'}
               </label>
               {!isLoginMode && (
                 <span
-                  className={`text-[10px] font-bold ${
+                  className={`text-[10px] font-bold font-draft-mono ${
                     password.length >= 6 ? 'text-emerald-600' : 'text-copy-muted'
                   }`}
                 >
@@ -417,7 +399,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
                   if (error) setError('');
                 }}
                 placeholder={isLoginMode ? '••••••••' : 'At least 6 characters'}
-                className="w-full h-11 pl-4 pr-11 rounded-2xl border-2 border-slate-200 bg-slate-50 text-sm font-bold text-copy placeholder:text-copy-muted/50 focus:bg-surface focus:border-primary outline-none transition-all"
+                className="w-full h-11 pl-4 pr-11 rounded-2xl border-2 border-slate-200 bg-slate-50 text-sm font-semibold text-[#1F1730] placeholder:text-copy-muted/50 placeholder:font-normal focus:bg-surface focus:border-primary outline-none transition-all"
               />
               <button
                 type="button"
@@ -434,16 +416,16 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
           {/* Create Account: Confirm Password */}
           {!isLoginMode && (
             <div>
-              <div className="flex items-center justify-between mb-1">
+              <div className="flex items-center justify-between mb-1.5">
                 <label
                   htmlFor="auth-confirm-password"
-                  className="text-xs font-black uppercase tracking-wider text-copy"
+                  className="text-xs font-bold uppercase tracking-wider text-[#2E2438]"
                 >
                   Confirm Password
                 </label>
                 {confirmPassword && (
                   <span
-                    className={`text-[10px] font-bold ${
+                    className={`text-[10px] font-bold font-draft-mono ${
                       confirmPassword === password ? 'text-emerald-600' : 'text-amber-600'
                     }`}
                   >
@@ -464,7 +446,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
                     if (error) setError('');
                   }}
                   placeholder="Re-enter your password"
-                  className={`w-full h-11 pl-4 pr-11 rounded-2xl border-2 text-sm font-bold text-copy placeholder:text-copy-muted/50 focus:bg-surface outline-none transition-all ${
+                  className={`w-full h-11 pl-4 pr-11 rounded-2xl border-2 text-sm font-semibold text-[#1F1730] placeholder:text-copy-muted/50 placeholder:font-normal focus:bg-surface outline-none transition-all ${
                     confirmPassword && confirmPassword !== password
                       ? 'border-amber-300 bg-amber-50/30'
                       : confirmPassword && confirmPassword === password
@@ -489,22 +471,22 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
           {isLoginMode && (
             <div className="flex items-center justify-between pt-1">
               <span className="text-[11px] font-semibold text-copy-muted">Quick Autofill:</span>
-              <div className="flex gap-1.5">
+              <div className="flex gap-1.5 font-draft-mono">
                 <button
                   type="button"
                   onClick={() => handleQuickFill('hero123', 'password123')}
-                  className="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-[10px] font-bold text-copy transition-colors cursor-pointer"
+                  className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-[#EADFFF]/50 text-[11px] font-bold text-[#1F1730] border border-slate-200 transition-colors cursor-pointer"
                   title="Autofill hero123"
                 >
-                  Hero (hero123)
+                  hero123
                 </button>
                 <button
                   type="button"
                   onClick={() => handleQuickFill('guest', 'guest123')}
-                  className="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-[10px] font-bold text-copy transition-colors cursor-pointer"
+                  className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-[#EADFFF]/50 text-[11px] font-bold text-[#1F1730] border border-slate-200 transition-colors cursor-pointer"
                   title="Autofill guest"
                 >
-                  Guest (guest)
+                  guest
                 </button>
               </div>
             </div>
@@ -517,7 +499,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
             size="lg"
             fullWidth
             isLoading={isSubmitting}
-            className="mt-2"
+            className="mt-2 font-headline font-bold tracking-wide"
             rightIcon={isLoginMode ? <IconArrowRight size={18} /> : <IconSparkles size={18} />}
           >
             {isLoginMode ? 'Enter the Guild' : 'Begin Your Journey'}
@@ -525,7 +507,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
         </form>
 
         {/* 1-Click Instant Guest Access */}
-        <div className="mt-5 pt-4 border-t-2 border-slate-100">
+        <div className="mt-5 pt-4 border-t-2 border-slate-100 font-headline">
           <Button
             id="guest-login-button"
             type="button"
@@ -534,11 +516,12 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
             fullWidth
             isLoading={isSubmitting}
             onClick={handleGuestLogin}
+            className="font-headline font-bold"
             leftIcon={<IconUser size={18} />}
           >
             Continue as Guest (Instant Access)
           </Button>
-          <p className="text-[11px] text-copy-muted text-center mt-2 font-medium">
+          <p className="text-xs text-copy-muted text-center mt-2 font-medium">
             Immediate guest session with starter quests. No registration required.
           </p>
         </div>

@@ -141,7 +141,7 @@ export interface LumiEventItem {
 }
 
 export interface LumiPresenterProps {
-  variant?: 'dashboard' | 'focus' | 'pedestal' | 'shop' | 'modal' | 'mini';
+  variant?: 'dashboard' | 'focus' | 'pedestal' | 'shop' | 'modal' | 'mini' | 'auth';
   spatialAnchor?: LumiSpatialAnchor;
   className?: string;
   height?: number | string;

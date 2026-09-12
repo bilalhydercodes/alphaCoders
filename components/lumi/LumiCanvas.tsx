@@ -8,7 +8,7 @@ import { LumiParticles } from './LumiParticles';
 import { LumiMascot } from '../LumiMascot';
 
 interface LumiCanvasProps {
-  variant?: 'dashboard' | 'focus' | 'pedestal' | 'shop' | 'modal' | 'mini';
+  variant?: 'dashboard' | 'focus' | 'pedestal' | 'shop' | 'modal' | 'mini' | 'auth';
   interactive?: boolean;
 }
 
@@ -42,6 +42,8 @@ export const LumiCanvas: React.FC<LumiCanvasProps> = ({
   const cameraPosition: [number, number, number] =
     variant === 'mini'
       ? [0, -0.05, 3.5]
+      : variant === 'auth'
+      ? [0, -0.05, 2.05]
       : variant === 'modal'
       ? [0, -0.05, 2.7]
       : variant === 'pedestal'
