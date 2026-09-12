@@ -199,7 +199,7 @@ export const CharacterCodex: React.FC = () => {
 
           {/* 3D Companion Pedestal Showcase */}
           <div className="w-full rounded-2xl bg-gradient-to-b from-lavender-soft/40 to-surface border border-primary/20 p-2 overflow-hidden flex flex-col items-center justify-center">
-            <LumiPresenter variant="pedestal" height={170} interactive />
+            <LumiPresenter variant="pedestal" height={200} interactive />
             <span className="text-[10px] font-extrabold text-primary uppercase tracking-widest mt-1">
               Companion Paper Doll · Interactive 3D
             </span>

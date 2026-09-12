@@ -51,21 +51,23 @@ export const LumiModel: React.FC<LumiModelProps> = ({ interactive = true }) => {
     return clone;
   }, [scene]);
 
-  // Model bounding box normalization & auto-centering
-  const { targetScale, verticalOffset } = useMemo(() => {
+  // Model bounding box normalization & exact origin centering
+  const { targetScale, centerOffset } = useMemo(() => {
     const box = new THREE.Box3().setFromObject(clonedScene);
     const size = new THREE.Vector3();
+    const center = new THREE.Vector3();
     box.getSize(size);
+    box.getCenter(center);
 
-    // Target a consistent height of 1.48 units
+    // Target a consistent height of 1.30 units
     const height = size.y || 0.905;
-    const scale = 1.48 / height;
+    const scale = 1.30 / height;
 
-    // Offset so feet sit cleanly at base y = 0.05
-    const minY = box.min.y;
-    const offset = -minY * scale + 0.05;
-
-    return { targetScale: scale, verticalOffset: offset };
+    // Shift model so its geometric center is precisely at (0, 0, 0)
+    return {
+      targetScale: scale,
+      centerOffset: [-center.x, -center.y, -center.z] as [number, number, number],
+    };
   }, [clonedScene]);
 
   // Animation timing state
@@ -73,21 +75,21 @@ export const LumiModel: React.FC<LumiModelProps> = ({ interactive = true }) => {
   const spinAngle = useRef(0);
   const hopHeight = useRef(0);
 
-  // Frame animation loop: applies breathing, gaze tracking, pet hops, and celebratory spins
+  // Frame animation loop: applies subtle grounded breathing, gaze tracking, pet hops, and celebratory spins
   useFrame((state, delta) => {
     if (!groupRef.current || !modelAnchorRef.current) return;
 
     animTime.current += delta;
     const t = animTime.current;
 
-    // 1. Ambient Breathing / Hover Motion
+    // 1. Subtle Grounded Breathing (Zero Levitation: only 0.008 units subtle breath)
     const breatheSpeed = mood === 'SLEEPY' ? 1.2 : mood === 'FOCUSED' ? 1.6 : 2.2;
-    const breatheAmp = mood === 'SLEEPY' ? 0.015 : mood === 'FOCUSED' ? 0.02 : 0.035;
+    const breatheAmp = mood === 'SLEEPY' ? 0.004 : mood === 'FOCUSED' ? 0.006 : 0.008;
     const breatheY = reducedMotion ? 0 : Math.sin(t * breatheSpeed) * breatheAmp;
 
     // 2. Petting Hop Reaction
     if (isPetted) {
-      hopHeight.current = THREE.MathUtils.lerp(hopHeight.current, 0.16, delta * 12);
+      hopHeight.current = THREE.MathUtils.lerp(hopHeight.current, 0.09, delta * 12);
     } else {
       hopHeight.current = THREE.MathUtils.lerp(hopHeight.current, 0, delta * 8);
     }
@@ -147,12 +149,8 @@ export const LumiModel: React.FC<LumiModelProps> = ({ interactive = true }) => {
   return (
     <group ref={groupRef} dispose={null}>
       {/* Centered Anchor Group with 180 deg orientation to face user */}
-      <group
-        ref={modelAnchorRef}
-        position={[0, verticalOffset, 0]}
-        rotation={[0, Math.PI, 0]}
-      >
-        <primitive object={clonedScene} />
+      <group ref={modelAnchorRef} rotation={[0, Math.PI, 0]}>
+        <primitive object={clonedScene} position={centerOffset} />
       </group>
     </group>
   );

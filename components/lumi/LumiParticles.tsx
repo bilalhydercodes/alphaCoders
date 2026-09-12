@@ -9,11 +9,6 @@ export const LumiParticles: React.FC = () => {
   const { particleType, reducedMotion } = useLumi();
   const pointsRef = useRef<THREE.Points>(null);
 
-  // If reduced motion is requested or no particles, render nothing
-  if (reducedMotion || particleType === 'none') {
-    return null;
-  }
-
   // Generate particle buffer attributes
   const count = particleType === 'confetti' ? 48 : particleType === 'radiant' ? 16 : 28;
 
@@ -75,7 +70,7 @@ export const LumiParticles: React.FC = () => {
   }, []);
 
   useFrame((state, delta) => {
-    if (!pointsRef.current) return;
+    if (!pointsRef.current || reducedMotion || particleType === 'none') return;
 
     const geo = pointsRef.current.geometry;
     const posAttr = geo.attributes.position as THREE.BufferAttribute;
@@ -100,6 +95,10 @@ export const LumiParticles: React.FC = () => {
 
     posAttr.needsUpdate = true;
   });
+
+  if (reducedMotion || particleType === 'none') {
+    return null;
+  }
 
   return (
     <points ref={pointsRef}>

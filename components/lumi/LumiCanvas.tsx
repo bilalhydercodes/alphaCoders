@@ -2,7 +2,7 @@
 
 import React, { Suspense, useState, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { ContactShadows, Float } from '@react-three/drei';
+import { ContactShadows } from '@react-three/drei';
 import { LumiModel } from './LumiModel';
 import { LumiParticles } from './LumiParticles';
 import { LumiMascot } from '../LumiMascot';
@@ -38,20 +38,22 @@ export const LumiCanvas: React.FC<LumiCanvasProps> = ({
     );
   }
 
-  // Camera distance and height based on variant
+  // Camera distance and height calibrated for centered character (head at +0.65, feet at -0.65)
   const cameraPosition: [number, number, number] =
     variant === 'mini'
-      ? [0, 0.75, 2.6]
+      ? [0, -0.05, 2.5]
       : variant === 'modal'
-      ? [0, 0.85, 3.0]
+      ? [0, -0.05, 2.7]
       : variant === 'pedestal'
-      ? [0, 0.9, 3.4]
-      : [0, 0.8, 3.2];
+      ? [0, 0.15, 2.8]
+      : variant === 'focus'
+      ? [0, -0.05, 2.55]
+      : [0, -0.05, 2.55];
 
   return (
     <div className="relative w-full h-full select-none cursor-pointer overflow-hidden">
       <Canvas
-        camera={{ position: cameraPosition, fov: 36 }}
+        camera={{ position: cameraPosition, fov: 34 }}
         dpr={[1, 1.8]}
         shadows
         gl={{
@@ -89,36 +91,41 @@ export const LumiCanvas: React.FC<LumiCanvasProps> = ({
             color="#F8F8FF"
           />
 
-          {/* Optional Pedestal for Character Codex */}
+          {/* Pedestal for Character Codex (top surface at y = -0.65, directly beneath feet) */}
           {variant === 'pedestal' && (
-            <mesh position={[0, -0.05, 0]} receiveShadow>
-              <cylinderGeometry args={[1.1, 1.25, 0.12, 32]} />
-              <meshStandardMaterial
-                color="#EADFFF"
-                roughness={0.3}
-                metalness={0.1}
-              />
-            </mesh>
+            <group position={[0, -0.72, 0]}>
+              <mesh receiveShadow>
+                <cylinderGeometry args={[1.05, 1.18, 0.14, 36]} />
+                <meshStandardMaterial
+                  color="#EADFFF"
+                  roughness={0.32}
+                  metalness={0.08}
+                />
+              </mesh>
+              {/* Amethyst accent trim ring on pedestal base */}
+              <mesh position={[0, -0.04, 0]} receiveShadow>
+                <cylinderGeometry args={[1.15, 1.22, 0.05, 36]} />
+                <meshStandardMaterial
+                  color="#9966CC"
+                  roughness={0.4}
+                  metalness={0.15}
+                />
+              </mesh>
+            </group>
           )}
 
-          {/* Ambient Floating Motion */}
-          <Float
-            speed={variant === 'focus' ? 0.8 : 2}
-            rotationIntensity={variant === 'focus' ? 0.05 : 0.2}
-            floatIntensity={variant === 'focus' ? 0.1 : 0.35}
-          >
-            <LumiModel interactive={interactive} />
-            <LumiParticles />
-          </Float>
+          {/* 3D Model & Particles (Grounded, Zero Float Levitation) */}
+          <LumiModel interactive={interactive} />
+          <LumiParticles />
 
-          {/* Soft Contact Shadow below Lumi */}
+          {/* Soft Contact Shadow beneath Lumi's feet */}
           <ContactShadows
-            position={[0, 0, 0]}
-            opacity={0.4}
-            scale={2.2}
-            blur={2.0}
-            far={1.6}
-            color="#2E2438"
+            position={[0, variant === 'pedestal' ? -0.648 : -0.65, 0]}
+            opacity={0.55}
+            scale={1.8}
+            blur={1.6}
+            far={1.2}
+            color="#1F1730"
           />
         </Suspense>
       </Canvas>
