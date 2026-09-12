@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { LandingNav } from './LandingNav';
+import { PaperHero } from './PaperHero';
 import { ScrollyVideoCanvas } from './ScrollyVideoCanvas';
 import { LandingFeatures } from './LandingFeatures';
 import { LandingFaq } from './LandingFaq';
@@ -53,30 +54,31 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterDashboard }) =>
   };
 
   return (
-    <div className="min-h-screen bg-background text-copy selection:bg-lavender-soft selection:text-primary flex flex-col font-sans">
-      {/* Sticky Glassmorphism Navigation */}
+    <div className="min-h-screen bg-background text-copy selection:bg-lavender-soft selection:text-primary flex flex-col font-sans relative">
+      {/* Floating Center Dock Navigation */}
       <LandingNav
         onOpenAuth={handleOpenAuth}
         onOpenDashboard={onEnterDashboard}
       />
 
-      {/* Main Scrollytelling & Editorial Content */}
-      <main className="flex-1 flex flex-col">
-        {/* 3D Scrollytelling Canvas Section */}
+      {/* Main Experience */}
+      <main className="flex-1 flex flex-col relative">
+        {/* 1. Architectural Draft Paper Hero (Lifts up like a curtain on scroll) */}
+        <PaperHero onOpenAuth={() => handleOpenAuth('register')} />
+
+        {/* 2. 3D Scrollytelling Video Canvas (Unveiled on scroll, frames 020 to 184) */}
         <ScrollyVideoCanvas onOpenAuth={() => handleOpenAuth('register')} />
 
-        {/* 4 Systems Feature Architecture */}
-        <LandingFeatures />
-
-        {/* Inverted-Pyramid FAQ & AEO Section */}
-        <LandingFaq />
+        {/* 3. Progression Layers: 4 Systems Features & FAQ */}
+        <div className="relative z-20 bg-background shadow-[0_-30px_90px_rgba(0,0,0,0.5)]">
+          <LandingFeatures />
+          <LandingFaq />
+          <LandingFooter
+            onOpenAuth={() => handleOpenAuth('register')}
+            onOpenShortcuts={() => setIsShortcutsOpen(true)}
+          />
+        </div>
       </main>
-
-      {/* Minimal Handcrafted Footer */}
-      <LandingFooter
-        onOpenAuth={() => handleOpenAuth('register')}
-        onOpenShortcuts={() => setIsShortcutsOpen(true)}
-      />
 
       {/* Accessible Authentication Modal */}
       {authModalOpen && (

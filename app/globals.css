@@ -1,6 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.font-pencil {
+  font-family: 'Caveat', cursive, sans-serif;
+}
+
+.font-draft-mono {
+  font-family: 'Space Mono', monospace;
+}
+
+.bg-draft-paper {
+  background-color: #E6DECE;
+  background-image: 
+    linear-gradient(to right, rgba(120, 105, 80, 0.09) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(120, 105, 80, 0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
 
 :root {
   --primary: #9966CC;
