@@ -6,7 +6,6 @@ import { ScrollyVideoCanvas } from './ScrollyVideoCanvas';
 import { PlatformOverview } from './PlatformOverview';
 import { LandingFeatures } from './LandingFeatures';
 import { LandingFaq } from './LandingFaq';
-import { LandingFooter } from './LandingFooter';
 import { AuthScreen } from '../AuthScreen';
 import { KeyboardShortcutsModal } from '../KeyboardShortcutsModal';
 
@@ -70,13 +69,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterDashboard }) =>
         <PlatformOverview onOpenAuth={() => handleOpenAuth('register')} />
 
         {/* 3. Progression Layers: 4 Systems Features & FAQ */}
-        <div className="relative z-20 bg-background">
+        <div className="relative z-20 bg-draft-paper">
           <LandingFeatures />
           <LandingFaq />
-          <LandingFooter
-            onOpenAuth={() => handleOpenAuth('register')}
-            onOpenShortcuts={() => setIsShortcutsOpen(true)}
-          />
         </div>
       </main>
 

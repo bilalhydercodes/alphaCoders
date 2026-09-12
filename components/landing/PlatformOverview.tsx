@@ -14,23 +14,8 @@ export const PlatformOverview: React.FC<PlatformOverviewProps> = ({ onOpenAuth }
       className="relative z-20 w-full bg-draft-paper py-16 sm:py-24 px-4 sm:px-8 md:px-12 lg:px-16 select-none"
     >
       <div className="max-w-[1200px] mx-auto relative z-10">
-        {/* Top Minimal Drafting Markup */}
-        <div className="w-full flex items-center justify-between pb-4 mb-8 text-xs font-draft-mono text-[#7A6F8C] tracking-wider">
-          <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 bg-[#9966CC] border border-[#2E2438]" />
-            <span className="font-semibold text-[#1F1730]">LIFE RPG OVERVIEW</span>
-          </div>
-          <div className="font-draft-mono text-[11px] text-[#7A6F8C]">
-            X 334.40 / Y 214.40
-          </div>
-        </div>
-
-        {/* Main Headline & Human Pitch */}
+        {/* Main Headline */}
         <div className="max-w-4xl">
-          <div className="inline-block px-2.5 py-0.5 border border-dashed border-[#9966CC]/50 text-[#7A4BC2] font-pencil text-base sm:text-lg -rotate-1 bg-[#EADFFF]/50 mb-4">
-            ~ real habits, real character growth
-          </div>
-
           <h2 className="text-3xl sm:text-5xl md:text-6xl font-semibold text-[#1F1730] tracking-[-0.035em] leading-[1.04] font-headline">
             A workspace that turns your daily life into a playable role-playing game.
           </h2>

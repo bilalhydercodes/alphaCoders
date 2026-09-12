@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { IconSparkles } from '../icons/LumiIcons';
 
 interface FaqItem {
   question: string;
@@ -39,7 +38,7 @@ const FAQ_ITEMS: FaqItem[] = [
 export const LandingFaq: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
-  // Generate FAQPage JSON-LD for Google & AI Answer Engines
+  // Generate FAQPage JSON-LD for Search Engines
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -54,38 +53,34 @@ export const LandingFaq: React.FC = () => {
   };
 
   return (
-    <section id="faq" className="py-24 px-4 sm:px-8 bg-background" aria-label="Frequently Asked Questions">
+    <section id="faq" className="py-20 sm:py-24 px-4 sm:px-8 md:px-12 lg:px-16 bg-draft-paper scroll-mt-20 select-none" aria-label="Frequently Asked Questions">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      <div className="max-w-[860px] mx-auto">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-lavender-soft text-[#492673] border border-primary/25 font-black text-xs uppercase tracking-wider mb-3">
-            <IconSparkles size={14} className="text-[#522B80]" />
-            <span>Answer Engine Optimization & Insights</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-black text-copy tracking-tight">
-            Frequently Asked Questions
+      <div className="max-w-[1200px] mx-auto">
+        <div className="max-w-3xl mb-12">
+          <h2 className="text-3xl sm:text-5xl font-semibold text-[#1F1730] tracking-[-0.035em] leading-[1.06] font-headline">
+            Frequently asked questions
           </h2>
-          <p className="text-sm text-copy-muted font-medium mt-2 max-w-lg mx-auto">
-            Direct, factual answers designed for human adventurers and AI answer engines alike.
+          <p className="text-base sm:text-lg text-[#5C5070] font-medium mt-3 leading-relaxed">
+            Everything you need to know about quests, character progression, and Lumi.
           </p>
         </div>
 
-        {/* Accordion List with Inverted-Pyramid Snippet Structure */}
-        <div className="flex flex-col gap-4">
+        {/* Accordion List */}
+        <div className="flex flex-col gap-3.5 max-w-4xl">
           {FAQ_ITEMS.map((item, idx) => {
             const isOpen = openIndex === idx;
 
             return (
               <div
                 key={idx}
-                className={`rounded-2xl border-2 transition-all duration-200 overflow-hidden ${
+                className={`border transition-colors duration-150 overflow-hidden ${
                   isOpen
-                    ? 'bg-surface border-primary/40 shadow-xs'
-                    : 'bg-surface/60 border-slate-200 hover:border-slate-300'
+                    ? 'bg-white border-[#9966CC]/60 shadow-xs'
+                    : 'bg-white border-[#E2D9F3] hover:border-[#9966CC]/30'
                 }`}
               >
                 <button
@@ -94,12 +89,12 @@ export const LandingFaq: React.FC = () => {
                   className="w-full px-6 py-5 flex items-center justify-between text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-primary gap-4"
                   aria-expanded={isOpen}
                 >
-                  <h3 className="text-base font-extrabold text-copy">{item.question}</h3>
+                  <h3 className="text-base sm:text-lg font-semibold text-[#1F1730] font-headline">{item.question}</h3>
                   <span
-                    className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-black transition-transform duration-200 shrink-0 ${
+                    className={`w-7 h-7 flex items-center justify-center text-xs font-bold transition-transform duration-200 shrink-0 border border-[#2E2438] ${
                       isOpen
-                        ? 'bg-primary text-white rotate-180'
-                        : 'bg-slate-100 text-copy-muted'
+                        ? 'bg-[#9966CC] text-white rotate-180'
+                        : 'bg-[#F4EFFF] text-[#1F1730]'
                     }`}
                   >
                     ↓
@@ -107,7 +102,7 @@ export const LandingFaq: React.FC = () => {
                 </button>
 
                 {isOpen && (
-                  <div className="px-6 pb-5 pt-1 text-xs sm:text-sm text-copy-muted font-medium leading-relaxed border-t border-slate-100">
+                  <div className="px-6 pb-5 pt-1 text-sm text-[#5C5070] font-normal leading-relaxed border-t border-[#E2D9F3]/50">
                     <p>{item.answer}</p>
                   </div>
                 )}
