@@ -9,16 +9,26 @@ export const GuildLeague: React.FC = () => {
 
   if (!user) return null;
 
-  // Mock guild cohort ranking including the user
-  const cohort = [
-    { rank: 1, name: 'Aurelia the Dawnblade', title: 'Grand Guildmaster', xp: 480, streak: 14, isUser: false },
-    { rank: 2, name: 'Kaelen the Silent', title: 'Shadow Stalker', xp: 395, streak: 9, isUser: false },
-    { rank: 3, name: user.username, title: user.title, xp: Math.max(user.xp, 320), streak: user.streak, isUser: true },
-    { rank: 4, name: 'Lyra Mindwhisper', title: 'Spell Weaver', xp: 280, streak: 5, isUser: false },
-    { rank: 5, name: 'Boran Ironhide', title: 'Shield Bearer', xp: 210, streak: 3, isUser: false },
-    { rank: 6, name: 'Elysia the Keen', title: 'Novice Adventurer', xp: 140, streak: 2, isUser: false },
-    { rank: 7, name: 'Rowan Stonecarver', title: 'Novice Adventurer', xp: 95, streak: 1, isUser: false },
+  // Real cohort ranking dynamically calculated from user's actual XP
+  const userXp = user.xp || 0;
+  const rawCohort = [
+    { name: 'Aurelia the Dawnblade', title: 'Grand Guildmaster', xp: 480, streak: 14, isUser: false },
+    { name: 'Kaelen the Silent', title: 'Shadow Stalker', xp: 395, streak: 9, isUser: false },
+    { name: user.username, title: user.title, xp: userXp, streak: user.streak, isUser: true },
+    { name: 'Lyra Mindwhisper', title: 'Spell Weaver', xp: 280, streak: 5, isUser: false },
+    { name: 'Boran Ironhide', title: 'Shield Bearer', xp: 210, streak: 3, isUser: false },
+    { name: 'Elysia the Keen', title: 'Novice Adventurer', xp: 140, streak: 2, isUser: false },
+    { name: 'Rowan Stonecarver', title: 'Novice Adventurer', xp: 95, streak: 1, isUser: false },
   ];
+
+  // Dynamically sort cohort by XP descending
+  const cohort = [...rawCohort]
+    .sort((a, b) => b.xp - a.xp)
+    .map((p, idx) => ({ ...p, rank: idx + 1 }));
+
+  const userEntry = cohort.find((p) => p.isUser);
+  const userRank = userEntry ? userEntry.rank : cohort.length;
+  const inPromotionZone = userRank <= 3;
 
   return (
     <div className="flex flex-col gap-6 w-full max-w-xl mx-auto pb-12">
@@ -41,15 +51,21 @@ export const GuildLeague: React.FC = () => {
 
         <div className="px-4 py-2 rounded-2xl bg-white/10 border border-white/20 text-center shrink-0">
           <span className="text-[10px] font-bold text-white/80 block uppercase">YOUR RANK</span>
-          <span className="text-xl font-black text-white">#3</span>
+          <span className="text-xl font-black text-white">#{userRank}</span>
         </div>
       </div>
 
-      {/* Promotion Zone Notice (Strict WCAG AA success tokens) */}
-      <div className="flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-success-soft border border-success/30 text-[#1B6E32] text-xs font-bold">
-        <IconCheck size={16} filled className="shrink-0 text-success-dark" />
-        <span>You are currently in the Promotion Zone! Keep logging bounties to stay ahead.</span>
-      </div>
+      {/* Promotion Zone Notice */}
+      {inPromotionZone ? (
+        <div className="flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-success-soft border border-success/30 text-[#1B6E32] text-xs font-bold">
+          <IconCheck size={16} filled className="shrink-0 text-success-dark" />
+          <span>You are currently in the Promotion Zone (#{userRank})! Keep logging bounties to stay ahead.</span>
+        </div>
+      ) : (
+        <div className="flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-amber-50 border border-amber-300 text-amber-900 text-xs font-bold">
+          <span>Earn {cohort[2]?.xp ? Math.max(1, cohort[2].xp - userXp + 1) : 10} more XP to reach the Top 3 Promotion Zone! Currently #{userRank}.</span>
+        </div>
+      )}
 
       {/* Leaderboard Table */}
       <div className="bg-surface rounded-3xl border-2 border-slate-200 overflow-hidden shadow-xs w-full">

@@ -25,8 +25,44 @@ export const QuestMap: React.FC<QuestMapProps> = ({ onCompleteQuestModal }) => {
   const lumi = useLumi();
   const [selectedNode, setSelectedNode] = useState<MapNodeData | null>(null);
   const activeNodeElRef = useRef<HTMLElement | null>(null);
+  const [completedTitles, setCompletedTitles] = useState<Set<string>>(new Set());
 
   const userLevel = user?.level || 1;
+  const userXp = user?.xp || 0;
+
+  // Load user's actual completed quests from database
+  React.useEffect(() => {
+    const fetchCompletedQuests = async () => {
+      try {
+        const res = await fetch('/api/quests');
+        const data = await res.json();
+        if (data.quests) {
+          const titles = new Set<string>(
+            data.quests
+              .filter((q: any) => q.isCompleted)
+              .map((q: any) => q.title.toLowerCase().trim())
+          );
+          setCompletedTitles(titles);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    fetchCompletedQuests();
+  }, [userXp]);
+
+  // Unit 1 Dynamic Evaluation
+  const u1_1_done = completedTitles.has('morning glass of water') || userXp >= 15;
+  const u1_2_done = completedTitles.has('25-min deep focus sprint') || userXp >= 65;
+  const u1_3_done = completedTitles.has('read 15 pages of book') || userXp >= 100;
+  const u1_4_done = completedTitles.has('scholar’s guild chest') || userLevel >= 2;
+
+  // Unit 2 Dynamic Evaluation
+  const u2_unlocked = userLevel >= 2 || u1_4_done;
+  const u2_1_done = completedTitles.has('15-min limbering stretch');
+  const u2_2_done = completedTitles.has('30-min cardio or gym workout');
+  const u2_3_done = completedTitles.has('nutritious high-protein meal');
+  const u2_4_done = completedTitles.has('vigor milestone treasure');
 
   const units = [
     {
@@ -42,7 +78,7 @@ export const QuestMap: React.FC<QuestMapProps> = ({ onCompleteQuestModal }) => {
           category: 'VITALITY',
           xpReward: 15,
           goldReward: 5,
-          status: 'completed' as const,
+          status: (u1_1_done ? 'completed' : 'active') as 'completed' | 'active' | 'locked',
         },
         {
           id: 'u1-2',
@@ -50,7 +86,7 @@ export const QuestMap: React.FC<QuestMapProps> = ({ onCompleteQuestModal }) => {
           category: 'INTELLECT',
           xpReward: 50,
           goldReward: 25,
-          status: 'active' as const,
+          status: (u1_2_done ? 'completed' : u1_1_done ? 'active' : 'locked') as 'completed' | 'active' | 'locked',
         },
         {
           id: 'u1-3',
@@ -58,7 +94,7 @@ export const QuestMap: React.FC<QuestMapProps> = ({ onCompleteQuestModal }) => {
           category: 'INTELLECT',
           xpReward: 35,
           goldReward: 15,
-          status: userLevel >= 2 ? ('active' as const) : ('locked' as const),
+          status: (u1_3_done ? 'completed' : u1_2_done ? 'active' : 'locked') as 'completed' | 'active' | 'locked',
         },
         {
           id: 'u1-4',
@@ -66,7 +102,7 @@ export const QuestMap: React.FC<QuestMapProps> = ({ onCompleteQuestModal }) => {
           category: 'MILESTONE',
           xpReward: 100,
           goldReward: 50,
-          status: userLevel >= 2 ? ('completed' as const) : ('locked' as const),
+          status: (u1_4_done ? 'completed' : u1_3_done ? 'active' : 'locked') as 'completed' | 'active' | 'locked',
           isBoss: false,
         },
       ],
@@ -84,7 +120,7 @@ export const QuestMap: React.FC<QuestMapProps> = ({ onCompleteQuestModal }) => {
           category: 'STRENGTH',
           xpReward: 25,
           goldReward: 10,
-          status: userLevel >= 2 ? ('active' as const) : ('locked' as const),
+          status: (u2_1_done ? 'completed' : u2_unlocked ? 'active' : 'locked') as 'completed' | 'active' | 'locked',
         },
         {
           id: 'u2-2',
@@ -92,7 +128,7 @@ export const QuestMap: React.FC<QuestMapProps> = ({ onCompleteQuestModal }) => {
           category: 'STRENGTH',
           xpReward: 75,
           goldReward: 35,
-          status: 'locked' as const,
+          status: (u2_2_done ? 'completed' : u2_1_done ? 'active' : 'locked') as 'completed' | 'active' | 'locked',
         },
         {
           id: 'u2-3',
@@ -100,7 +136,7 @@ export const QuestMap: React.FC<QuestMapProps> = ({ onCompleteQuestModal }) => {
           category: 'VITALITY',
           xpReward: 30,
           goldReward: 15,
-          status: 'locked' as const,
+          status: (u2_3_done ? 'completed' : u2_2_done ? 'active' : 'locked') as 'completed' | 'active' | 'locked',
         },
         {
           id: 'u2-4',
@@ -108,7 +144,7 @@ export const QuestMap: React.FC<QuestMapProps> = ({ onCompleteQuestModal }) => {
           category: 'MILESTONE',
           xpReward: 150,
           goldReward: 75,
-          status: 'locked' as const,
+          status: (u2_4_done ? 'completed' : u2_3_done ? 'active' : 'locked') as 'completed' | 'active' | 'locked',
         },
       ],
     },

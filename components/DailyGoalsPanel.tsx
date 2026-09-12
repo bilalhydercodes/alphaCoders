@@ -12,7 +12,7 @@ export const DailyGoalsPanel: React.FC = () => {
   const xpEarnedToday = Math.min(50, user.xp % 100);
   const xpPercent = Math.round((xpEarnedToday / 50) * 100);
 
-  const habitsDone = user.streak > 0 ? 2 : 1;
+  const habitsDone = user.streak > 0 ? Math.min(2, user.streak) : (user.xp > 0 ? 1 : 0);
   const habitsPercent = Math.min(100, Math.round((habitsDone / 2) * 100));
 
   const goals = [
