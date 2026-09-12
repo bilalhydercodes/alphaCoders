@@ -17,10 +17,10 @@
 }
 
 .bg-draft-paper {
-  background-color: #E6DECE;
+  background-color: #F8F8FF;
   background-image: 
-    linear-gradient(to right, rgba(120, 105, 80, 0.09) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(120, 105, 80, 0.05) 1px, transparent 1px);
+    linear-gradient(to right, rgba(153, 102, 204, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(153, 102, 204, 0.05) 1px, transparent 1px);
   background-size: 28px 28px;
 }
 

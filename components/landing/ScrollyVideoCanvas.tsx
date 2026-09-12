@@ -260,7 +260,7 @@ export const ScrollyVideoCanvas: React.FC<ScrollyVideoCanvasProps> = ({
         {/* Framed 3D Video Screen with Draft Paper Margins & Borders (Completely still, no stretch/movement) */}
         <div
           ref={videoFrameRef}
-          className="absolute inset-x-4 sm:inset-x-8 md:inset-x-12 lg:inset-x-16 max-w-[1200px] mx-auto border border-[#262524] rounded-none bg-black overflow-hidden shadow-2xl z-10"
+          className="absolute inset-x-4 sm:inset-x-8 md:inset-x-12 lg:inset-x-16 max-w-[1200px] mx-auto border border-[#2E2438] rounded-none bg-black overflow-hidden shadow-2xl z-10"
           style={{
             top: '50vh',
             bottom: '24px',
@@ -276,7 +276,7 @@ export const ScrollyVideoCanvas: React.FC<ScrollyVideoCanvasProps> = ({
           {/* Loading Indicator */}
           {!isReady && (
             <div className="absolute inset-0 z-40 flex flex-col items-center justify-center gap-3 bg-black/80 backdrop-blur-md text-white">
-              <div className="w-10 h-10 border-3 border-purple-500/20 border-t-purple-500 rounded-full animate-spin" />
+              <div className="w-10 h-10 border-3 border-[#9966CC]/20 border-t-[#9966CC] rounded-full animate-spin" />
               <span className="text-xs font-bold text-slate-300">
                 Loading 3D Workspace ({loadProgress}%)...
               </span>
