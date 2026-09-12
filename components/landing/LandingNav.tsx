@@ -106,34 +106,16 @@ export const LandingNav: React.FC<LandingNavProps> = ({ onOpenAuth, onOpenDashbo
             {isMuted ? '🔇' : '🔔'}
           </button>
 
-          {user ? (
-            <a
-              href="/dashboard"
-              onClick={(e) => {
-                if (onOpenDashboard) {
-                  e.preventDefault();
-                  onOpenDashboard();
-                }
-              }}
-              className="inline-flex items-center gap-2 px-3.5 sm:px-4 h-[40px] sm:h-[42px] text-xs font-bold text-white bg-[#9966CC] hover:bg-[#8B54C2] active:bg-[#7A4BC2] border border-[#2E2438] rounded-none shadow-xs transition-colors cursor-pointer whitespace-nowrap"
-            >
-              <div className="w-4 h-4 bg-[#7A4BC2] rounded-none flex items-center justify-center shrink-0">
-                <IconSparkles size={11} className="text-white" />
-              </div>
-              <span>Dashboard</span>
-            </a>
-          ) : (
-            <button
-              type="button"
-              onClick={() => onOpenAuth('register')}
-              className="inline-flex items-center gap-2 px-3.5 sm:px-4 h-[40px] sm:h-[42px] text-xs font-bold text-white bg-[#9966CC] hover:bg-[#8B54C2] active:bg-[#7A4BC2] border border-[#2E2438] rounded-none shadow-xs transition-colors cursor-pointer whitespace-nowrap"
-            >
-              <div className="w-4 h-4 bg-[#7A4BC2] rounded-none flex items-center justify-center shrink-0">
-                <IconSparkles size={11} className="text-white" />
-              </div>
-              <span>Try for free</span>
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={() => onOpenAuth('login')}
+            className="inline-flex items-center gap-2 px-3.5 sm:px-4 h-[40px] sm:h-[42px] text-xs font-bold text-white bg-[#9966CC] hover:bg-[#8B54C2] active:bg-[#7A4BC2] border border-[#2E2438] rounded-none shadow-xs transition-colors cursor-pointer whitespace-nowrap"
+          >
+            <div className="w-4 h-4 bg-[#7A4BC2] rounded-none flex items-center justify-center shrink-0">
+              <IconSparkles size={11} className="text-white" />
+            </div>
+            <span>Login</span>
+          </button>
         </div>
       </div>
     </header>
