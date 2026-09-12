@@ -2,7 +2,9 @@
 
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 
-const TOTAL_FRAMES = 184;
+const START_FRAME = 20;
+const END_FRAME = 184;
+const TOTAL_FRAMES = END_FRAME - START_FRAME + 1; // 165 frames
 
 interface ScrollyVideoCanvasProps {
   onOpenAuth?: (mode?: 'login' | 'register') => void;
@@ -15,77 +17,17 @@ export const ScrollyVideoCanvas: React.FC<ScrollyVideoCanvasProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const imagesRef = useRef<(HTMLImageElement | null)[]>(new Array(TOTAL_FRAMES).fill(null));
+  // Store cached frames indexed by frame number (20..184)
+  const imagesRef = useRef<{ [key: number]: HTMLImageElement | null }>({});
 
   const [loadProgress, setLoadProgress] = useState(0);
   const [isReady, setIsReady] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
 
-  // Current interpolated frame for silky 60fps rendering
-  const targetFrameRef = useRef(1);
-  const currentFrameRef = useRef(1);
+  // Current interpolated frame for silky 60fps rendering, starting at frame 20
+  const targetFrameRef = useRef(START_FRAME);
+  const currentFrameRef = useRef(START_FRAME);
   const rafRef = useRef<number | null>(null);
-
-  // Preload frames incrementally
-  useEffect(() => {
-    let loadedCount = 0;
-    const priorityFrames = [1, 20, 40, 60, 90, 120, 150, 184];
-
-    const loadFrame = (index: number): Promise<void> => {
-      return new Promise((resolve) => {
-        if (imagesRef.current[index - 1]) {
-          resolve();
-          return;
-        }
-
-        const img = new Image();
-        const paddedIndex = String(index).padStart(3, '0');
-        img.src = `/frames/frame_${paddedIndex}.webp`;
-
-        img.onload = () => {
-          imagesRef.current[index - 1] = img;
-          loadedCount++;
-          setLoadProgress(Math.round((loadedCount / TOTAL_FRAMES) * 100));
-
-          // Draw frame immediately as soon as frame 1 or current target arrives
-          if (index === 1 || Math.round(currentFrameRef.current) === index) {
-            renderFrame(index);
-          }
-
-          if (loadedCount >= 5) {
-            setIsReady(true);
-          }
-          resolve();
-        };
-
-        img.onerror = () => {
-          loadedCount++;
-          resolve();
-        };
-      });
-    };
-
-    // Immediately load frame 1 for instant display
-    loadFrame(1).then(() => {
-      renderFrame(1);
-    });
-
-    // Load key frames first for smooth initial scrub
-    Promise.all(priorityFrames.map(loadFrame)).then(() => {
-      setIsReady(true);
-      renderFrame(1);
-      // Load remainder in background batches
-      for (let i = 1; i <= TOTAL_FRAMES; i++) {
-        if (!imagesRef.current[i - 1]) {
-          loadFrame(i);
-        }
-      }
-    });
-
-    return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, []);
 
   // Edge-to-edge full bleed cover render loop with High-DPI support
   const renderFrame = useCallback((frameIndex: number): boolean => {
@@ -94,7 +36,7 @@ export const ScrollyVideoCanvas: React.FC<ScrollyVideoCanvasProps> = ({
     const ctx = canvas.getContext('2d');
     if (!ctx) return false;
 
-    const img = imagesRef.current[frameIndex - 1];
+    const img = imagesRef.current[frameIndex];
     if (!img || !img.complete || img.naturalWidth === 0) return false;
 
     const dpr = typeof window !== 'undefined' ? Math.min(window.devicePixelRatio || 1, 2) : 1;
@@ -124,6 +66,67 @@ export const ScrollyVideoCanvas: React.FC<ScrollyVideoCanvasProps> = ({
     return true;
   }, []);
 
+  // Preload frames starting at frame 20 through 184
+  useEffect(() => {
+    let loadedCount = 0;
+    const priorityFrames = [20, 35, 50, 75, 100, 130, 160, 184];
+
+    const loadFrame = (index: number): Promise<void> => {
+      return new Promise((resolve) => {
+        if (imagesRef.current[index]) {
+          resolve();
+          return;
+        }
+
+        const img = new Image();
+        const paddedIndex = String(index).padStart(3, '0');
+        img.src = `/frames/frame_${paddedIndex}.webp`;
+
+        img.onload = () => {
+          imagesRef.current[index] = img;
+          loadedCount++;
+          setLoadProgress(Math.round((loadedCount / TOTAL_FRAMES) * 100));
+
+          // Draw frame immediately as soon as start frame (20) or current target arrives
+          if (index === START_FRAME || Math.round(currentFrameRef.current) === index) {
+            renderFrame(index);
+          }
+
+          if (loadedCount >= 4) {
+            setIsReady(true);
+          }
+          resolve();
+        };
+
+        img.onerror = () => {
+          loadedCount++;
+          resolve();
+        };
+      });
+    };
+
+    // Immediately load frame 20 for instant display
+    loadFrame(START_FRAME).then(() => {
+      renderFrame(START_FRAME);
+    });
+
+    // Load key frames first for smooth initial scrub
+    Promise.all(priorityFrames.map(loadFrame)).then(() => {
+      setIsReady(true);
+      renderFrame(START_FRAME);
+      // Load remainder of frames (20..184) in background batches
+      for (let i = START_FRAME; i <= END_FRAME; i++) {
+        if (!imagesRef.current[i]) {
+          loadFrame(i);
+        }
+      }
+    });
+
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [renderFrame]);
+
   // 60fps / 120fps lerp interpolation loop
   useEffect(() => {
     let lastRenderedFrame = -1;
@@ -140,7 +143,7 @@ export const ScrollyVideoCanvas: React.FC<ScrollyVideoCanvasProps> = ({
       }
 
       const frameToDraw = Math.round(
-        Math.max(1, Math.min(TOTAL_FRAMES, currentFrameRef.current))
+        Math.max(START_FRAME, Math.min(END_FRAME, currentFrameRef.current))
       );
 
       if (frameToDraw !== lastRenderedFrame) {
@@ -182,8 +185,8 @@ export const ScrollyVideoCanvas: React.FC<ScrollyVideoCanvasProps> = ({
       const progress = Math.max(0, Math.min(1, scrolled / scrollableDistance));
       setScrollProgress(progress);
 
-      // Map progress 0.0 -> 1.0 to Frame 1 -> 184
-      const targetFrame = Math.round(1 + progress * (TOTAL_FRAMES - 1));
+      // Map progress 0.0 -> 1.0 directly to Frame 20 -> 184
+      const targetFrame = Math.round(START_FRAME + progress * (END_FRAME - START_FRAME));
       targetFrameRef.current = targetFrame;
     };
 
@@ -198,7 +201,7 @@ export const ScrollyVideoCanvas: React.FC<ScrollyVideoCanvasProps> = ({
       ref={containerRef}
       id="how-it-works"
       aria-label="Life RPG Interactive 3D Experience"
-      className="relative w-full h-[400vh] bg-black scroll-mt-10"
+      className="relative w-full h-[360vh] bg-black scroll-mt-10"
     >
       <div id="meet-lumi" className="absolute top-0 pointer-events-none" />
       {/* Sticky Fullscreen Edge-to-Edge Scrollytelling Viewport */}
@@ -211,8 +214,8 @@ export const ScrollyVideoCanvas: React.FC<ScrollyVideoCanvasProps> = ({
         />
 
         {/* Cinematic Vignettes */}
-        {/* Top gradient for navbar clarity */}
-        <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-black/70 via-black/30 to-transparent pointer-events-none z-10" />
+        {/* Top gradient for floating navbar clarity */}
+        <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-black/60 via-black/25 to-transparent pointer-events-none z-10" />
 
         {/* Bottom gradient smoothly merging with next section */}
         <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-surface via-surface/60 to-transparent pointer-events-none z-10" />
@@ -235,14 +238,6 @@ export const ScrollyVideoCanvas: React.FC<ScrollyVideoCanvasProps> = ({
         >
           <span>Scroll to explore the 3D journey</span>
           <span className="animate-bounce inline-block">↓</span>
-        </div>
-
-        {/* Edge-to-Edge Glowing Progress Bar at Absolute Bottom */}
-        <div className="absolute bottom-0 inset-x-0 h-1.5 bg-white/10 z-30">
-          <div
-            className="h-full bg-gradient-to-r from-[#7042C1] via-[#9966CC] to-[#A855F7] transition-all duration-75 shadow-[0_0_12px_#9966CC]"
-            style={{ width: `${Math.round(scrollProgress * 100)}%` }}
-          />
         </div>
       </div>
     </section>
