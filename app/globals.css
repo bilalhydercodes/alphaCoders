@@ -22,53 +22,127 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Tactile 10px spacing and button focus indicators */
+/* Tactile 3D Buttons (Duolingo-grade physical press) */
+.btn-3d-primary {
+  background-color: #9966CC;
+  color: #1F1730;
+  border-bottom: 4px solid #7A4BC2;
+  transition: transform 75ms ease, border-bottom 75ms ease, filter 75ms ease;
+}
+.btn-3d-primary:hover {
+  filter: brightness(1.05);
+}
+.btn-3d-primary:active:not(:disabled) {
+  border-bottom-width: 0px;
+  transform: translateY(4px);
+}
+
+.btn-3d-accent {
+  background-color: #F5B700;
+  color: #1F1730;
+  border-bottom: 4px solid #D49E00;
+  transition: transform 75ms ease, border-bottom 75ms ease, filter 75ms ease;
+}
+.btn-3d-accent:hover {
+  filter: brightness(1.05);
+}
+.btn-3d-accent:active:not(:disabled) {
+  border-bottom-width: 0px;
+  transform: translateY(4px);
+}
+
+.btn-3d-secondary {
+  background-color: #FFFFFF;
+  color: #2E2438;
+  border: 2px solid #E2E8F0;
+  border-bottom: 4px solid #CBD5E1;
+  transition: transform 75ms ease, border-bottom 75ms ease, background-color 75ms ease;
+}
+.btn-3d-secondary:hover {
+  background-color: #F8FAFC;
+}
+.btn-3d-secondary:active:not(:disabled) {
+  border-bottom-width: 2px;
+  transform: translateY(2px);
+}
+
+.btn-3d-success {
+  background-color: #4FCE6B;
+  color: #FFFFFF;
+  border-bottom: 4px solid #3BA853;
+  transition: transform 75ms ease, border-bottom 75ms ease;
+}
+.btn-3d-success:active:not(:disabled) {
+  border-bottom-width: 0px;
+  transform: translateY(4px);
+}
+
+/* 3D Round Stepping Stone Nodes */
+.btn-3d-node-active {
+  background-color: #9966CC;
+  color: #FFFFFF;
+  border-bottom: 6px solid #7A4BC2;
+  box-shadow: 0 10px 25px -4px rgba(153, 102, 204, 0.4);
+  transition: transform 75ms ease, border-bottom 75ms ease;
+}
+.btn-3d-node-active:active {
+  border-bottom-width: 2px;
+  transform: translateY(4px);
+}
+
+.btn-3d-node-completed {
+  background-color: #4FCE6B;
+  color: #FFFFFF;
+  border-bottom: 6px solid #3BA853;
+  transition: transform 75ms ease, border-bottom 75ms ease;
+}
+.btn-3d-node-completed:active {
+  border-bottom-width: 2px;
+  transform: translateY(4px);
+}
+
+.btn-3d-node-locked {
+  background-color: #E2E8F0;
+  color: #94A3B8;
+  border-bottom: 6px solid #CBD5E1;
+  cursor: not-allowed;
+}
+
+/* Focus and accessibility */
 *:focus-visible {
   outline: 2px solid #9966CC;
   outline-offset: 2px;
 }
 
-/* Touch targets >= 44x44px for accessibility */
-button, 
-a, 
+/* Touch targets >= 44x44px */
+button,
+a,
 input[type="checkbox"],
 [role="button"] {
   min-height: 44px;
-  min-width: 44px;
 }
 
-/* Reduced motion support */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  ::before,
-  ::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+/* Animations */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
 }
 
-/* Custom scrollbar matching Amethyst palette */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+.animate-shake {
+  animation: shake 0.35s ease-in-out;
 }
 
-::-webkit-scrollbar-track {
-  background: #F0EFFF;
+@keyframes pop-in {
+  0% { transform: scale(0.8); opacity: 0; }
+  70% { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
 }
 
-::-webkit-scrollbar-thumb {
-  background: #DCC7FF;
-  border-radius: 4px;
+.animate-pop-in {
+  animation: pop-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #9966CC;
-}
-
-/* Floating combat text animation */
 @keyframes float-up-fade {
   0% {
     opacity: 1;
@@ -88,22 +162,14 @@ input[type="checkbox"],
   animation: float-up-fade 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
-/* Spring checkbox checkmark draw */
-@keyframes checkmark-draw {
-  0% {
-    stroke-dashoffset: 24;
-    transform: scale(0.8);
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
-  60% {
-    stroke-dashoffset: 0;
-    transform: scale(1.15);
-  }
-  100% {
-    stroke-dashoffset: 0;
-    transform: scale(1);
-  }
-}
-
-.animate-checkmark {
-  animation: checkmark-draw 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }

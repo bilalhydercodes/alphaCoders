@@ -1,6 +1,13 @@
 import type { Metadata, Viewport } from 'next';
+import { Nunito } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/context/AuthContext';
+
+const nunito = Nunito({
+  subsets: ['latin'],
+  weight: ['400', '600', '700', '800', '900'],
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'Life RPG with Lumi · Chronicles of Mastery',
@@ -29,7 +36,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-background text-copy antialiased selection:bg-primary/20 selection:text-copy">
+      <body className={`${nunito.className} min-h-screen bg-background text-copy antialiased selection:bg-primary/20 selection:text-copy`}>
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
