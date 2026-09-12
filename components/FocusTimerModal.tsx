@@ -123,8 +123,8 @@ export const FocusTimerModal: React.FC<FocusTimerModalProps> = ({
         </button>
 
         {/* Header */}
-        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-lavender-soft text-primary text-xs font-black mb-2">
-          <IconSparkles size={14} className="text-primary" />
+        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-lavender-soft text-[#492673] border border-primary/20 text-xs font-black mb-2">
+          <IconSparkles size={14} className="text-[#522B80]" />
           <span>DEEP FOCUS SANCTUARY</span>
         </div>
 
@@ -184,7 +184,7 @@ export const FocusTimerModal: React.FC<FocusTimerModalProps> = ({
 
         {/* Reward disclaimer */}
         <p className="text-[11px] text-copy-muted mt-5 font-semibold">
-          Completing this session awards <span className="font-bold text-primary">+50 Intellect XP</span> and <span className="font-bold text-accent">+25 GP</span>!
+          Completing this session awards <span className="font-bold text-primary">+50 Intellect XP</span> and <span className="font-bold text-[#875800]">+25 GP</span>!
         </p>
       </div>
     </div>

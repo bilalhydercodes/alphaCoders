@@ -14,6 +14,7 @@
 }
 
 body {
+  font-family: var(--font-plus-jakarta), 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   background-color: #F8F8FF;
   color: #2E2438;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";

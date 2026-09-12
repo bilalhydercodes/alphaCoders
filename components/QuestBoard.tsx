@@ -5,6 +5,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useXpArc } from './XpArcManager';
 import { useLumi, LumiPresenter } from './lumi';
 import { sound } from '@/lib/sound';
+import confetti from 'canvas-confetti';
 import { Button } from './ui/Button';
 import { LumiMascot } from './LumiMascot';
 import {
@@ -61,11 +62,11 @@ const CATEGORY_CONFIG: Record<
 };
 
 const DIFFICULTY_BADGES: Record<string, { label: string; bg: string }> = {
-  TRIVIAL: { label: 'Trivial', bg: 'bg-slate-100 text-copy-muted' },
-  EASY: { label: 'Easy', bg: 'bg-slate-100 text-copy' },
-  MEDIUM: { label: 'Medium', bg: 'bg-slate-100 text-copy font-medium' },
-  HARD: { label: 'Hard', bg: 'bg-primary/10 text-primary font-bold' },
-  EPIC: { label: 'Epic', bg: 'bg-primary/20 text-primary font-black' },
+  TRIVIAL: { label: 'Trivial', bg: 'bg-slate-100 text-copy-muted font-medium' },
+  EASY: { label: 'Easy', bg: 'bg-slate-100 text-copy font-medium' },
+  MEDIUM: { label: 'Medium', bg: 'bg-slate-100 text-copy font-bold' },
+  HARD: { label: 'Hard', bg: 'bg-primary/15 text-[#522B80] font-bold border border-primary/20' },
+  EPIC: { label: 'Epic', bg: 'bg-primary/25 text-[#3D1D60] font-black border border-primary/30' },
 };
 
 export const QuestBoard: React.FC<QuestBoardProps> = ({
@@ -108,11 +109,29 @@ export const QuestBoard: React.FC<QuestBoardProps> = ({
     sound.playQuestComplete();
     sound.playCoin();
 
+    // Tactile confetti burst from completed checkbox
+    const rect = e.currentTarget.getBoundingClientRect();
+    try {
+      confetti({
+        particleCount: 30,
+        spread: 55,
+        startVelocity: 26,
+        origin: {
+          x: (rect.left + rect.width / 2) / window.innerWidth,
+          y: (rect.top + rect.height / 2) / window.innerHeight,
+        },
+        colors: ['#9966CC', '#F5B700', '#4FCE6B', '#8B54C2', '#FFFFFF'],
+        disableForReducedMotion: true,
+        zIndex: 9999,
+      });
+    } catch {
+      // ignore
+    }
+
     // Trigger Ballistic Arc directly to header XP pill
     triggerXpArc(quest.xpReward, e.currentTarget);
 
     // Floating text coordinates
-    const rect = e.currentTarget.getBoundingClientRect();
     const floatId = Math.random().toString();
     setFloatingTexts((prev) => [
       ...prev,
@@ -250,17 +269,19 @@ export const QuestBoard: React.FC<QuestBoardProps> = ({
             </select>
           </div>
 
-          <Button
-            variant="primary"
-            size="sm"
+          <button
+            type="button"
             onClick={() => {
               sound.playClick();
               onOpenCreateModal();
             }}
-            leftIcon={<IconPlus size={16} />}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black text-white bg-primary hover:bg-[#8B54C2] border-b-4 border-[#7343A8] active:border-b-0 active:translate-y-1 shadow-md hover:shadow-lg transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-primary shrink-0"
+            title="Post a new bounty (Press Q)"
+            aria-label="Post a new bounty"
           >
-            Post Bounty (Q)
-          </Button>
+            <IconPlus size={16} />
+            <span>Post Bounty (Q)</span>
+          </button>
         </div>
       </div>
 
@@ -305,17 +326,17 @@ export const QuestBoard: React.FC<QuestBoardProps> = ({
               >
                 {/* Left: Interactive Checkbox & Details */}
                 <div className="flex items-center gap-3.5 min-w-0">
-                  {/* Checkbox */}
+                  {/* Checkbox with tactile active scale */}
                   <button
                     type="button"
                     onClick={(e) => handleCompleteQuest(quest, e)}
                     disabled={quest.isCompleted || isCompleting}
-                    className={`w-10 h-10 rounded-xl border-2 flex items-center justify-center transition-all cursor-pointer shrink-0 focus-visible:outline-2 focus-visible:outline-primary ${
+                    className={`w-10 h-10 rounded-xl border-2 flex items-center justify-center transition-all cursor-pointer shrink-0 active:scale-90 focus-visible:outline-2 focus-visible:outline-primary ${
                       quest.isCompleted
-                        ? 'bg-success border-success text-white'
+                        ? 'bg-success border-success text-white shadow-xs'
                         : isCompleting
                         ? 'bg-success/20 border-success animate-pulse'
-                        : 'border-slate-300 hover:border-primary hover:bg-lavender-soft/40'
+                        : 'border-slate-300 hover:border-primary hover:bg-lavender-soft/40 shadow-xs'
                     }`}
                     aria-label={`Mark quest "${quest.title}" as complete`}
                   >
@@ -337,9 +358,9 @@ export const QuestBoard: React.FC<QuestBoardProps> = ({
                         {quest.title}
                       </h4>
 
-                      {/* Monochromatic Category tag: All attributes use primary amethyst */}
-                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold border border-primary/20 bg-lavender-soft text-primary">
-                        <CatIcon size={12} />
+                      {/* Monochromatic Category tag: WCAG AAA compliance (>7.4:1 contrast) */}
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black border border-primary/30 bg-lavender-soft text-[#492673]">
+                        <CatIcon size={12} className="text-[#522B80]" />
                         <span>{cat.label}</span>
                       </span>
 
@@ -367,7 +388,7 @@ export const QuestBoard: React.FC<QuestBoardProps> = ({
                           : 'To-Do Bounty'}
                       </span>
                       {quest.streakCount > 0 && (
-                        <span className="flex items-center gap-1 text-accent font-bold">
+                        <span className="flex items-center gap-1 text-[#875800] font-black">
                           <IconStreakFlame size={14} filled className="text-accent animate-flame-breathe" />
                           <span>{quest.streakCount}d streak</span>
                         </span>
@@ -378,14 +399,14 @@ export const QuestBoard: React.FC<QuestBoardProps> = ({
 
                 {/* Right: Reward Badges & Actions */}
                 <div className="flex items-center gap-2 shrink-0">
-                  {/* Rewards chip */}
+                  {/* Rewards chip (WCAG AA compliant gold text) */}
                   <div className="hidden sm:flex flex-col items-end text-right">
                     <span className="flex items-center gap-1 text-xs font-black text-primary">
                       <IconXpGem size={14} filled />
                       +{quest.xpReward} XP
                     </span>
-                    <span className="flex items-center gap-1 text-[11px] font-extrabold text-accent">
-                      <IconGoldCoin size={12} filled />
+                    <span className="flex items-center gap-1 text-[11px] font-black text-[#875800]">
+                      <IconGoldCoin size={12} filled className="text-accent" />
                       +{quest.goldReward} GP
                     </span>
                   </div>

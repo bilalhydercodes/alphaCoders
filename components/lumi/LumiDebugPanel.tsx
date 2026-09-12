@@ -52,23 +52,10 @@ export const LumiDebugPanel: React.FC = () => {
 
   const anchors: LumiSpatialAnchor[] = ['home', 'quest', 'focus', 'shop', 'codex', 'empty'];
 
-  return (
-    <>
-      {/* Small floating toggle button in bottom-right */}
-      <div className="fixed bottom-20 right-4 z-50">
-        <button
-          type="button"
-          onClick={() => setIsOpen(!isOpen)}
-          className="px-2.5 py-1 bg-primary text-[#1F1730] font-black text-[11px] rounded-full shadow-lg border border-primary/40 cursor-pointer hover:brightness-110 active:scale-95 transition-all"
-          title="Toggle 3D Lumi Debug Panel (Ctrl+Shift+L)"
-        >
-          {isOpen ? '✕ Close Lumi 3D Debug' : '⚙ 3D Lumi Debug'}
-        </button>
-      </div>
+  if (!isOpen) return null;
 
-      {/* Floating Drawer */}
-      {isOpen && (
-        <div className="fixed bottom-32 right-4 z-50 w-80 max-h-[75vh] overflow-y-auto bg-surface/95 backdrop-blur-md rounded-2xl border-2 border-primary/30 p-4 shadow-2xl text-xs font-sans animate-in zoom-in-95">
+  return (
+    <div className="fixed bottom-32 right-4 z-50 w-80 max-h-[75vh] overflow-y-auto bg-surface/95 backdrop-blur-md rounded-2xl border-2 border-primary/30 p-4 shadow-2xl text-xs font-sans animate-in zoom-in-95">
           <div className="flex items-center justify-between border-b border-slate-200 pb-2 mb-3">
             <span className="font-black text-copy uppercase tracking-wider">3D Lumi Controller</span>
             <span className="text-[10px] px-2 py-0.5 rounded-full bg-primary/20 text-primary font-bold">
@@ -132,7 +119,5 @@ export const LumiDebugPanel: React.FC = () => {
             </div>
           </div>
         </div>
-      )}
-    </>
   );
 };

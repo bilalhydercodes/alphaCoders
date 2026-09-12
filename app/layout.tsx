@@ -1,13 +1,13 @@
 import type { Metadata, Viewport } from 'next';
-import { Nunito } from 'next/font/google';
+import { Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/context/AuthContext';
 
-const nunito = Nunito({
+const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  weight: ['400', '600', '700', '800', '900'],
+  weight: ['400', '500', '600', '700', '800'],
   display: 'swap',
-  variable: '--font-nunito',
+  variable: '--font-plus-jakarta',
 });
 
 export const metadata: Metadata = {
@@ -37,7 +37,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${nunito.variable} ${nunito.className} min-h-screen bg-background text-copy antialiased selection:bg-primary/20 selection:text-copy`}>
+      <body className={`${plusJakartaSans.variable} ${plusJakartaSans.className} min-h-screen bg-background text-copy antialiased selection:bg-primary/20 selection:text-copy`}>
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>

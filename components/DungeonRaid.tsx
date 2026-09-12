@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { sound } from '@/lib/sound';
 import {
   IconSwords,
   IconLeague,
@@ -14,6 +15,8 @@ export const DungeonRaid: React.FC = () => {
   const [boss, setBoss] = useState<any | null>(null);
   const [recentHits, setRecentHits] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isShaking, setIsShaking] = useState(false);
+  const [damageNumber, setDamageNumber] = useState<number | null>(null);
 
   const fetchBoss = async () => {
     try {
@@ -54,10 +57,28 @@ export const DungeonRaid: React.FC = () => {
     );
   }
 
+  const handleStrike = (dmg: number = 45) => {
+    sound.playHit();
+    setIsShaking(true);
+    setDamageNumber(dmg);
+    setBoss((prev: any) =>
+      prev ? { ...prev, currentHp: Math.max(0, prev.currentHp - dmg) } : prev
+    );
+    setTimeout(() => setIsShaking(false), 400);
+    setTimeout(() => setDamageNumber(null), 1200);
+  };
+
   const hpPercent = Math.max(0, Math.round((boss.currentHp / boss.maxHp) * 100));
 
   return (
-    <div className="flex flex-col gap-4 text-left">
+    <div className={`flex flex-col gap-4 text-left relative ${isShaking ? 'animate-shake' : ''}`}>
+      {/* Floating Damage Text */}
+      {damageNumber && (
+        <div className="absolute top-2 right-4 font-black text-danger text-base animate-float-up pointer-events-none drop-shadow-md z-20">
+          -{damageNumber} DMG!
+        </div>
+      )}
+
       {/* Boss Encounter Header */}
       <div className="flex flex-col gap-2">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-danger-soft text-danger text-xs font-black self-start">
@@ -78,8 +99,8 @@ export const DungeonRaid: React.FC = () => {
             <IconXpGem size={14} filled />
             <span>+{boss.rewardXp} XP</span>
           </span>
-          <span className="flex items-center gap-1 text-accent">
-            <IconGoldCoin size={14} filled />
+          <span className="flex items-center gap-1 text-[#875800] font-black">
+            <IconGoldCoin size={14} filled className="text-accent" />
             <span>+{boss.rewardGold} GP</span>
           </span>
         </div>
@@ -111,9 +132,19 @@ export const DungeonRaid: React.FC = () => {
           />
         </div>
 
-        <div className="p-2 rounded-xl bg-surface border border-slate-200 text-[11px] text-copy-muted flex items-center gap-2">
-          <IconHelp size={14} className="text-primary shrink-0" />
-          <span>Completed bounties deal damage equal to quest XP!</span>
+        <div className="p-2 rounded-xl bg-surface border border-slate-200 text-[11px] text-copy-muted flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <IconHelp size={14} className="text-primary shrink-0" />
+            <span>Completed bounties deal damage equal to quest XP!</span>
+          </div>
+          <button
+            type="button"
+            onClick={() => handleStrike(45)}
+            className="px-2 py-1 rounded-lg text-[10px] font-black bg-danger/10 text-danger hover:bg-danger/20 active:scale-95 transition-all cursor-pointer shrink-0"
+            title="Simulate Guild Strike"
+          >
+            Strike ⚔
+          </button>
         </div>
       </div>
 

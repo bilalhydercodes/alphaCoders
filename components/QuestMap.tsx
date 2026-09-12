@@ -237,14 +237,14 @@ export const QuestMap: React.FC<QuestMapProps> = ({ onCompleteQuestModal }) => {
                 <IconXpGem size={20} filled />
                 <span>+{selectedNode.xpReward} XP</span>
               </div>
-              <div className="flex items-center gap-1.5 font-black text-sm text-accent">
-                <IconGoldCoin size={20} filled />
+              <div className="flex items-center gap-1.5 font-black text-sm text-[#875800]">
+                <IconGoldCoin size={20} filled className="text-accent" />
                 <span>+{selectedNode.goldReward} GP</span>
               </div>
             </div>
 
             {selectedNode.status === 'completed' ? (
-              <div className="w-full py-3 rounded-2xl bg-success-soft border border-success/30 text-success font-black text-sm flex items-center justify-center gap-2">
+              <div className="w-full py-3 rounded-2xl bg-success-soft border border-success/30 text-[#1B6E32] font-black text-sm flex items-center justify-center gap-2">
                 <IconCheck size={18} />
                 <span>Already Claimed!</span>
               </div>

@@ -31,7 +31,7 @@ export const LumiCompanion: React.FC<LumiCompanionProps> = ({ onStartFocus }) =>
         <span
           className={`text-[11px] font-black px-2.5 py-0.5 rounded-full ${
             activeMoment
-              ? 'bg-success-soft text-success'
+              ? 'bg-success-soft text-[#1B6E32] border border-success/30'
               : mood === 'RADIANT'
               ? 'bg-amber-100 text-amber-800'
               : mood === 'SLEEPY'
@@ -40,7 +40,7 @@ export const LumiCompanion: React.FC<LumiCompanionProps> = ({ onStartFocus }) =>
               ? 'bg-orange-100 text-orange-800'
               : mood === 'FOCUSED'
               ? 'bg-emerald-100 text-emerald-800'
-              : 'bg-lavender-soft text-primary'
+              : 'bg-lavender-soft text-[#492673] border border-primary/20'
           }`}
         >
           {activeMoment ? activeMoment.replace('_', ' ') : mood}

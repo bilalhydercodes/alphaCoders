@@ -53,7 +53,7 @@ export const DailyGoalsPanel: React.FC = () => {
             Daily Goals
           </h3>
         </div>
-        <span className="text-xs font-black text-primary px-2.5 py-0.5 rounded-full bg-lavender-soft">
+        <span className="text-xs font-black text-[#492673] px-2.5 py-0.5 rounded-full bg-lavender-soft border border-primary/20">
           {completedCount} / 3 DONE
         </span>
       </div>
@@ -74,7 +74,7 @@ export const DailyGoalsPanel: React.FC = () => {
                   )}
                   <span>{g.title}</span>
                 </div>
-                <span className="text-[11px] font-extrabold text-primary">
+                <span className="text-[11px] font-black text-[#875800]">
                   {g.reward}
                 </span>
               </div>

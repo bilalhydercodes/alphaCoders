@@ -254,8 +254,8 @@ export const QuestModal: React.FC<QuestModalProps> = ({
                   <IconXpGem size={14} filled />
                   +{currentRewards.xp} XP
                 </span>
-                <span className="flex items-center gap-1 text-accent">
-                  <IconGoldCoin size={12} filled />
+                <span className="flex items-center gap-1 text-[#875800] font-black">
+                  <IconGoldCoin size={12} filled className="text-accent" />
                   +{currentRewards.gold} GP
                 </span>
               </div>

@@ -88,10 +88,10 @@ export const CharacterCodex: React.FC = () => {
   return (
     <div className="flex flex-col gap-6">
       {/* Header & Character Identity */}
-      <div className="bg-surface rounded-2xl border-2 border-slate-200 p-6 shadow-xs flex flex-col md:flex-row items-center justify-between gap-6">
-        <div className="flex items-center gap-5">
-          <div className="w-20 h-20 rounded-2xl bg-gradient-to-b from-lavender-soft to-surface border-2 border-primary/30 flex items-center justify-center p-0.5 shadow-xs overflow-hidden shrink-0">
-            <LumiPresenter variant="mini" height={76} showSpeech={false} interactive={false} />
+      <div className="bg-surface rounded-2xl border-2 border-slate-200 p-5 shadow-xs flex flex-col xl:flex-row items-center justify-between gap-5">
+        <div className="flex items-center gap-4 w-full xl:w-auto">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-b from-lavender-soft to-surface border-2 border-primary/30 flex items-center justify-center p-0.5 shadow-xs overflow-hidden shrink-0">
+            <LumiPresenter variant="mini" height={64} showSpeech={false} interactive={false} />
           </div>
           <div>
             <div className="flex items-center gap-2">
@@ -101,38 +101,38 @@ export const CharacterCodex: React.FC = () => {
               </span>
             </div>
             <p className="text-xs font-bold text-primary mt-0.5">{user.title}</p>
-            <p className="text-xs text-copy-muted mt-1">
+            <p className="text-xs text-copy-muted mt-0.5">
               Adventurer registered at the Guild · {user.streak} day streak
             </p>
           </div>
         </div>
 
         {/* Vital Gauges */}
-        <div className="flex items-center gap-3 w-full md:w-auto">
-          <div className="flex-1 md:flex-initial p-3 rounded-2xl bg-background border border-slate-200 text-center min-w-[100px]">
-            <span className="text-[11px] text-copy-muted font-bold flex items-center justify-center gap-1">
-              <IconHeart size={14} filled className="text-danger" />
+        <div className="grid grid-cols-3 gap-2 w-full xl:w-auto shrink-0">
+          <div className="p-2.5 rounded-2xl bg-background border border-slate-200 text-center min-w-[78px]">
+            <span className="text-[10px] text-copy-muted font-bold flex items-center justify-center gap-1">
+              <IconHeart size={13} filled className="text-danger" />
               <span>Health</span>
             </span>
-            <span className="text-sm font-black text-danger mt-0.5 block">
-              {user.hp} / {user.maxHp} HP
+            <span className="text-xs sm:text-sm font-black text-danger mt-0.5 block">
+              {user.hp}/{user.maxHp}
             </span>
           </div>
-          <div className="flex-1 md:flex-initial p-3 rounded-2xl bg-background border border-slate-200 text-center min-w-[100px]">
-            <span className="text-[11px] text-copy-muted font-bold flex items-center justify-center gap-1">
-              <IconXpGem size={14} filled className="text-primary" />
-              <span>Experience</span>
+          <div className="p-2.5 rounded-2xl bg-background border border-slate-200 text-center min-w-[78px]">
+            <span className="text-[10px] text-copy-muted font-bold flex items-center justify-center gap-1">
+              <IconXpGem size={13} filled className="text-primary" />
+              <span>XP</span>
             </span>
-            <span className="text-sm font-black text-primary mt-0.5 block">
-              {user.xp} / {user.xpNeeded} XP
+            <span className="text-xs sm:text-sm font-black text-primary mt-0.5 block">
+              {user.xp}/{user.xpNeeded}
             </span>
           </div>
-          <div className="flex-1 md:flex-initial p-3 rounded-2xl bg-background border border-slate-200 text-center min-w-[100px]">
-            <span className="text-[11px] text-copy-muted font-bold flex items-center justify-center gap-1">
-              <IconGoldCoin size={14} filled className="text-accent" />
-              <span>Vault Gold</span>
+          <div className="p-2.5 rounded-2xl bg-background border border-slate-200 text-center min-w-[78px]">
+            <span className="text-[10px] text-copy-muted font-bold flex items-center justify-center gap-1">
+              <IconGoldCoin size={13} filled className="text-accent" />
+              <span>Gold</span>
             </span>
-            <span className="text-sm font-black text-accent mt-0.5 block">
+            <span className="text-xs sm:text-sm font-black text-[#875800] mt-0.5 block">
               {user.gold} GP
             </span>
           </div>

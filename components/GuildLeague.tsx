@@ -45,14 +45,14 @@ export const GuildLeague: React.FC = () => {
         </div>
       </div>
 
-      {/* Promotion Zone Notice (Strict success tokens) */}
-      <div className="flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-success-soft border border-success/30 text-success text-xs font-bold">
-        <IconCheck size={16} filled className="shrink-0 text-success" />
+      {/* Promotion Zone Notice (Strict WCAG AA success tokens) */}
+      <div className="flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-success-soft border border-success/30 text-[#1B6E32] text-xs font-bold">
+        <IconCheck size={16} filled className="shrink-0 text-success-dark" />
         <span>You are currently in the Promotion Zone! Keep logging bounties to stay ahead.</span>
       </div>
 
       {/* Leaderboard Table */}
-      <div className="bg-surface rounded-3xl border-2 border-slate-200 overflow-hidden shadow-xs">
+      <div className="bg-surface rounded-3xl border-2 border-slate-200 overflow-hidden shadow-xs w-full">
         <div className="p-4 border-b-2 border-slate-100 flex items-center justify-between text-xs font-black text-copy-muted uppercase tracking-wider">
           <span>Adventurer</span>
           <span>Weekly XP</span>
@@ -73,11 +73,11 @@ export const GuildLeague: React.FC = () => {
                 <span
                   className={`w-7 text-center font-black text-sm ${
                     player.rank === 1
-                      ? 'text-accent text-base'
+                      ? 'text-[#875800] text-base'
                       : player.rank === 2
-                      ? 'text-slate-400 text-base'
+                      ? 'text-slate-500 text-base'
                       : player.rank === 3
-                      ? 'text-accent/80 text-base'
+                      ? 'text-[#875800] text-base'
                       : 'text-slate-400'
                   }`}
                 >

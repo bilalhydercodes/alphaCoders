@@ -111,7 +111,7 @@ export const GuildEmporium: React.FC = () => {
         <div
           className={`p-3.5 rounded-2xl border text-xs font-bold flex items-center justify-between ${
             message.type === 'success'
-              ? 'bg-success-soft border-success/30 text-success'
+              ? 'bg-success-soft border-success/30 text-[#1B6E32]'
               : 'bg-danger-soft border-danger/30 text-danger'
           }`}
         >
@@ -141,11 +141,11 @@ export const GuildEmporium: React.FC = () => {
               <div>
                 {/* Top Badge & Cost */}
                 <div className="flex items-center justify-between gap-2 mb-2">
-                  <span className="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-lavender-soft text-primary uppercase tracking-wide">
+                  <span className="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-lavender-soft text-[#492673] border border-primary/20 uppercase tracking-wide">
                     {item.category.replace('_', ' ')}
                   </span>
-                  <div className="flex items-center gap-1 font-black text-xs text-accent">
-                    <IconGoldCoin size={14} filled />
+                  <div className="flex items-center gap-1 font-black text-xs text-[#875800]">
+                    <IconGoldCoin size={14} filled className="text-accent" />
                     <span>{item.cost} GP</span>
                   </div>
                 </div>
