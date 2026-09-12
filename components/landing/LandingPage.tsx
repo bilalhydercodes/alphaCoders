@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { LandingNav } from './LandingNav';
-import { PaperHero } from './PaperHero';
 import { ScrollyVideoCanvas } from './ScrollyVideoCanvas';
 import { LandingFeatures } from './LandingFeatures';
 import { LandingFaq } from './LandingFaq';
@@ -63,10 +62,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterDashboard }) =>
 
       {/* Main Experience */}
       <main className="flex-1 flex flex-col relative">
-        {/* 1. Architectural Draft Paper Hero (Lifts up like a curtain on scroll) */}
-        <PaperHero onOpenAuth={() => handleOpenAuth('register')} />
-
-        {/* 2. 3D Scrollytelling Video Canvas (Unveiled on scroll, frames 020 to 184) */}
+        {/* 3D Scrollytelling Experience with Integrated Draft Paper Curtain Hero */}
         <ScrollyVideoCanvas onOpenAuth={() => handleOpenAuth('register')} />
 
         {/* 3. Progression Layers: 4 Systems Features & FAQ */}

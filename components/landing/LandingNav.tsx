@@ -15,8 +15,8 @@ export const LandingNav: React.FC<LandingNavProps> = ({ onOpenAuth, onOpenDashbo
 
   return (
     <header className="fixed top-3 sm:top-4 inset-x-0 z-50 px-3 sm:px-4 flex justify-center pointer-events-none">
-      {/* Strict Sharp Rectangular Nav Island - Exactly like the reference image (no rounded corners) */}
-      <div className="w-full max-w-[880px] bg-white border border-[#2B2927] shadow-[0_4px_16px_rgba(0,0,0,0.06)] px-3 sm:px-4 py-1.5 sm:py-2 flex items-center justify-between gap-3 sm:gap-4 pointer-events-auto rounded-none transition-all">
+      {/* Compact Sharp Rectangular Nav Island - Compact width & increased height matching reference */}
+      <div className="w-full max-w-[540px] h-[58px] sm:h-[62px] bg-white border border-[#2B2927] shadow-[0_4px_18px_rgba(0,0,0,0.06)] px-3.5 sm:px-4 flex items-center justify-between gap-3 pointer-events-auto rounded-none transition-all">
         {/* Left: Brand Identity (Sharp rectangular icon box + typography) */}
         <div className="flex items-center">
           <a
@@ -25,18 +25,18 @@ export const LandingNav: React.FC<LandingNavProps> = ({ onOpenAuth, onOpenDashbo
             aria-label="Life RPG Home"
           >
             {/* Square sharp icon container */}
-            <div className="w-7 h-7 bg-[#EDE4FC] border border-[#2B2927] rounded-none flex items-center justify-center shrink-0">
-              <LumiMascot mood="content" size={18} />
+            <div className="w-8 h-8 bg-[#EDE4FC] border border-[#2B2927] rounded-none flex items-center justify-center shrink-0">
+              <LumiMascot mood="content" size={19} />
             </div>
-            <span className="text-[15px] font-black text-[#1E1D1C] tracking-tight ml-1">
+            <span className="text-[14px] font-black text-[#1E1D1C] tracking-tight ml-0.5 font-sans">
               Life RPG
             </span>
           </a>
         </div>
 
-        {/* Center: Navigation Links (Clean text links matching reference) */}
+        {/* Center: Navigation Links (Compact text links matching reference) */}
         <nav
-          className="hidden md:flex items-center gap-6 text-[13px] font-semibold text-[#5A534B]"
+          className="hidden sm:flex items-center gap-3.5 md:gap-4.5 text-[12px] font-semibold text-[#5A534B]"
           aria-label="Primary Navigation"
         >
           <a
@@ -63,7 +63,7 @@ export const LandingNav: React.FC<LandingNavProps> = ({ onOpenAuth, onOpenDashbo
             }}
             className="hover:text-[#1E1D1C] transition-colors py-1"
           >
-            How It Works
+            Quests
           </a>
           <a
             href="#meet-lumi"
@@ -76,7 +76,7 @@ export const LandingNav: React.FC<LandingNavProps> = ({ onOpenAuth, onOpenDashbo
             }}
             className="hover:text-[#1E1D1C] transition-colors py-1"
           >
-            Companion
+            Lumi
           </a>
           <a
             href="#faq"
@@ -93,13 +93,13 @@ export const LandingNav: React.FC<LandingNavProps> = ({ onOpenAuth, onOpenDashbo
           </a>
         </nav>
 
-        {/* Right: Actions (Strict sharp rectangle button with dashboard purple palette) */}
-        <div className="flex items-center gap-3 shrink-0">
+        {/* Right: Action Button (Taller sharp rectangular button matching reference) */}
+        <div className="flex items-center gap-2 shrink-0">
           {/* Audio Chime Mute Toggle */}
           <button
             type="button"
             onClick={toggleSound}
-            className="hidden sm:inline-flex items-center justify-center w-7 h-7 bg-slate-100 hover:bg-slate-200 border border-[#2B2927] rounded-none text-slate-700 transition-colors text-xs font-bold cursor-pointer"
+            className="hidden md:inline-flex items-center justify-center w-7 h-7 bg-slate-100 hover:bg-slate-200 border border-[#2B2927] rounded-none text-slate-700 transition-colors text-xs font-bold cursor-pointer"
             title={isMuted ? 'Unmute audio' : 'Mute audio'}
             aria-label={isMuted ? 'Unmute audio' : 'Mute audio'}
           >
@@ -115,35 +115,24 @@ export const LandingNav: React.FC<LandingNavProps> = ({ onOpenAuth, onOpenDashbo
                   onOpenDashboard();
                 }
               }}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 text-xs font-bold text-white bg-[#7042C1] hover:bg-[#5F37A6] active:bg-[#4E2B8D] border border-[#2B2927] rounded-none shadow-xs transition-colors cursor-pointer whitespace-nowrap"
+              className="inline-flex items-center gap-2 px-3.5 sm:px-4 h-[40px] sm:h-[42px] text-xs font-bold text-white bg-[#7042C1] hover:bg-[#5F37A6] active:bg-[#4E2B8D] border border-[#2B2927] rounded-none shadow-xs transition-colors cursor-pointer whitespace-nowrap"
             >
               <div className="w-4 h-4 bg-[#542E96] rounded-none flex items-center justify-center shrink-0">
                 <IconSparkles size={11} className="text-white" />
               </div>
-              <span>Open Dashboard</span>
+              <span>Dashboard</span>
             </a>
           ) : (
-            <div className="flex items-center gap-2 sm:gap-3">
-              <button
-                type="button"
-                onClick={() => onOpenAuth('login')}
-                className="text-xs font-semibold text-[#5A534B] hover:text-[#1E1D1C] transition-colors cursor-pointer hidden sm:block px-1"
-              >
-                Log in
-              </button>
-
-              {/* Exact sharp rectangle button with left square icon box */}
-              <button
-                type="button"
-                onClick={() => onOpenAuth('register')}
-                className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 text-xs font-bold text-white bg-[#7042C1] hover:bg-[#5F37A6] active:bg-[#4E2B8D] border border-[#2B2927] rounded-none shadow-xs transition-colors cursor-pointer whitespace-nowrap"
-              >
-                <div className="w-4 h-4 bg-[#542E96] rounded-none flex items-center justify-center shrink-0">
-                  <IconSparkles size={11} className="text-white" />
-                </div>
-                <span>Try for free</span>
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={() => onOpenAuth('register')}
+              className="inline-flex items-center gap-2 px-3.5 sm:px-4 h-[40px] sm:h-[42px] text-xs font-bold text-white bg-[#7042C1] hover:bg-[#5F37A6] active:bg-[#4E2B8D] border border-[#2B2927] rounded-none shadow-xs transition-colors cursor-pointer whitespace-nowrap"
+            >
+              <div className="w-4 h-4 bg-[#542E96] rounded-none flex items-center justify-center shrink-0">
+                <IconSparkles size={11} className="text-white" />
+              </div>
+              <span>Try for free</span>
+            </button>
           )}
         </div>
       </div>

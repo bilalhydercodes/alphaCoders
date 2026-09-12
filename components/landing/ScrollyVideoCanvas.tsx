@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useEffect, useState, useCallback } from 'react';
+import { PaperHero } from './PaperHero';
 
 const START_FRAME = 20;
 const END_FRAME = 184;
@@ -17,6 +18,9 @@ export const ScrollyVideoCanvas: React.FC<ScrollyVideoCanvasProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const curtainRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
+  const videoFrameRef = useRef<HTMLDivElement>(null);
   // Store cached frames indexed by frame number (20..184)
   const imagesRef = useRef<{ [key: number]: HTMLImageElement | null }>({});
 
@@ -170,7 +174,7 @@ export const ScrollyVideoCanvas: React.FC<ScrollyVideoCanvasProps> = ({
     };
   }, [renderFrame]);
 
-  // Track container scroll position smoothly
+  // Track container scroll position and choreograph the 3 distinct stages smoothly
   useEffect(() => {
     const handleScroll = () => {
       const container = containerRef.current;
@@ -185,15 +189,64 @@ export const ScrollyVideoCanvas: React.FC<ScrollyVideoCanvasProps> = ({
       const progress = Math.max(0, Math.min(1, scrolled / scrollableDistance));
       setScrollProgress(progress);
 
-      // Map progress 0.0 -> 1.0 directly to Frame 20 -> 184
-      const targetFrame = Math.round(START_FRAME + progress * (END_FRAME - START_FRAME));
-      targetFrameRef.current = targetFrame;
+      const isMobile = window.innerWidth < 640;
+      const targetTop = isMobile ? 74 : 80;
+      const initialTop = window.innerHeight * 0.5;
+
+      if (progress <= 0.12) {
+        // Stage 1: Text moves up first with 2-3 frames scrub
+        const p1 = progress / 0.12;
+        if (textRef.current) {
+          textRef.current.style.transform = `translateY(-${p1 * 60}px)`;
+        }
+        if (curtainRef.current) {
+          curtainRef.current.style.transform = 'translateY(0%)';
+        }
+        if (videoFrameRef.current) {
+          videoFrameRef.current.style.top = `${initialTop}px`;
+        }
+        // Scrub 2-3 frames from frame 20 to 23
+        targetFrameRef.current = Math.round(START_FRAME + p1 * 3);
+      } else if (progress < 0.30) {
+        // Stage 2: Paper section and text sync and move up scroll animation (curtain lifts)
+        const p2 = (progress - 0.12) / 0.18;
+        if (textRef.current) {
+          textRef.current.style.transform = 'translateY(-60px)';
+        }
+        if (curtainRef.current) {
+          curtainRef.current.style.transform = `translateY(-${p2 * 100}%)`;
+        }
+        if (videoFrameRef.current) {
+          const currentTop = initialTop - p2 * (initialTop - targetTop);
+          videoFrameRef.current.style.top = `${currentTop}px`;
+        }
+        // Hold frame at 23 during curtain movement
+        targetFrameRef.current = 23;
+      } else {
+        // Stage 3: Curtain is off-screen, video frames scrub from 23 to 184
+        const p3 = (progress - 0.30) / 0.70;
+        if (textRef.current) {
+          textRef.current.style.transform = 'translateY(-60px)';
+        }
+        if (curtainRef.current) {
+          curtainRef.current.style.transform = 'translateY(-100%)';
+        }
+        if (videoFrameRef.current) {
+          videoFrameRef.current.style.top = `${targetTop}px`;
+        }
+        // Scrub frames 23 -> 184
+        targetFrameRef.current = Math.round(23 + p3 * (END_FRAME - 23));
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
     handleScroll();
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
   }, []);
 
   return (
@@ -201,34 +254,51 @@ export const ScrollyVideoCanvas: React.FC<ScrollyVideoCanvasProps> = ({
       ref={containerRef}
       id="how-it-works"
       aria-label="Life RPG Interactive 3D Experience"
-      className="relative w-full h-[360vh] bg-black scroll-mt-0"
+      className="relative w-full h-[380vh] bg-draft-paper scroll-mt-0"
     >
       <div id="meet-lumi" className="absolute top-0 pointer-events-none" />
-      {/* Sticky Fullscreen Edge-to-Edge Scrollytelling Viewport */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
-        {/* Full-Bleed Edge-to-Edge Canvas */}
-        <canvas
-          ref={canvasRef}
-          className="absolute inset-0 w-full h-full block cursor-grab active:cursor-grabbing"
-          aria-label="3D visual animation scrubbing smoothly on scroll"
+
+      {/* Sticky Fullscreen Viewport Framed with Architectural Draft Paper */}
+      <div className="sticky top-0 h-screen w-full overflow-hidden bg-draft-paper">
+        {/* Stage 1 & 2: Architectural Draft Paper Curtain Hero */}
+        <PaperHero
+          ref={curtainRef}
+          textRef={textRef}
+          onOpenAuth={onOpenAuth}
         />
 
-        {/* Bottom gradient smoothly merging with next section */}
-        <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-surface via-surface/60 to-transparent pointer-events-none z-10" />
+        {/* Framed 3D Video Screen with Draft Paper Margins & Borders */}
+        <div
+          ref={videoFrameRef}
+          className="absolute inset-x-3 sm:inset-x-6 md:inset-x-12 lg:inset-x-16 max-w-[1360px] mx-auto border border-[#262524] rounded-none bg-black overflow-hidden shadow-2xl z-10"
+          style={{
+            top: '50vh',
+            bottom: '16px',
+          }}
+        >
+          {/* Framed Canvas */}
+          <canvas
+            ref={canvasRef}
+            className="w-full h-full block cursor-grab active:cursor-grabbing"
+            aria-label="3D visual animation scrubbing smoothly on scroll"
+          />
 
-        {/* Loading Indicator */}
-        {!isReady && (
-          <div className="absolute inset-0 z-40 flex flex-col items-center justify-center gap-3 bg-black/80 backdrop-blur-md text-white">
-            <div className="w-10 h-10 border-3 border-purple-500/20 border-t-purple-500 rounded-full animate-spin" />
-            <span className="text-xs font-bold text-slate-300">
-              Loading 3D Workspace ({loadProgress}%)...
-            </span>
+          {/* Loading Indicator */}
+          {!isReady && (
+            <div className="absolute inset-0 z-40 flex flex-col items-center justify-center gap-3 bg-black/80 backdrop-blur-md text-white">
+              <div className="w-10 h-10 border-3 border-purple-500/20 border-t-purple-500 rounded-full animate-spin" />
+              <span className="text-xs font-bold text-slate-300">
+                Loading 3D Workspace ({loadProgress}%)...
+              </span>
+            </div>
+          )}
+
+          {/* Bottom-Right Architectural Drafting Coordinates Badge matching reference image */}
+          <div className="absolute bottom-2.5 right-2.5 sm:bottom-3 sm:right-3 z-20 flex items-center gap-2 text-[10px] sm:text-[11px] font-draft-mono text-white/80 bg-black/60 backdrop-blur-xs px-2.5 py-1 border border-white/15 rounded-none pointer-events-none">
+            <span>X 334.40 / Y 214.40</span>
+            <span className="opacity-40">|</span>
+            <span className="hidden sm:inline">3D WORKSPACE</span>
           </div>
-        )}
-
-        {/* Bottom-Right Tagline matching reference layout */}
-        <div className="absolute bottom-4 right-4 sm:right-6 z-20 hidden sm:flex items-center gap-2 text-[11px] font-medium text-white/70 bg-black/40 backdrop-blur-xs px-2.5 py-1 border border-white/10 rounded-none pointer-events-none">
-          <span>The agentic 3D workspace that levels up with you.</span>
         </div>
       </div>
     </section>
