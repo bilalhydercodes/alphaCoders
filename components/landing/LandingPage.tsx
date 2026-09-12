@@ -85,6 +85,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterDashboard }) =>
           onClose={() => setAuthModalOpen(false)}
           onSuccess={() => {
             setAuthModalOpen(false);
+            if (typeof window !== 'undefined') {
+              sessionStorage.setItem('liferpg_active_view', 'dashboard');
+              if (window.location.pathname.startsWith('/landing') || !onEnterDashboard) {
+                window.location.href = '/?view=dashboard';
+                return;
+              }
+            }
             onEnterDashboard?.();
           }}
         />

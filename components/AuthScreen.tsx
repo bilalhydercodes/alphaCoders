@@ -122,7 +122,14 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
         setSuccessMsg('Account created successfully! Entering the Guild...');
         sound.playLevelUp();
         setTimeout(() => {
-          onSuccess?.();
+          if (typeof window !== 'undefined') {
+            sessionStorage.setItem('liferpg_active_view', 'dashboard');
+          }
+          if (onSuccess) {
+            onSuccess();
+          } else if (typeof window !== 'undefined') {
+            window.location.href = '/?view=dashboard';
+          }
         }, 500);
       }
       return;
@@ -155,7 +162,14 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
       setSuccessMsg('Credentials verified! Welcome back.');
       sound.playQuestComplete();
       setTimeout(() => {
-        onSuccess?.();
+        if (typeof window !== 'undefined') {
+          sessionStorage.setItem('liferpg_active_view', 'dashboard');
+        }
+        if (onSuccess) {
+          onSuccess();
+        } else if (typeof window !== 'undefined') {
+          window.location.href = '/?view=dashboard';
+        }
       }, 400);
     }
   };
@@ -181,7 +195,14 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
     setSuccessMsg('Guest session initialized! Entering realm...');
     sound.playQuestComplete();
     setTimeout(() => {
-      onSuccess?.();
+      if (typeof window !== 'undefined') {
+        sessionStorage.setItem('liferpg_active_view', 'dashboard');
+      }
+      if (onSuccess) {
+        onSuccess();
+      } else if (typeof window !== 'undefined') {
+        window.location.href = '/?view=dashboard';
+      }
     }, 400);
   };
 
@@ -474,11 +495,11 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
               <div className="flex gap-1.5 font-draft-mono">
                 <button
                   type="button"
-                  onClick={() => handleQuickFill('hero123', 'password123')}
+                  onClick={() => handleQuickFill('demo', 'demo123')}
                   className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-[#EADFFF]/50 text-[11px] font-bold text-[#1F1730] border border-slate-200 transition-colors cursor-pointer"
-                  title="Autofill hero123"
+                  title="Autofill demo"
                 >
-                  hero123
+                  demo
                 </button>
                 <button
                   type="button"

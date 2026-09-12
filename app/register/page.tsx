@@ -3,12 +3,12 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import { LumiProvider } from '@/components/lumi';
-import { LandingPage } from '@/components/landing/LandingPage';
+import { AuthScreen } from '@/components/AuthScreen';
 
-export default function LandingPageRoute() {
+export default function RegisterPage() {
   const router = useRouter();
 
-  const handleEnterDashboard = () => {
+  const handleSuccess = () => {
     if (typeof window !== 'undefined') {
       sessionStorage.setItem('liferpg_active_view', 'dashboard');
       window.location.href = '/?view=dashboard';
@@ -17,9 +17,17 @@ export default function LandingPageRoute() {
     }
   };
 
+  const handleClose = () => {
+    router.push('/');
+  };
+
   return (
     <LumiProvider>
-      <LandingPage onEnterDashboard={handleEnterDashboard} />
+      <AuthScreen
+        initialMode="register"
+        onClose={handleClose}
+        onSuccess={handleSuccess}
+      />
     </LumiProvider>
   );
 }

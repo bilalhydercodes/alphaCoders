@@ -62,20 +62,25 @@ export default function HomePage() {
         sessionStorage.setItem('liferpg_active_view', 'landing');
       } else {
         const saved = sessionStorage.getItem('liferpg_active_view');
-        if (saved === 'dashboard') {
+        if (saved === 'dashboard' || user) {
           setViewMode('dashboard');
+          sessionStorage.setItem('liferpg_active_view', 'dashboard');
         } else {
           setViewMode('landing');
           sessionStorage.setItem('liferpg_active_view', 'landing');
         }
       }
     }
-  }, []);
+  }, [user]);
 
   const handleEnterDashboard = () => {
     setViewMode('dashboard');
     if (typeof window !== 'undefined') {
       sessionStorage.setItem('liferpg_active_view', 'dashboard');
+      if (window.location.pathname !== '/') {
+        window.location.href = '/?view=dashboard';
+        return;
+      }
       const url = new URL(window.location.href);
       url.searchParams.set('view', 'dashboard');
       window.history.replaceState(null, '', url.toString());
