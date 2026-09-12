@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { sound } from '@/lib/sound';
 import { useAuth } from '@/context/AuthContext';
+import { useLumi, LumiPresenter } from './lumi';
 import { Button } from './ui/Button';
 import { LumiMascot } from './LumiMascot';
 import {
@@ -25,6 +26,7 @@ export const FocusTimerModal: React.FC<FocusTimerModalProps> = ({
   onTimerComplete,
 }) => {
   const { triggerLumiReaction, refreshUser } = useAuth();
+  const lumi = useLumi();
   const [secondsLeft, setSecondsLeft] = useState(25 * 60);
   const [isActive, setIsActive] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
@@ -32,6 +34,7 @@ export const FocusTimerModal: React.FC<FocusTimerModalProps> = ({
   useEffect(() => {
     if (isOpen) {
       triggerLumiReaction('focus', 'Focus mode ON! Distractions blocked.');
+      lumi.react('FOCUS', 'Focus mode ON! Distractions blocked.');
     }
   }, [isOpen]);
 
@@ -47,6 +50,7 @@ export const FocusTimerModal: React.FC<FocusTimerModalProps> = ({
       setIsCompleted(true);
       sound.playLevelUp();
       triggerLumiReaction('achievement', 'Magnificent focus session completed! Intellect boosted.');
+      lumi.react('ACHIEVEMENT', 'Magnificent focus session completed! Intellect boosted.', 50);
       handleReward();
     }
 
@@ -131,9 +135,9 @@ export const FocusTimerModal: React.FC<FocusTimerModalProps> = ({
           Lumi is focused and working alongside you!
         </p>
 
-        {/* Vector Mascot with Focused mood */}
-        <div className="my-3 flex items-center justify-center">
-          <LumiMascot mood="focused" size={144} />
+        {/* 3D Focused Lumi Companion */}
+        <div className="my-2 w-full flex items-center justify-center">
+          <LumiPresenter variant="focus" height={180} interactive />
         </div>
 
         {/* Digital Clock Display */}

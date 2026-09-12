@@ -26,6 +26,7 @@ import {
 } from '@/components/icons/LumiIcons';
 import { LumiMascot } from '@/components/LumiMascot';
 import { XpArcProvider } from '@/components/XpArcManager';
+import { LumiProvider, LumiDebugPanel } from '@/components/lumi';
 
 export default function HomePage() {
   const { user, isLoading, toggleSound } = useAuth();
@@ -107,8 +108,9 @@ export default function HomePage() {
   }
 
   return (
-    <XpArcProvider>
-      <div className="min-h-screen bg-background flex flex-col">
+    <LumiProvider>
+      <XpArcProvider>
+        <div className="min-h-screen bg-background flex flex-col">
       {/* 1. Left Fixed Desktop Sidebar (256px wide) */}
       <Sidebar
         activeTab={activeTab}
@@ -251,11 +253,13 @@ export default function HomePage() {
         onTimerComplete={() => setRefreshTrigger((prev) => prev + 1)}
       />
 
-      <KeyboardShortcutsModal
-        isOpen={isShortcutsOpen}
-        onClose={() => setIsShortcutsOpen(false)}
-      />
-    </div>
-    </XpArcProvider>
+        <KeyboardShortcutsModal
+          isOpen={isShortcutsOpen}
+          onClose={() => setIsShortcutsOpen(false)}
+        />
+        <LumiDebugPanel />
+      </div>
+      </XpArcProvider>
+    </LumiProvider>
   );
 }

@@ -5,6 +5,7 @@ import { QuestMapNode, MapNodeData } from './QuestMapNode';
 import { sound } from '@/lib/sound';
 import { useAuth } from '@/context/AuthContext';
 import { useXpArc } from './XpArcManager';
+import { useLumi } from './lumi';
 import { Button } from './ui/Button';
 import {
   IconCheck,
@@ -21,6 +22,7 @@ interface QuestMapProps {
 export const QuestMap: React.FC<QuestMapProps> = ({ onCompleteQuestModal }) => {
   const { user, refreshUser, updateUserOptimistic, triggerLumiReaction } = useAuth();
   const { triggerXpArc } = useXpArc();
+  const lumi = useLumi();
   const [selectedNode, setSelectedNode] = useState<MapNodeData | null>(null);
   const activeNodeElRef = useRef<HTMLElement | null>(null);
 
@@ -134,6 +136,7 @@ export const QuestMap: React.FC<QuestMapProps> = ({ onCompleteQuestModal }) => {
     }));
 
     triggerLumiReaction('achievement', `Node completed! +${selectedNode.xpReward} XP gained!`);
+    lumi.react('QUEST_COMPLETE', `Node completed! +${selectedNode.xpReward} XP gained!`, selectedNode.xpReward);
 
     try {
       const res = await fetch('/api/quests', {

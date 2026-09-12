@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useXpArc } from './XpArcManager';
+import { useLumi } from './lumi';
 import { sound } from '@/lib/sound';
 import { Button } from './ui/Button';
 import { LumiMascot } from './LumiMascot';
@@ -74,6 +75,7 @@ export const QuestBoard: React.FC<QuestBoardProps> = ({
 }) => {
   const { refreshUser, updateUserOptimistic, triggerLumiReaction } = useAuth();
   const { triggerXpArc } = useXpArc();
+  const { react: lumiReact } = useLumi();
   const [quests, setQuests] = useState<Quest[]>([]);
   const [activeTypeTab, setActiveTypeTab] = useState<'ALL' | 'DAILY' | 'TODO' | 'HABIT'>('ALL');
   const [activeCategory, setActiveCategory] = useState<string>('ALL');
@@ -134,8 +136,10 @@ export const QuestBoard: React.FC<QuestBoardProps> = ({
 
     if (quest.category === 'VITALITY') {
       triggerLumiReaction('selfcare', 'Vitality replenished! Lumi feels nourished.');
+      lumiReact('SELF_CARE', 'Vitality replenished! Lumi feels nourished.');
     } else {
       triggerLumiReaction('achievement', 'Bounty completed! Glory to the Guild!');
+      lumiReact('QUEST_COMPLETE', `Bounty completed! +${quest.xpReward} XP gained!`);
     }
 
     try {

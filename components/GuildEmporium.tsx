@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { sound } from '@/lib/sound';
+import { useLumi } from './lumi';
 import { Button } from './ui/Button';
 import {
   IconGoldCoin,
@@ -13,6 +14,7 @@ import {
 
 export const GuildEmporium: React.FC = () => {
   const { user, refreshUser, updateUserOptimistic, triggerLumiReaction } = useAuth();
+  const lumi = useLumi();
   const [items, setItems] = useState<any[]>([]);
   const [buyingId, setBuyingId] = useState<string | null>(null);
   const [message, setMessage] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
@@ -42,6 +44,7 @@ export const GuildEmporium: React.FC = () => {
         type: 'error',
       });
       triggerLumiReaction('yougotthis', 'A few more quests and you can afford this!');
+      lumi.react('YOU_GOT_THIS', 'A few more quests and you can afford this!');
       return;
     }
 
@@ -66,6 +69,7 @@ export const GuildEmporium: React.FC = () => {
         sound.playQuestComplete();
         setMessage({ text: `Acquired ${item.name}! Check your Character Codex.`, type: 'success' });
         triggerLumiReaction('explore', `Lumi loves the new ${item.name}!`);
+        lumi.react('SHOP_TRY_ON', `Lumi is thrilled with the new ${item.name}!`, item.cost);
         await refreshUser();
         await fetchItems();
       } else {

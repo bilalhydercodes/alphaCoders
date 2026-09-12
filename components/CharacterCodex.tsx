@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { sound } from '@/lib/sound';
+import { useLumi, LumiPresenter } from './lumi';
 import { Button } from './ui/Button';
 import { LumiMascot } from './LumiMascot';
 import {
@@ -20,6 +21,7 @@ import {
 
 export const CharacterCodex: React.FC = () => {
   const { user, refreshUser } = useAuth();
+  const lumi = useLumi();
   const [inventory, setInventory] = useState<any[]>([]);
   const [equippingId, setEquippingId] = useState<string | null>(null);
 
@@ -53,6 +55,7 @@ export const CharacterCodex: React.FC = () => {
       const data = await res.json();
       if (data.success) {
         sound.playQuestComplete();
+        lumi.react('SHOP_TRY_ON', 'Equipment adjusted! Looking magnificent.');
         await refreshUser();
         await fetchInventory();
       }
@@ -191,6 +194,14 @@ export const CharacterCodex: React.FC = () => {
             </h3>
             <span className="text-xs text-copy-muted font-semibold">
               {inventory.length} items
+            </span>
+          </div>
+
+          {/* 3D Companion Pedestal Showcase */}
+          <div className="w-full rounded-2xl bg-gradient-to-b from-lavender-soft/40 to-surface border border-primary/20 p-2 overflow-hidden flex flex-col items-center justify-center">
+            <LumiPresenter variant="pedestal" height={170} interactive />
+            <span className="text-[10px] font-extrabold text-primary uppercase tracking-widest mt-1">
+              Companion Paper Doll · Interactive 3D
             </span>
           </div>
 

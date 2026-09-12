@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti';
 import { sound } from '@/lib/sound';
+import { useLumi, LumiPresenter } from './lumi';
 import { LumiMascot } from './LumiMascot';
 import { Button } from './ui/Button';
 import {
@@ -34,10 +35,12 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
   statGained,
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
+  const lumi = useLumi();
 
   useEffect(() => {
     if (isOpen) {
       sound.playLevelUp();
+      lumi.react('LEVEL_UP', `You reached Level ${newLevel}! So proud of you!`, xpEarned);
 
       // Confetti burst
       const count = 200;
@@ -94,9 +97,9 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
           <span>LEVEL UP RECOGNITION</span>
         </div>
 
-        {/* Big celebrating Lumi vector mascot */}
-        <div className="relative my-3 flex items-center justify-center">
-          <LumiMascot mood="celebrating" size={170} />
+        {/* Real-time 3D Celebrating Lumi */}
+        <div className="relative my-2 w-full flex items-center justify-center">
+          <LumiPresenter variant="modal" height={210} interactive />
         </div>
 
         {/* Congratulatory Text */}
