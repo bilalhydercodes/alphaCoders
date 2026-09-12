@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { sound } from '@/lib/sound';
 import { Button } from './ui/Button';
+import { LumiPresenter } from './lumi';
 import { LumiMascot } from './LumiMascot';
 import {
   IconShield,
@@ -104,14 +105,14 @@ export const AuthScreen: React.FC = () => {
               </div>
               <div className="flex items-center gap-3 text-xs font-bold text-copy">
                 <IconHeart size={18} filled className="text-danger shrink-0" />
-                <span>Dynamic vector companion moods reacting to your real journey</span>
+                <span>Real-time interactive 3D companion reacting to your real journey</span>
               </div>
             </div>
           </div>
 
-          {/* Hero Mascot Vector */}
-          <div className="relative mt-8 flex items-center justify-center">
-            <LumiMascot mood="radiant" size={190} />
+          {/* Hero Mascot 3D Model */}
+          <div className="relative mt-6 flex items-center justify-center">
+            <LumiPresenter variant="dashboard" height={220} showSpeech={false} interactive={true} />
           </div>
         </div>
 

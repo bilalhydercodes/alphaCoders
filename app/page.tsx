@@ -104,7 +104,11 @@ export default function HomePage() {
 
   // Not authenticated -> Show Auth & Landing Screen
   if (!user) {
-    return <AuthScreen />;
+    return (
+      <LumiProvider>
+        <AuthScreen />
+      </LumiProvider>
+    );
   }
 
   return (

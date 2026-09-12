@@ -90,8 +90,8 @@ export const CharacterCodex: React.FC = () => {
       {/* Header & Character Identity */}
       <div className="bg-surface rounded-2xl border-2 border-slate-200 p-6 shadow-xs flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-5">
-          <div className="w-20 h-20 rounded-2xl bg-gradient-to-b from-lavender-soft to-surface border-2 border-primary/30 flex items-center justify-center p-1 shadow-xs overflow-hidden shrink-0">
-            <LumiMascot mood="content" size={68} />
+          <div className="w-20 h-20 rounded-2xl bg-gradient-to-b from-lavender-soft to-surface border-2 border-primary/30 flex items-center justify-center p-0.5 shadow-xs overflow-hidden shrink-0">
+            <LumiPresenter variant="mini" height={76} showSpeech={false} interactive={false} />
           </div>
           <div>
             <div className="flex items-center gap-2">

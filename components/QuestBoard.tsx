@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useXpArc } from './XpArcManager';
-import { useLumi } from './lumi';
+import { useLumi, LumiPresenter } from './lumi';
 import { sound } from '@/lib/sound';
 import { Button } from './ui/Button';
 import { LumiMascot } from './LumiMascot';
@@ -266,9 +266,9 @@ export const QuestBoard: React.FC<QuestBoardProps> = ({
 
       {/* Quest Cards Grid / List */}
       {filteredQuests.length === 0 ? (
-        <div className="bg-surface rounded-2xl border-2 border-slate-200 p-10 flex flex-col items-center justify-center text-center shadow-xs">
-          <div className="w-36 h-36 mb-3 flex items-center justify-center">
-            <LumiMascot mood="explore" size={130} />
+        <div className="bg-surface rounded-2xl border-2 border-slate-200 p-8 flex flex-col items-center justify-center text-center shadow-xs">
+          <div className="w-48 h-44 mb-2 flex items-center justify-center">
+            <LumiPresenter variant="mini" height={160} showSpeech={false} interactive={true} />
           </div>
           <h3 className="text-base font-extrabold text-copy">The Bounty Board is Clear</h3>
           <p className="text-xs text-copy-muted max-w-sm mt-1 mb-4">
