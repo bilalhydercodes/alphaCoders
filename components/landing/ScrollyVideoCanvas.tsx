@@ -201,7 +201,7 @@ export const ScrollyVideoCanvas: React.FC<ScrollyVideoCanvasProps> = ({
       ref={containerRef}
       id="how-it-works"
       aria-label="Life RPG Interactive 3D Experience"
-      className="relative w-full h-[360vh] bg-black scroll-mt-10"
+      className="relative w-full h-[360vh] bg-black scroll-mt-0"
     >
       <div id="meet-lumi" className="absolute top-0 pointer-events-none" />
       {/* Sticky Fullscreen Edge-to-Edge Scrollytelling Viewport */}
@@ -213,31 +213,22 @@ export const ScrollyVideoCanvas: React.FC<ScrollyVideoCanvasProps> = ({
           aria-label="3D visual animation scrubbing smoothly on scroll"
         />
 
-        {/* Cinematic Vignettes */}
-        {/* Top gradient for floating navbar clarity */}
-        <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-black/60 via-black/25 to-transparent pointer-events-none z-10" />
-
         {/* Bottom gradient smoothly merging with next section */}
-        <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-surface via-surface/60 to-transparent pointer-events-none z-10" />
+        <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-surface via-surface/60 to-transparent pointer-events-none z-10" />
 
         {/* Loading Indicator */}
         {!isReady && (
           <div className="absolute inset-0 z-40 flex flex-col items-center justify-center gap-3 bg-black/80 backdrop-blur-md text-white">
-            <div className="w-12 h-12 border-4 border-purple-500/20 border-t-purple-500 rounded-full animate-spin" />
+            <div className="w-10 h-10 border-3 border-purple-500/20 border-t-purple-500 rounded-full animate-spin" />
             <span className="text-xs font-bold text-slate-300">
-              Loading 3D Experience ({loadProgress}%)...
+              Loading 3D Workspace ({loadProgress}%)...
             </span>
           </div>
         )}
 
-        {/* Minimal Scroll Helper Indicator at Bottom Center - Fades on scroll */}
-        <div
-          className={`absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white/90 shadow-lg text-xs font-bold transition-opacity duration-300 pointer-events-none ${
-            scrollProgress > 0.03 ? 'opacity-0' : 'opacity-100'
-          }`}
-        >
-          <span>Scroll to explore the 3D journey</span>
-          <span className="animate-bounce inline-block">↓</span>
+        {/* Bottom-Right Tagline matching reference layout */}
+        <div className="absolute bottom-4 right-4 sm:right-6 z-20 hidden sm:flex items-center gap-2 text-[11px] font-medium text-white/70 bg-black/40 backdrop-blur-xs px-2.5 py-1 border border-white/10 rounded-none pointer-events-none">
+          <span>The agentic 3D workspace that levels up with you.</span>
         </div>
       </div>
     </section>
