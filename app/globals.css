@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #9966CC;
+  --on-primary: #1F1730;
+  --background: #F8F8FF;
+  --text: #2E2438;
+  --text-muted: #7A6F8C;
+  --accent: #F5B700;
+  --success: #4FCE6B;
+  --danger: #E5484D;
+}
+
+body {
+  background-color: #F8F8FF;
+  color: #2E2438;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Tactile 10px spacing and button focus indicators */
+*:focus-visible {
+  outline: 2px solid #9966CC;
+  outline-offset: 2px;
+}
+
+/* Touch targets >= 44x44px for accessibility */
+button, 
+a, 
+input[type="checkbox"],
+[role="button"] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Custom scrollbar matching Amethyst palette */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F0EFFF;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #DCC7FF;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9966CC;
+}
+
+/* Floating combat text animation */
+@keyframes float-up-fade {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: translateY(-24px) scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-44px) scale(0.95);
+  }
+}
+
+.animate-float-up {
+  animation: float-up-fade 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* Spring checkbox checkmark draw */
+@keyframes checkmark-draw {
+  0% {
+    stroke-dashoffset: 24;
+    transform: scale(0.8);
+  }
+  60% {
+    stroke-dashoffset: 0;
+    transform: scale(1.15);
+  }
+  100% {
+    stroke-dashoffset: 0;
+    transform: scale(1);
+  }
+}
+
+.animate-checkmark {
+  animation: checkmark-draw 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}

@@ -38,3 +38,7 @@ next-env.d.ts
 # prisma sqlite file
 dev.db
 dev.db-journal
+
+# external clones or archives
+nextjs-duolingo-clone-master/
+
