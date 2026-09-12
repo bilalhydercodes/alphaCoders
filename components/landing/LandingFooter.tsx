@@ -14,7 +14,7 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({
   onOpenShortcuts,
 }) => {
   return (
-    <footer className="bg-surface border-t-2 border-slate-200/80 pt-16 pb-12 px-4 sm:px-8">
+    <footer className="bg-surface pt-16 pb-12 px-4 sm:px-8">
       <div className="max-w-[1140px] mx-auto flex flex-col gap-12">
         {/* Pre-footer Call-To-Action Banner */}
         <div className="bg-gradient-to-br from-lavender-soft/60 to-surface rounded-3xl border-2 border-primary/20 p-8 sm:p-12 flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">

@@ -13,7 +13,7 @@ export const PaperHero = forwardRef<HTMLDivElement, PaperHeroProps>(
       <div
         ref={ref}
         aria-label="Draft Paper Hero"
-        className="absolute top-0 inset-x-0 z-30 h-[50vh] bg-draft-paper border-b border-[#2A2825] shadow-[0_12px_36px_rgba(0,0,0,0.3)] select-none overflow-hidden will-change-transform"
+        className="absolute top-0 inset-x-0 z-30 h-[50vh] bg-draft-paper select-none overflow-hidden will-change-transform"
       >
         {/* Constrained Framed Container matching video margins */}
         <div className="w-full max-w-[1200px] mx-auto h-full flex flex-col justify-between pt-16 sm:pt-20 pb-3 px-4 sm:px-8 md:px-12 lg:px-16">

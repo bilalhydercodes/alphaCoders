@@ -70,7 +70,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterDashboard }) =>
         <PlatformOverview onOpenAuth={() => handleOpenAuth('register')} />
 
         {/* 3. Progression Layers: 4 Systems Features & FAQ */}
-        <div className="relative z-20 bg-background shadow-[0_-30px_90px_rgba(0,0,0,0.5)]">
+        <div className="relative z-20 bg-background">
           <LandingFeatures />
           <LandingFaq />
           <LandingFooter

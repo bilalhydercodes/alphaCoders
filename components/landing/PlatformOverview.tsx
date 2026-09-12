@@ -11,9 +11,9 @@ export const PlatformOverview: React.FC<PlatformOverviewProps> = ({ onOpenAuth }
     <section
       id="about-platform"
       aria-label="About Life RPG Platform"
-      className="relative z-20 w-full bg-draft-paper border-t border-b border-[#262524] py-16 sm:py-24 px-4 sm:px-8 md:px-12 lg:px-16 select-none"
+      className="relative z-20 w-full bg-draft-paper py-16 sm:py-24 px-4 sm:px-8 md:px-12 lg:px-16 select-none"
     >
-      <div className="max-w-[1200px] mx-auto">
+      <div className="max-w-[1200px] mx-auto relative z-10">
         {/* Top Minimal Drafting Markup */}
         <div className="w-full flex items-center justify-between pb-4 mb-8 text-xs font-draft-mono text-[#6E6454] tracking-wider">
           <div className="flex items-center gap-2">
@@ -102,6 +102,9 @@ export const PlatformOverview: React.FC<PlatformOverviewProps> = ({ onOpenAuth }
           </button>
         </div>
       </div>
+
+      {/* Seamless bottom blend into next section */}
+      <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-b from-transparent via-[#F8F8FF]/60 to-[#F8F8FF] pointer-events-none z-0" />
     </section>
   );
 };

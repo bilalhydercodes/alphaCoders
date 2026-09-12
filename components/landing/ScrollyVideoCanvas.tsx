@@ -282,13 +282,6 @@ export const ScrollyVideoCanvas: React.FC<ScrollyVideoCanvasProps> = ({
               </span>
             </div>
           )}
-
-          {/* Bottom-Right Architectural Drafting Coordinates Badge matching reference image */}
-          <div className="absolute bottom-2.5 right-2.5 sm:bottom-3 sm:right-3 z-20 flex items-center gap-2 text-[10px] sm:text-[11px] font-draft-mono text-white/80 bg-black/60 backdrop-blur-xs px-2.5 py-1 border border-white/15 rounded-none pointer-events-none">
-            <span>X 334.40 / Y 214.40</span>
-            <span className="opacity-40">|</span>
-            <span className="hidden sm:inline">3D WORKSPACE</span>
-          </div>
         </div>
       </div>
     </section>
