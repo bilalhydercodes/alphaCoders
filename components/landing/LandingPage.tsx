@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { LandingNav } from './LandingNav';
 import { ScrollyVideoCanvas } from './ScrollyVideoCanvas';
+import { CatalogueCard } from './CatalogueCard';
 import { PlatformOverview } from './PlatformOverview';
 import { LandingFeatures } from './LandingFeatures';
 import { LandingFaq } from './LandingFaq';
@@ -62,21 +63,59 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterDashboard }) =>
       />
 
       {/* Main Experience */}
-      <main className="flex-1 flex flex-col relative">
+      <main className="flex-1 flex flex-col relative overflow-x-hidden">
         {/* 1. 3D Scrollytelling Experience with Integrated Draft Paper Curtain Hero */}
         <ScrollyVideoCanvas onOpenAuth={() => handleOpenAuth('register')} />
 
-        {/* 2. Platform Overview: Architectural Brief explaining what the platform is */}
-        <PlatformOverview onOpenAuth={() => handleOpenAuth('register')} />
+        {/* 2. Separated Catalogue Deck: Each section moves up in turn from left and right */}
+        <div className="relative z-20 w-full py-12 sm:py-20 bg-draft-paper border-t border-[#262524] flex flex-col gap-2 sm:gap-6">
+          {/* Card 1: What is this product (moves from LEFT and up) */}
+          <CatalogueCard
+            id="about-platform"
+            direction="left"
+            cardIndex="01 // OVERVIEW"
+            category="WHAT IS LIFE RPG"
+            bgClassName="bg-draft-paper"
+          >
+            <PlatformOverview onOpenAuth={() => handleOpenAuth('register')} embedded />
+          </CatalogueCard>
 
-        {/* 3. Progression Layers: 4 Systems Features & FAQ */}
-        <div className="relative z-20 bg-background shadow-[0_-30px_90px_rgba(0,0,0,0.5)]">
-          <LandingFeatures />
-          <LandingFaq />
-          <LandingFooter
-            onOpenAuth={() => handleOpenAuth('register')}
-            onOpenShortcuts={() => setIsShortcutsOpen(true)}
-          />
+          {/* Card 2: What are the features (moves from RIGHT and up) */}
+          <CatalogueCard
+            id="features"
+            direction="right"
+            cardIndex="02 // ARCHITECTURE"
+            category="CORE RPG FEATURES"
+            bgClassName="bg-white"
+          >
+            <LandingFeatures embedded />
+          </CatalogueCard>
+
+          {/* Card 3: FAQs (moves from LEFT and up) */}
+          <CatalogueCard
+            id="faq"
+            direction="left"
+            cardIndex="03 // INQUIRIES"
+            category="FREQUENTLY ASKED QUESTIONS"
+            bgClassName="bg-[#FAF8F5]"
+          >
+            <LandingFaq embedded />
+          </CatalogueCard>
+
+          {/* Card 4: Footer (moves from RIGHT and up) */}
+          <CatalogueCard
+            id="guild-footer"
+            direction="right"
+            cardIndex="04 // DISPATCH"
+            category="ADVENTURERS GUILD"
+            bgClassName="bg-white"
+          >
+            <LandingFooter
+              onOpenAuth={() => handleOpenAuth('register')}
+              onOpenShortcuts={() => setIsShortcutsOpen(true)}
+              embedded
+            />
+          </CatalogueCard>
         </div>
       </main>
 

@@ -4,14 +4,18 @@ import React from 'react';
 
 interface PlatformOverviewProps {
   onOpenAuth?: (mode?: 'login' | 'register') => void;
+  embedded?: boolean;
 }
 
-export const PlatformOverview: React.FC<PlatformOverviewProps> = ({ onOpenAuth }) => {
+export const PlatformOverview: React.FC<PlatformOverviewProps> = ({ onOpenAuth, embedded }) => {
   return (
-    <section
-      id="about-platform"
+    <div
       aria-label="About Life RPG Platform"
-      className="relative z-20 w-full bg-draft-paper border-t border-b border-[#262524] py-16 sm:py-24 px-4 sm:px-8 md:px-12 select-none"
+      className={`relative w-full ${
+        embedded
+          ? 'py-10 sm:py-16 px-4 sm:px-10 md:px-12 bg-draft-paper'
+          : 'bg-draft-paper border-t border-b border-[#262524] py-16 sm:py-24 px-4 sm:px-8 md:px-12'
+      } select-none`}
     >
       <div className="max-w-[1360px] mx-auto">
         {/* Top Minimal Drafting Markup */}
@@ -102,6 +106,6 @@ export const PlatformOverview: React.FC<PlatformOverviewProps> = ({ onOpenAuth }
           </button>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
