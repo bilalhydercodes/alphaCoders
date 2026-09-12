@@ -1,83 +1,144 @@
 'use client';
 
 import React from 'react';
-import { LumiMascot } from '../LumiMascot';
-import { IconSparkles } from '../icons/LumiIcons';
 
 interface LandingFooterProps {
-  onOpenAuth: () => void;
-  onOpenShortcuts?: () => void;
+  onOpenAuth?: (mode?: 'login' | 'register') => void;
 }
 
-export const LandingFooter: React.FC<LandingFooterProps> = ({
-  onOpenAuth,
-  onOpenShortcuts,
-}) => {
+export const LandingFooter: React.FC<LandingFooterProps> = ({ onOpenAuth }) => {
   return (
-    <footer className="bg-surface pt-16 pb-12 px-4 sm:px-8">
-      <div className="max-w-[1140px] mx-auto flex flex-col gap-12">
-        {/* Pre-footer Call-To-Action Banner */}
-        <div className="bg-gradient-to-br from-lavender-soft/60 to-surface rounded-3xl border-2 border-primary/20 p-8 sm:p-12 flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-white border-2 border-primary/25 shadow-xs flex items-center justify-center shrink-0">
-              <LumiMascot mood="radiant" size={42} />
-            </div>
-            <div>
-              <h3 className="text-xl sm:text-2xl font-black text-copy tracking-tight">
-                Ready to Turn Everyday Chores into Quests?
-              </h3>
-              <p className="text-xs sm:text-sm text-copy-muted font-medium mt-1">
-                Free, open-source, and engineered to bridge the delayed gratification gap.
-              </p>
-            </div>
-          </div>
+    <footer className="relative w-full overflow-hidden select-none" aria-label="Life RPG Footer">
+      {/* 1. Organic Cloudy SVG Horizon Transition from Ghost White (#F8F8FF) into Amethyst (#9966CC) */}
+      <div className="w-full bg-[#F8F8FF] leading-none">
+        <svg
+          viewBox="0 0 1440 140"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-full h-auto block pointer-events-none -mb-1"
+          preserveAspectRatio="none"
+        >
+          {/* Layer 1: Soft translucent back cloud puffs */}
+          <path
+            d="M0,105 C120,60 220,95 340,70 C460,45 560,85 680,60 C800,35 900,80 1020,55 C1140,30 1240,75 1440,65 L1440,140 L0,140 Z"
+            fill="rgba(153, 102, 204, 0.28)"
+          />
+          {/* Layer 2: Midground cloud puffs */}
+          <path
+            d="M0,115 C150,75 270,105 420,80 C570,55 690,95 840,70 C990,45 1110,85 1260,65 C1350,55 1410,75 1440,80 L1440,140 L0,140 Z"
+            fill="rgba(153, 102, 204, 0.62)"
+          />
+          {/* Layer 3: Solid Amethyst foreground cumulus clouds */}
+          <path
+            d="M0,140 L0,110 C50,90 100,92 140,95 C190,65 260,70 310,88 C370,50 450,55 510,75 C560,95 620,90 660,80 C730,45 830,50 890,75 C950,55 1030,60 1080,82 C1140,55 1230,60 1290,80 C1360,68 1410,85 1440,92 L1440,140 Z"
+            fill="#9966CC"
+          />
+        </svg>
+      </div>
 
-          <button
-            type="button"
-            onClick={onOpenAuth}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-black text-white bg-primary hover:bg-[#8B54C2] border-b-4 border-[#7343A8] active:border-b-0 active:translate-y-1 shadow-md hover:shadow-lg transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-primary shrink-0"
-          >
-            <IconSparkles size={16} />
-            <span>Join the Adventurers Guild</span>
-          </button>
+      {/* 2. Main Cloudy Footer Body (#9966CC) */}
+      <div className="relative bg-[#9966CC] pt-10 sm:pt-14 pb-12 px-4 sm:px-8 md:px-12 lg:px-16 text-white">
+        {/* Decorative Floating Clouds in Background */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+          {/* Cloud 1 (Top-Left) */}
+          <div className="absolute -top-6 left-10 w-64 h-24 bg-white/10 rounded-full blur-md" />
+          {/* Cloud 2 (Mid-Right) */}
+          <div className="absolute top-20 right-12 w-80 h-28 bg-white/12 rounded-full blur-lg" />
+          {/* Cloud 3 (Bottom-Center) */}
+          <div className="absolute bottom-8 left-1/3 w-96 h-32 bg-white/8 rounded-full blur-xl" />
         </div>
 
-        {/* Footer Navigation & Metadata */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-slate-100 pt-8 text-xs font-semibold text-copy-muted">
-          <div className="flex items-center gap-3">
-            <span className="font-extrabold text-copy">Life RPG with Lumi</span>
-            <span>·</span>
-            <span>Chronicles of Mastery</span>
-            <span>·</span>
-            <span className="text-[#1B6E32] font-black">WCAG AA / AAA Compliant</span>
+        {/* Hero Character & Call-To-Action Container */}
+        <div className="max-w-[1160px] mx-auto relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pb-14 border-b border-white/20">
+            {/* Left Column: Inspiring Call-To-Action (7 Cols) */}
+            <div className="lg:col-span-7 flex flex-col items-start text-left">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/20 backdrop-blur-xs border border-white/30 text-white font-draft-mono text-xs tracking-wider uppercase mb-5">
+                <span className="w-2 h-2 bg-white" />
+                <span>Begin Your Journey</span>
+              </div>
+
+              <h2 className="text-3xl sm:text-5xl md:text-6xl font-semibold text-white tracking-[-0.035em] leading-[1.04] font-headline">
+                Ready for your next real-life adventure?
+              </h2>
+
+              <p className="mt-4 text-base sm:text-lg text-white/90 font-medium leading-relaxed max-w-xl">
+                Lumi is waiting to level up your habits, protect your streaks, and celebrate every milestone with you. Join the guild today.
+              </p>
+
+              {/* Action Buttons */}
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                <button
+                  type="button"
+                  onClick={() => onOpenAuth?.('register')}
+                  className="inline-flex items-center justify-center px-8 h-[48px] text-xs sm:text-sm font-bold text-[#1F1730] bg-white hover:bg-[#F8F8FF] active:scale-95 border border-[#2E2438] rounded-none shadow-md transition-all cursor-pointer whitespace-nowrap"
+                >
+                  Start your campaign
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onOpenAuth?.('login')}
+                  className="inline-flex items-center justify-center px-6 h-[48px] text-xs sm:text-sm font-bold text-white hover:text-[#1F1730] hover:bg-white/90 border border-white/40 rounded-none transition-all cursor-pointer whitespace-nowrap"
+                >
+                  Sign in
+                </button>
+              </div>
+            </div>
+
+            {/* Right Column: Adorable Lumi Adventurer Mascot with Cloud Pedestal (5 Cols) */}
+            <div className="lg:col-span-5 flex flex-col items-center justify-center relative">
+              {/* Soft dreamy cloud pedestal behind & under Lumi */}
+              <div className="relative flex flex-col items-center group">
+                <div className="absolute inset-0 bg-white/20 rounded-full blur-2xl transform scale-90 pointer-events-none" />
+                <img
+                  src="/images/lumi-footer.png"
+                  alt="Lumi Adventurer Mascot with backpack and purple scarf"
+                  className="relative z-10 w-56 sm:w-64 md:w-72 h-auto object-contain drop-shadow-[0_16px_28px_rgba(31,23,48,0.25)] hover:scale-105 transition-transform duration-300 pointer-events-auto select-none"
+                />
+                {/* Cloud puff shadow under Lumi's feet */}
+                <div className="w-48 sm:w-56 h-6 bg-white/25 rounded-full blur-xs -mt-3 relative z-0" />
+              </div>
+            </div>
           </div>
 
-          <div className="flex items-center gap-6">
-            <a
-              href="https://github.com/bilalhydercodes/alphaCoders.git"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-primary transition-colors cursor-pointer"
-            >
-              GitHub Repository
-            </a>
-            {onOpenShortcuts && (
-              <button
-                type="button"
-                onClick={onOpenShortcuts}
-                className="hover:text-primary transition-colors cursor-pointer"
+          {/* Clean Bottom Navigation & Brand Credit */}
+          <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-semibold text-white/80">
+            <div className="flex items-center gap-2">
+              <span className="font-extrabold text-white text-sm font-sans tracking-tight">Life RPG</span>
+              <span>·</span>
+              <span>with Lumi</span>
+              <span>·</span>
+              <span className="text-white/70">Turn daily routines into playable quests</span>
+            </div>
+
+            <div className="flex items-center gap-6">
+              <a
+                href="#features"
+                className="hover:text-white transition-colors cursor-pointer"
               >
-                Keyboard Shortcuts (?)
-              </button>
-            )}
-            <a
-              href="/llms.txt"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-primary transition-colors cursor-pointer"
-            >
-              llms.txt
-            </a>
+                Features
+              </a>
+              <a
+                href="#how-it-works"
+                className="hover:text-white transition-colors cursor-pointer"
+              >
+                Experience
+              </a>
+              <a
+                href="#faq"
+                className="hover:text-white transition-colors cursor-pointer"
+              >
+                FAQ
+              </a>
+              <a
+                href="https://github.com/bilalhydercodes/alphaCoders.git"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors cursor-pointer"
+              >
+                GitHub
+              </a>
+            </div>
           </div>
         </div>
       </div>
