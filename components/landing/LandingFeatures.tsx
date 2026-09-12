@@ -14,7 +14,7 @@ export const LandingFeatures: React.FC = () => {
   return (
     <section
       id="features"
-      className="relative z-20 py-24 sm:py-28 px-4 sm:px-8 md:px-12 lg:px-16 bg-[#9966CC] scroll-mt-20 select-none border-t border-[#2E2438]"
+      className="relative z-20 py-28 sm:py-36 px-4 sm:px-8 md:px-12 lg:px-16 bg-[#9966CC] scroll-mt-20 select-none overflow-hidden"
       style={{
         backgroundImage:
           'linear-gradient(to right, rgba(255, 255, 255, 0.12) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 1px, transparent 1px)',
@@ -22,7 +22,10 @@ export const LandingFeatures: React.FC = () => {
       }}
       aria-label="Core RPG Features"
     >
-      <div className="max-w-[1200px] mx-auto relative z-10">
+      {/* Top Blend: Seamless fade from Platform Overview (#F8F8FF) into Amethyst (#9966CC) */}
+      <div className="absolute inset-x-0 top-0 h-32 sm:h-44 bg-gradient-to-b from-[#F8F8FF] to-transparent pointer-events-none z-10" />
+
+      <div className="max-w-[1200px] mx-auto relative z-20">
         {/* Section Header */}
         <div className="max-w-3xl mb-16">
           <div className="flex items-center gap-2 mb-3 text-xs font-draft-mono text-white/85 tracking-wider uppercase">
@@ -136,6 +139,9 @@ export const LandingFeatures: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Bottom Blend: Seamless fade from Amethyst (#9966CC) into FAQ (#F8F8FF) */}
+      <div className="absolute inset-x-0 bottom-0 h-32 sm:h-44 bg-gradient-to-b from-transparent to-[#F8F8FF] pointer-events-none z-10" />
     </section>
   );
 };
