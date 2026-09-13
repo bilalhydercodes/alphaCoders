@@ -212,12 +212,12 @@ export const Settings: React.FC = () => {
         </div>
 
         {/* Chime Resonance Style Row */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl bg-[#FAF9FD] border border-slate-100">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 sm:p-4 rounded-xl bg-[#FAF9FD] border border-slate-100">
           <div>
             <p className="text-sm font-bold text-slate-900">Chime Resonance Style</p>
             <p className="text-xs text-slate-500 font-normal mt-0.5">Select the timbre for victory flourishes</p>
           </div>
-          <div className="inline-flex items-center bg-white p-1 rounded-xl border border-slate-200 shrink-0">
+          <div className="inline-flex items-center bg-white p-1 rounded-xl border border-slate-200 shrink-0 max-w-full overflow-x-auto">
             <button
               type="button"
               onClick={() => {
@@ -225,7 +225,7 @@ export const Settings: React.FC = () => {
                 sound.playClick();
                 setHasUnsavedChanges(true);
               }}
-              className={`px-4 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+              className={`px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg text-[11px] sm:text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
                 chimeTheme === 'harmonic'
                   ? 'bg-[#7042C1] text-white shadow-xs font-bold'
                   : 'text-slate-600 hover:text-slate-900'
@@ -241,7 +241,7 @@ export const Settings: React.FC = () => {
                 sound.playClick();
                 setHasUnsavedChanges(true);
               }}
-              className={`px-4 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+              className={`px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg text-[11px] sm:text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
                 chimeTheme === 'crystal'
                   ? 'bg-[#7042C1] text-white shadow-xs font-bold'
                   : 'text-slate-600 hover:text-slate-900'
@@ -257,7 +257,7 @@ export const Settings: React.FC = () => {
                 sound.playClick();
                 setHasUnsavedChanges(true);
               }}
-              className={`px-4 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+              className={`px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg text-[11px] sm:text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
                 chimeTheme === 'fanfare'
                   ? 'bg-[#7042C1] text-white shadow-xs font-bold'
                   : 'text-slate-600 hover:text-slate-900'
@@ -371,7 +371,7 @@ export const Settings: React.FC = () => {
             <p className="text-sm font-bold text-slate-900">Default Focus Duration</p>
             <p className="text-xs text-slate-500 font-normal mt-0.5">Standard interval for your deep work sessions</p>
           </div>
-          <div className="flex items-center bg-white p-1 rounded-xl border border-slate-200">
+          <div className="flex items-center bg-white p-1 rounded-xl border border-slate-200 max-w-full overflow-x-auto shrink-0">
             {[
               { val: '15', label: '15m' },
               { val: '25', label: '25m' },
@@ -386,7 +386,7 @@ export const Settings: React.FC = () => {
                   sound.playClick();
                   setHasUnsavedChanges(true);
                 }}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                className={`px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                   focusDuration === preset.val
                     ? 'bg-[#7042C1] text-white shadow-xs'
                     : 'text-slate-600 hover:text-slate-900'
@@ -437,7 +437,7 @@ export const Settings: React.FC = () => {
       </section>
 
       {/* 5. Exact Bottom Floating Action Bar matching reference photo */}
-      <div className="sticky bottom-4 z-30 p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/90 shadow-md flex items-center justify-between gap-4">
+      <div className="sticky bottom-20 md:bottom-4 z-30 p-3.5 sm:p-5 rounded-2xl bg-white border border-slate-200/90 shadow-md flex items-center justify-between gap-3 sm:gap-4">
         <div className="min-w-0">
           {saveMsg ? (
             <div

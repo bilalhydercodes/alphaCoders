@@ -34,16 +34,16 @@ export const KeyboardShortcutsModal: React.FC<KeyboardShortcutsModalProps> = ({
       role="dialog"
       aria-modal="true"
       aria-labelledby="shortcuts-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-copy/50 backdrop-blur-xs animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-copy/50 backdrop-blur-xs animate-in fade-in duration-200"
       onKeyDown={(e) => {
         if (e.key === 'Escape') onClose();
       }}
     >
-      <div className="relative w-full max-w-md bg-surface rounded-3xl border-2 border-slate-200 shadow-2xl p-6 sm:p-7 animate-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-md max-h-[90vh] flex flex-col bg-surface rounded-3xl border-2 border-slate-200 shadow-2xl p-5 sm:p-7 animate-in zoom-in-95 duration-200 overflow-hidden">
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 text-copy-muted hover:text-copy rounded-xl hover:bg-slate-100 transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-primary"
+          className="absolute top-3 sm:top-4 right-3 sm:right-4 p-2 text-copy-muted hover:text-copy rounded-xl hover:bg-slate-100 transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-primary z-10"
           aria-label="Close keyboard shortcuts"
         >
           <IconClose size={20} />

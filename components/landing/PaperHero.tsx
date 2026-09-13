@@ -31,32 +31,32 @@ export const PaperHero = forwardRef<HTMLDivElement, PaperHeroProps>(
 
             {/* Right: Architectural Contact Note */}
             <div className="font-draft-mono text-[10px] sm:text-[11px] text-[#7A6F8C] tracking-widest">
-              HELLO@LIFERPG.COM
+              HELLO@LUMI.APP
             </div>
           </div>
 
           {/* Center Headline: Exactly 3 words with animated textRef */}
           <div
             ref={textRef}
-            className="w-full flex items-center justify-center my-auto will-change-transform"
+            className="w-full flex items-center justify-center my-auto will-change-transform px-2"
           >
-            <div className="relative inline-block text-left">
+            <div className="relative inline-block text-left max-w-full">
               {/* Top-Left Eyebrow: AGENTIC PRODUCTIVITY (Clean floating italic tracking, matching reference image) */}
-              <div className="text-[11px] sm:text-[13px] md:text-[14px] font-draft-mono italic tracking-[0.24em] text-[#8A52C7] uppercase mb-1 sm:mb-2 select-none">
+              <div className="text-[10px] sm:text-[13px] md:text-[14px] font-draft-mono italic tracking-[0.2em] sm:tracking-[0.24em] text-[#8A52C7] uppercase mb-1 sm:mb-2 select-none">
                 AGENTIC PRODUCTIVITY
               </div>
 
               {/* Exactly 3 Words in deep Amethyst ink with cursive italic serif 'made' */}
-              <h1 className="text-[46px] sm:text-[72px] md:text-[90px] lg:text-[106px] font-bold text-[#1F1730] tracking-[-0.04em] leading-[0.92] font-headline select-none">
+              <h1 className="text-[34px] sm:text-[68px] md:text-[88px] lg:text-[106px] font-bold text-[#1F1730] tracking-[-0.04em] leading-[0.95] font-headline select-none">
                 Productivity, <br />
-                <span className="font-serif-italic font-normal text-[#8A52C7] tracking-[-0.02em] mr-2 sm:mr-3.5 inline-block transform -translate-y-0.5">
+                <span className="font-serif-italic font-normal text-[#8A52C7] tracking-[-0.02em] mr-1.5 sm:mr-3.5 inline-block transform -translate-y-0.5">
                   made
                 </span>
                 <span>playable</span>
               </h1>
 
               {/* Right Annotation: -> WITH LUMI (Clean arrow & letter-spaced purple text) */}
-              <div className="absolute -bottom-1 sm:bottom-3 -right-20 sm:-right-28 flex items-center gap-1.5 text-[#8A52C7] font-draft-mono text-xs sm:text-sm font-semibold tracking-widest select-none">
+              <div className="mt-2 sm:mt-0 sm:absolute sm:-bottom-1 md:bottom-3 sm:-right-24 md:-right-28 flex items-center gap-1.5 text-[#8A52C7] font-draft-mono text-[11px] sm:text-xs md:text-sm font-semibold tracking-widest select-none">
                 <span>-&gt;</span>
                 <span className="uppercase">WITH LUMI</span>
               </div>

@@ -111,28 +111,28 @@ export const QuestModal: React.FC<QuestModalProps> = ({
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-copy/50 backdrop-blur-xs animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-copy/50 backdrop-blur-xs animate-in fade-in duration-200"
       onKeyDown={(e) => {
         if (e.key === 'Escape') onClose();
       }}
     >
-      <div className="relative w-full max-w-lg bg-surface rounded-3xl border-2 border-slate-200 shadow-2xl p-6 sm:p-7 overflow-hidden animate-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-lg max-h-[90vh] flex flex-col bg-surface rounded-3xl border-2 border-slate-200 shadow-2xl p-4 sm:p-7 overflow-hidden animate-in zoom-in-95 duration-200">
         {/* Close Button */}
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 text-copy-muted hover:text-copy rounded-xl hover:bg-slate-100 transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-primary"
+          className="absolute top-3 sm:top-4 right-3 sm:right-4 p-2 text-copy-muted hover:text-copy rounded-xl hover:bg-slate-100 transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-primary z-10"
           aria-label="Close modal"
         >
           <IconClose size={20} />
         </button>
 
         {/* Title */}
-        <div className="flex items-center gap-2.5 mb-4">
+        <div className="flex items-center gap-2.5 mb-3 sm:mb-4 shrink-0">
           <div className="w-9 h-9 rounded-xl bg-lavender-soft text-primary flex items-center justify-center">
             {editingQuest ? <IconEdit size={18} /> : <IconPlus size={18} />}
           </div>
-          <h3 id="modal-title" className="text-lg font-black text-copy">
+          <h3 id="modal-title" className="text-base sm:text-lg font-black text-copy">
             {editingQuest ? 'Modify Guild Bounty' : 'Post New Guild Bounty'}
           </h3>
         </div>
@@ -140,18 +140,18 @@ export const QuestModal: React.FC<QuestModalProps> = ({
         {error && (
           <div
             role="alert"
-            className="mb-4 p-3 rounded-2xl bg-danger-soft border border-danger/20 text-xs font-bold text-danger"
+            className="mb-3 p-3 rounded-2xl bg-danger-soft border border-danger/20 text-xs font-bold text-danger shrink-0"
           >
             {error}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-3 sm:gap-4 overflow-y-auto pr-1 -mr-1">
           {/* Title Input */}
           <div>
             <label
               htmlFor="quest-title-input"
-              className="block text-xs font-bold text-copy mb-1.5"
+              className="block text-xs font-bold text-copy mb-1"
             >
               Quest Title <span className="text-danger">*</span>
             </label>
@@ -163,7 +163,7 @@ export const QuestModal: React.FC<QuestModalProps> = ({
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. Read 20 pages of clean architecture"
-              className="w-full px-4 py-2.5 rounded-2xl border-2 border-slate-200 bg-background text-sm font-bold text-copy placeholder:text-copy-muted/60 focus:bg-surface focus:border-primary transition-all outline-none focus-visible:outline-2 focus-visible:outline-primary"
+              className="w-full px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl border-2 border-slate-200 bg-background text-sm font-bold text-copy placeholder:text-copy-muted/60 focus:bg-surface focus:border-primary transition-all outline-none focus-visible:outline-2 focus-visible:outline-primary"
             />
           </div>
 
@@ -171,7 +171,7 @@ export const QuestModal: React.FC<QuestModalProps> = ({
           <div>
             <label
               htmlFor="quest-desc-input"
-              className="block text-xs font-bold text-copy mb-1.5"
+              className="block text-xs font-bold text-copy mb-1"
             >
               Details or Real-World Motivation (Optional)
             </label>
@@ -181,31 +181,31 @@ export const QuestModal: React.FC<QuestModalProps> = ({
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Add key notes or goals..."
-              className="w-full px-4 py-2 rounded-2xl border-2 border-slate-200 bg-background text-sm font-medium text-copy placeholder:text-copy-muted/60 focus:bg-surface focus:border-primary transition-all outline-none resize-none focus-visible:outline-2 focus-visible:outline-primary"
+              className="w-full px-3.5 sm:px-4 py-2 rounded-2xl border-2 border-slate-200 bg-background text-sm font-medium text-copy placeholder:text-copy-muted/60 focus:bg-surface focus:border-primary transition-all outline-none resize-none focus-visible:outline-2 focus-visible:outline-primary"
             />
           </div>
 
           {/* Quest Type */}
           <div>
-            <label className="block text-xs font-bold text-copy mb-1.5">Quest Frequency</label>
-            <div className="grid grid-cols-3 gap-2">
+            <label className="block text-xs font-bold text-copy mb-1">Quest Frequency</label>
+            <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
               {[
-                { id: 'DAILY', label: 'Daily Bounty', desc: 'Resets each day' },
-                { id: 'TODO', label: 'One-Time Bounty', desc: 'Single completion' },
-                { id: 'HABIT', label: 'Core Habit', desc: 'Repeated tracking' },
+                { id: 'DAILY', label: 'Daily Bounty', desc: 'Resets daily' },
+                { id: 'TODO', label: 'One-Time Bounty', desc: 'Single run' },
+                { id: 'HABIT', label: 'Core Habit', desc: 'Repeated' },
               ].map((t) => (
                 <button
                   key={t.id}
                   type="button"
                   onClick={() => setType(t.id)}
-                  className={`p-2.5 rounded-2xl border-2 text-left transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-primary ${
+                  className={`p-2 sm:p-2.5 rounded-2xl border-2 text-left transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-primary ${
                     type === t.id
                       ? 'bg-lavender-soft/40 border-primary text-primary shadow-xs'
                       : 'border-slate-200 text-copy-muted hover:border-slate-300'
                   }`}
                 >
-                  <p className="text-xs font-bold text-copy">{t.label}</p>
-                  <p className="text-[10px] text-copy-muted font-medium">{t.desc}</p>
+                  <p className="text-[11px] sm:text-xs font-bold text-copy leading-tight truncate">{t.label}</p>
+                  <p className="text-[9px] sm:text-[10px] text-copy-muted font-medium truncate">{t.desc}</p>
                 </button>
               ))}
             </div>
@@ -213,10 +213,10 @@ export const QuestModal: React.FC<QuestModalProps> = ({
 
           {/* Attribute Mapping */}
           <div>
-            <label className="block text-xs font-bold text-copy mb-1.5">
+            <label className="block text-xs font-bold text-copy mb-1">
               Character Attribute Trained
             </label>
-            <div className="grid grid-cols-5 gap-1.5">
+            <div className="grid grid-cols-5 gap-1 sm:gap-1.5">
               {[
                 { id: 'INTELLECT', label: 'Intellect', icon: IconAttributeIntellect },
                 { id: 'STRENGTH', label: 'Strength', icon: IconAttributeStrength },
@@ -231,14 +231,14 @@ export const QuestModal: React.FC<QuestModalProps> = ({
                     key={c.id}
                     type="button"
                     onClick={() => setCategory(c.id)}
-                    className={`p-2 rounded-2xl border-2 flex flex-col items-center gap-1 transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-primary ${
+                    className={`p-1.5 sm:p-2 rounded-xl sm:rounded-2xl border-2 flex flex-col items-center gap-1 transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-primary ${
                       active
                         ? 'bg-primary text-[#1F1730] border-primary shadow-xs scale-102 font-black'
                         : 'border-slate-200 text-copy hover:border-slate-300 font-semibold'
                     }`}
                   >
                     <Icon size={16} />
-                    <span className="text-[10px]">{c.label}</span>
+                    <span className="text-[9px] sm:text-[10px] truncate max-w-full">{c.label}</span>
                   </button>
                 );
               })}
@@ -247,9 +247,9 @@ export const QuestModal: React.FC<QuestModalProps> = ({
 
           {/* Difficulty & Rewards */}
           <div>
-            <div className="flex items-center justify-between mb-1.5">
+            <div className="flex items-center justify-between mb-1">
               <label className="text-xs font-bold text-copy">Difficulty & Rewards</label>
-              <div className="flex items-center gap-3 text-xs font-black">
+              <div className="flex items-center gap-2 sm:gap-3 text-xs font-black">
                 <span className="flex items-center gap-1 text-primary">
                   <IconXpGem size={14} filled />
                   +{currentRewards.xp} XP
@@ -260,13 +260,13 @@ export const QuestModal: React.FC<QuestModalProps> = ({
                 </span>
               </div>
             </div>
-            <div className="grid grid-cols-5 gap-1.5">
+            <div className="grid grid-cols-5 gap-1 sm:gap-1.5">
               {['TRIVIAL', 'EASY', 'MEDIUM', 'HARD', 'EPIC'].map((d) => (
                 <button
                   key={d}
                   type="button"
                   onClick={() => setDifficulty(d)}
-                  className={`py-1.5 px-2 rounded-xl text-xs font-bold capitalize border-2 transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-primary ${
+                  className={`py-1.5 px-1 sm:px-2 rounded-xl text-[10px] sm:text-xs font-bold capitalize border-2 transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-primary truncate ${
                     difficulty === d
                       ? 'bg-lavender-soft/40 border-primary text-primary'
                       : 'border-slate-200 text-copy-muted hover:border-slate-300'

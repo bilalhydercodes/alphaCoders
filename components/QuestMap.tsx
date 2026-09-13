@@ -198,12 +198,12 @@ export const QuestMap: React.FC<QuestMapProps> = ({ onCompleteQuestModal }) => {
   };
 
   return (
-    <div className="flex flex-col items-center w-full max-w-xl mx-auto pb-16">
+    <div className="flex flex-col items-center w-full max-w-xl mx-auto pb-16 px-2 sm:px-4 overflow-x-hidden">
       {units.map((unit) => (
         <section key={unit.id} className="w-full flex flex-col items-center mb-12">
           {/* Unit Banner */}
           <div
-            className={`w-full rounded-2xl bg-gradient-to-r ${unit.themeColor} text-white p-5 sm:p-6 shadow-sm flex items-center justify-between gap-4 mb-6`}
+            className={`w-full rounded-2xl bg-gradient-to-r ${unit.themeColor} text-white p-4 sm:p-6 shadow-sm flex items-center justify-between gap-4 mb-6`}
           >
             <div>
               <span className="text-xs font-black uppercase tracking-widest text-white/80">
@@ -237,16 +237,16 @@ export const QuestMap: React.FC<QuestMapProps> = ({ onCompleteQuestModal }) => {
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-copy/50 backdrop-blur-xs animate-in fade-in duration-200"
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-copy/50 backdrop-blur-xs animate-in fade-in duration-200"
           onKeyDown={(e) => {
             if (e.key === 'Escape') setSelectedNode(null);
           }}
         >
-          <div className="relative w-full max-w-md bg-surface rounded-3xl border-2 border-slate-200 shadow-2xl p-6 sm:p-7 flex flex-col items-center text-center animate-in zoom-in-95 duration-200">
+          <div className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-surface rounded-3xl border-2 border-slate-200 shadow-2xl p-5 sm:p-7 flex flex-col items-center text-center animate-in zoom-in-95 duration-200">
             <button
               type="button"
               onClick={() => setSelectedNode(null)}
-              className="absolute top-4 right-4 p-2 text-copy-muted hover:text-copy rounded-xl hover:bg-slate-100 transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-primary"
+              className="absolute top-3 sm:top-4 right-3 sm:right-4 p-2 text-copy-muted hover:text-copy rounded-xl hover:bg-slate-100 transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-primary z-10"
               aria-label="Close modal"
             >
               <IconClose size={20} />

@@ -227,77 +227,77 @@ const DashboardInnerContent: React.FC<DashboardInnerContentProps> = ({
 
       {/* Mobile Bottom Navigation Bar (<768px) */}
       <nav
-        className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-surface border-t-2 border-slate-200 z-40 flex items-center justify-around px-2"
+        className="md:hidden fixed bottom-0 left-0 right-0 h-16 pb-[env(safe-area-inset-bottom,0px)] bg-surface/95 backdrop-blur-md border-t-2 border-slate-200 z-40 flex items-center justify-around px-1 sm:px-2 shadow-lg"
         aria-label="Mobile Navigation"
       >
         <button
           onClick={() => setActiveTab('map')}
-          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl min-h-[44px] justify-center ${
+          className={`flex-1 flex flex-col items-center gap-0.5 py-1 px-0.5 sm:px-2 rounded-xl min-h-[44px] justify-center transition-colors ${
             activeTab === 'map' ? 'text-primary font-black' : 'text-copy-muted'
           }`}
         >
-          <IconMap size={20} filled={activeTab === 'map'} />
-          <span className="text-[10px] font-bold">Map</span>
+          <IconMap size={18} filled={activeTab === 'map'} />
+          <span className="text-[9px] sm:text-[10px] font-bold leading-tight truncate">Map</span>
         </button>
         <button
           onClick={() => setActiveTab('bounties')}
-          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl min-h-[44px] justify-center ${
+          className={`flex-1 flex flex-col items-center gap-0.5 py-1 px-0.5 sm:px-2 rounded-xl min-h-[44px] justify-center transition-colors ${
             activeTab === 'bounties' ? 'text-primary font-black' : 'text-copy-muted'
           }`}
         >
-          <IconBounties size={20} filled={activeTab === 'bounties'} />
-          <span className="text-[10px] font-bold">Bounties</span>
+          <IconBounties size={18} filled={activeTab === 'bounties'} />
+          <span className="text-[9px] sm:text-[10px] font-bold leading-tight truncate">Bounties</span>
         </button>
         <button
           onClick={() => setActiveTab('league')}
-          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl min-h-[44px] justify-center ${
+          className={`flex-1 flex flex-col items-center gap-0.5 py-1 px-0.5 sm:px-2 rounded-xl min-h-[44px] justify-center transition-colors ${
             activeTab === 'league' ? 'text-primary font-black' : 'text-copy-muted'
           }`}
         >
-          <IconLeague size={20} filled={activeTab === 'league'} />
-          <span className="text-[10px] font-bold">League</span>
+          <IconLeague size={18} filled={activeTab === 'league'} />
+          <span className="text-[9px] sm:text-[10px] font-bold leading-tight truncate">League</span>
         </button>
         <button
           onClick={() => setActiveTab('shop')}
-          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl min-h-[44px] justify-center ${
+          className={`flex-1 flex flex-col items-center gap-0.5 py-1 px-0.5 sm:px-2 rounded-xl min-h-[44px] justify-center transition-colors ${
             activeTab === 'shop' ? 'text-primary font-black' : 'text-copy-muted'
           }`}
         >
-          <IconShop size={20} filled={activeTab === 'shop'} />
-          <span className="text-[10px] font-bold">Shop</span>
+          <IconShop size={18} filled={activeTab === 'shop'} />
+          <span className="text-[9px] sm:text-[10px] font-bold leading-tight truncate">Shop</span>
         </button>
         <button
           onClick={() => setActiveTab('codex')}
-          className={`flex flex-col items-center gap-1 py-1 px-2 rounded-xl min-h-[44px] justify-center ${
+          className={`flex-1 flex flex-col items-center gap-0.5 py-1 px-0.5 sm:px-2 rounded-xl min-h-[44px] justify-center transition-colors ${
             activeTab === 'codex' ? 'text-primary font-black' : 'text-copy-muted'
           }`}
         >
-          <IconCodex size={20} filled={activeTab === 'codex'} />
-          <span className="text-[10px] font-bold">Codex</span>
+          <IconCodex size={18} filled={activeTab === 'codex'} />
+          <span className="text-[9px] sm:text-[10px] font-bold leading-tight truncate">Codex</span>
         </button>
         <button
           onClick={() => setActiveTab('profile')}
-          className={`flex flex-col items-center gap-1 py-1 px-2 rounded-xl min-h-[44px] justify-center ${
+          className={`flex-1 flex flex-col items-center gap-0.5 py-1 px-0.5 sm:px-2 rounded-xl min-h-[44px] justify-center transition-colors ${
             activeTab === 'profile' ? 'text-primary font-black' : 'text-copy-muted'
           }`}
         >
-          <IconProfile size={20} filled={activeTab === 'profile'} />
-          <span className="text-[10px] font-bold">Profile</span>
+          <IconProfile size={18} filled={activeTab === 'profile'} />
+          <span className="text-[9px] sm:text-[10px] font-bold leading-tight truncate">Profile</span>
         </button>
         <button
           onClick={() => setActiveTab('settings')}
-          className={`flex flex-col items-center gap-1 py-1 px-2 rounded-xl min-h-[44px] justify-center ${
+          className={`flex-1 flex flex-col items-center gap-0.5 py-1 px-0.5 sm:px-2 rounded-xl min-h-[44px] justify-center transition-colors ${
             activeTab === 'settings' ? 'text-primary font-black' : 'text-copy-muted'
           }`}
         >
-          <IconSettings size={20} filled={activeTab === 'settings'} />
-          <span className="text-[10px] font-bold">Settings</span>
+          <IconSettings size={18} filled={activeTab === 'settings'} />
+          <span className="text-[9px] sm:text-[10px] font-bold leading-tight truncate">Settings</span>
         </button>
       </nav>
 
       {/* 2. Main Content Viewport (Indented 72px on tablet, 256px on desktop) */}
-      <div className="md:pl-[72px] lg:pl-[256px] min-h-screen pb-20 md:pb-10 flex flex-col">
-        <div className="max-w-[1080px] w-full mx-auto px-4 sm:px-8 pt-4 flex-1 flex flex-col">
+      <div className="md:pl-[72px] lg:pl-[256px] min-h-screen pb-24 md:pb-10 flex flex-col">
+        <div className="max-w-[1080px] w-full mx-auto px-3 sm:px-6 lg:px-8 pt-3 sm:pt-4 flex-1 flex flex-col">
           {/* Top Status Header */}
           <UserProgressHeader onOpenFocus={() => setIsFocusTimerOpen(true)} />
 

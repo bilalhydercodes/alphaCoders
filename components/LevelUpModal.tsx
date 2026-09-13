@@ -75,7 +75,7 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
       role="dialog"
       aria-modal="true"
       aria-labelledby="levelup-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-copy/60 backdrop-blur-md animate-in fade-in duration-300"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-copy/60 backdrop-blur-md animate-in fade-in duration-300"
       onKeyDown={(e) => {
         if (e.key === 'Escape' || e.key === 'Enter') {
           onClose();
@@ -85,7 +85,7 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
       <div
         ref={modalRef}
         tabIndex={-1}
-        className="relative w-full max-w-md bg-surface rounded-2xl border-2 border-primary/40 shadow-2xl p-6 sm:p-8 flex flex-col items-center text-center overflow-hidden outline-none animate-in zoom-in-95 duration-300"
+        className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-surface rounded-2xl border-2 border-primary/40 shadow-2xl p-5 sm:p-8 flex flex-col items-center text-center outline-none animate-in zoom-in-95 duration-300"
       >
         {/* Decorative rays */}
         <div className="absolute -top-24 -left-24 w-72 h-72 bg-accent/20 rounded-full blur-3xl pointer-events-none" />
@@ -99,7 +99,7 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
 
         {/* Real-time 3D Celebrating Lumi */}
         <div className="relative my-2 w-full flex items-center justify-center">
-          <LumiPresenter variant="modal" height={210} interactive />
+          <LumiPresenter variant="modal" height={160} interactive />
         </div>
 
         {/* Congratulatory Text */}

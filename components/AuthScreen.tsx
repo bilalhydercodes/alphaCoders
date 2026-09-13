@@ -41,6 +41,16 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
   const [successMsg, setSuccessMsg] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [shake, setShake] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Sync mode whenever initialMode prop updates
   useEffect(() => {
@@ -221,13 +231,13 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
   };
 
   const content = (
-    <main className="w-full max-w-4xl bg-surface rounded-3xl border-2 border-slate-200 shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2 relative z-10 font-headline">
+    <main className="w-full max-w-4xl bg-surface rounded-3xl border-2 border-slate-200 shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2 relative z-10 font-headline my-auto">
       {/* Top right close button */}
       {onClose && (
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 z-30 p-2 text-copy-muted hover:text-copy rounded-xl hover:bg-slate-100 transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-primary"
+          className="absolute top-3 sm:top-4 right-3 sm:right-4 z-30 p-2 text-copy-muted hover:text-copy rounded-xl hover:bg-slate-100 transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-primary"
           aria-label="Close authentication window"
         >
           <IconClose size={20} />
@@ -235,7 +245,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
       )}
 
       {/* Left Column: Adventurer Guild Showcase & 3D Companion */}
-      <div className="bg-slate-50/80 p-6 sm:p-10 flex flex-col justify-between border-b md:border-b-0 md:border-r-2 border-slate-200">
+      <div className="bg-slate-50/80 p-5 sm:p-8 md:p-10 flex flex-col justify-between border-b md:border-b-0 md:border-r-2 border-slate-200">
         <div>
           <div className="flex items-center gap-2">
             <span className="text-[11px] font-bold uppercase tracking-widest text-[#7A4BC2] bg-[#EADFFF]/60 px-3 py-1 rounded-full font-draft-mono">
@@ -243,31 +253,31 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
             </span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl font-bold text-[#1F1730] tracking-tight mt-3.5 leading-tight font-headline">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#1F1730] tracking-tight mt-2.5 sm:mt-3.5 leading-tight font-headline">
             Level up your real life, <br />
             <span className="text-[#9966CC]">one small quest at a time.</span>
           </h1>
         </div>
 
         {/* Dynamic 3D Mascot Companion & Speech Bubble (Enlarged to fill space) */}
-        <div className="relative mt-6 my-auto flex flex-col items-center justify-center">
+        <div className="relative mt-4 md:mt-6 my-auto flex flex-col items-center justify-center">
           {/* Ambient Speech Bubble */}
-          <div className="mb-2 px-4 py-2.5 bg-white rounded-2xl border-2 border-slate-200/90 shadow-sm text-xs font-bold text-[#2E2438] max-w-[280px] text-center relative animate-in fade-in font-headline">
+          <div className="mb-2 px-3.5 sm:px-4 py-2 sm:py-2.5 bg-white rounded-2xl border-2 border-slate-200/90 shadow-sm text-xs font-bold text-[#2E2438] max-w-[280px] text-center relative animate-in fade-in font-headline">
             {companionMessage}
             <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-x-8 border-x-transparent border-t-8 border-t-white" />
           </div>
 
           <div className="w-full flex items-center justify-center pointer-events-auto">
-            <LumiPresenter variant="auth" height={280} showSpeech={false} interactive={true} />
+            <LumiPresenter variant="auth" height={isMobile ? 150 : 280} showSpeech={false} interactive={true} />
           </div>
-          <p className="text-[11px] font-semibold text-copy-muted mt-1 text-center font-headline tracking-wide">
+          <p className="text-[10px] sm:text-[11px] font-semibold text-copy-muted mt-1 text-center font-headline tracking-wide">
             Tap Lumi to share a moment!
           </p>
         </div>
       </div>
 
       {/* Right Column: Clean Form & 3D Tactile Action Buttons */}
-      <div className="p-6 sm:p-10 flex flex-col justify-center">
+      <div className="p-5 sm:p-8 md:p-10 flex flex-col justify-center">
         {/* Mode Switcher Tabs */}
         <div className="flex rounded-2xl bg-slate-100 p-1 border border-slate-200 mb-5 font-headline">
           <button
@@ -559,7 +569,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
   if (isModal) {
     return (
       <div
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-copy/60 backdrop-blur-md animate-in fade-in"
+        className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-copy/60 backdrop-blur-md animate-in fade-in overflow-y-auto"
         role="dialog"
         aria-modal="true"
         aria-label="Authentication modal"
@@ -567,7 +577,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
           if (e.target === e.currentTarget && onClose) onClose();
         }}
       >
-        <div className="relative w-full max-w-4xl animate-in zoom-in-95 duration-200">
+        <div className="relative w-full max-w-4xl max-h-[96vh] my-auto animate-in zoom-in-95 duration-200 overflow-y-auto">
           {content}
         </div>
       </div>
@@ -575,12 +585,12 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 sm:p-12 relative">
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-3 sm:p-6 md:p-12 relative">
       {onClose && (
         <button
           type="button"
           onClick={onClose}
-          className="fixed top-6 left-6 z-40 inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-surface border-2 border-slate-200 text-xs font-bold text-copy hover:border-primary transition-all cursor-pointer shadow-xs"
+          className="fixed top-4 sm:top-6 left-4 sm:left-6 z-40 inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-surface border-2 border-slate-200 text-xs font-bold text-copy hover:border-primary transition-all cursor-pointer shadow-xs"
         >
           <span>← Return to Guild Realm</span>
         </button>
