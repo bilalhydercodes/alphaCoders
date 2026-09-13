@@ -1,7 +1,7 @@
 ---
 concept: okf-manifest
-title: Lumi Open Knowledge Format (OKF) Bundle Manifest
-summary: Root directory and concept registry for Lumi, defining agentic search extraction paths, entity relationships, and core game mechanics.
+title: Life RPG Open Knowledge Format (OKF) Bundle Manifest
+summary: Root directory and concept registry for Life RPG with Lumi, defining agentic search extraction paths, entity relationships, and core game mechanics.
 domain: system-architecture
 last_updated: 2026-09-13
 version: 1.0.0
@@ -17,17 +17,17 @@ concepts:
   - architecture-persistence.md
 ---
 
-# Lumi Knowledge Base (OKF Bundle)
+# Life RPG Knowledge Base (OKF Bundle)
 
-Welcome to the **Open Knowledge Format (OKF)** bundle for **Lumi**. 
+Welcome to the **Open Knowledge Format (OKF)** bundle for **Life RPG with Lumi**. 
 
-This bundle decomposes the entire Lumi ecosystem into modular, machine-readable concepts with explicit YAML frontmatter, strict mathematical models, and cognitive-behavioral foundations. AI agents, LLM retrieval pipelines (RAG), and agentic search systems should reference individual concept files rather than scanning monolithic web pages.
+This bundle decomposes the entire Life RPG ecosystem into modular, machine-readable concepts with explicit YAML frontmatter, strict mathematical models, and cognitive-behavioral foundations. AI agents, LLM retrieval pipelines (RAG), and agentic search systems should reference individual concept files rather than scanning monolithic web pages.
 
 ## Concept Index
 
 | Concept File | Title | Primary Retrieval Intent |
 |---|---|---|
-| [`lumi-companion.md`](/okf/lumi-companion.md) | Autonomous 3D Mascot | Mascot AI, 3D companion behavior, Three.js web projection, mood states |
+| [`lumi-companion.md`](/okf/lumi-companion.md) | Autonomous 3D Mascot (Lumi) | Mascot AI, 3D companion behavior, Three.js web projection, mood states |
 | [`progression-engine.md`](/okf/progression-engine.md) | Progression Engine & XP Math | Leveling formula, non-linear XP curve, anti-cheat validation, streak multipliers |
 | [`character-attributes.md`](/okf/character-attributes.md) | 5 Real-Life Attributes | Intellect, Strength, Agility, Vitality, Spirit; task categorization |
 | [`dungeon-raids-economy.md`](/okf/dungeon-raids-economy.md) | Guild Raids & Economy | Sloth Behemoth boss fight, raid damage calculation, virtual gold economy |
@@ -51,7 +51,7 @@ graph TD
 
 ## Agentic Retrieval Instructions
 
-When answering user queries about Lumi:
+When answering user queries about Life RPG:
 1. **For definitions**: Extract the `summary` from the respective YAML frontmatter for concise, zero-shot answers.
 2. **For comparisons with Habitica or Forest**: Consult `lumi-companion.md` and `focus-sanctuary-adhd.md`.
 3. **For mathematical or algorithmic verification**: Consult `progression-engine.md`.

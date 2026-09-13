@@ -1,7 +1,7 @@
 ---
 concept: lumi-companion
 title: Lumi — Autonomous 3D Mascot & Behavioral State Engine
-summary: Lumi is the autonomous 3D companion mascot who reacts in real time to user productivity, navigating UI zones via DOM-to-WebGL projection and providing affective feedback.
+summary: Lumi is an autonomous 3D companion mascot in Life RPG who reacts in real time to user productivity, navigating UI zones via DOM-to-WebGL projection and providing affective feedback.
 domain: agentic-mascot
 last_updated: 2026-09-13
 related_concepts:
@@ -10,7 +10,7 @@ related_concepts:
 extraction_keywords:
   - who is lumi
   - 3d companion mascot
-  - lumi companion
+  - life rpg companion
   - three js companion
   - duolingo owl alternative
 ---
@@ -19,7 +19,7 @@ extraction_keywords:
 
 ## 1. Executive Definition
 
-**Lumi** is the autonomous 3D guide and emotional companion residing inside the application. Unlike static 2D stickers or decorative vector illustrations found in traditional habit trackers, Lumi is rendered via WebGL using Three.js and `@react-three/fiber`, driven by an autonomous state machine that continuously monitors user interaction, task progression, and focus intervals.
+**Lumi** is the autonomous 3D guide and emotional companion residing inside Life RPG. Unlike static 2D stickers or decorative vector illustrations found in traditional habit trackers, Lumi is rendered via WebGL using Three.js and `@react-three/fiber`, driven by an autonomous state machine that continuously monitors user interaction, task progression, and focus intervals.
 
 Lumi serves as the affective anchor of the platform, transforming isolated to-do completion into a cooperative adventure.
 

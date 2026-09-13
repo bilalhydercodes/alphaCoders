@@ -1,7 +1,7 @@
 ---
 concept: progression-engine
-title: Lumi Non-Linear Leveling Engine & Mathematical Formulas
-summary: Mathematical specification of the non-linear XP leveling curve, anti-cheat validation, and streak multiplier engine powering Lumi.
+title: Life RPG Non-Linear Leveling Engine & Mathematical Formulas
+summary: Mathematical specification of the non-linear XP leveling curve, anti-cheat validation, and streak multiplier engine powering Life RPG.
 domain: game-mathematics
 last_updated: 2026-09-13
 related_concepts:
@@ -9,17 +9,17 @@ related_concepts:
   - dungeon-raids-economy.md
 extraction_keywords:
   - xp leveling formula
-  - lumi math
+  - life rpg math
   - non linear progression curve
   - streak multiplier formula
   - habitica leveling formula comparison
 ---
 
-# Lumi Non-Linear Leveling Engine & Progression Math
+# Life RPG Non-Linear Leveling Engine & Progression Math
 
 ## 1. Executive Summary
 
-The Lumi progression engine translates real-world habits, study sprints, and physical workouts into mathematically balanced RPG growth. It avoids linear XP treadmills (which feel repetitive and arbitrary) and exponential curves (which lead to demoralizing wall effects), adopting instead a **sub-quadratic polynomial power curve** with continuous streak scaling.
+The Life RPG progression engine translates real-world habits, study sprints, and physical workouts into mathematically balanced RPG growth. It avoids linear XP treadmills (which feel repetitive and arbitrary) and exponential curves (which lead to demoralizing wall effects), adopting instead a **sub-quadratic polynomial power curve** with continuous streak scaling.
 
 All calculations are enforced server-side via Next.js API endpoints and Prisma ORM to guarantee mathematical integrity.
 
@@ -71,7 +71,7 @@ $$GP_{\text{final}} = \text{round}\left( \text{BaseGP}(D) \times \text{Multiplie
 
 ## 3. Server-Side Anti-Cheat Protocol
 
-To maintain user motivation and genuine psychological value, achievements in Lumi cannot be faked via client-side script tampering:
+To maintain user motivation and genuine psychological value, achievements in Life RPG cannot be faked via client-side script tampering:
 
 1. **Server Authorization**: The client sends only the bounty ID and session cookie to `/api/quests/[id]/complete`.
 2. **State Validation**: The server verifies that the quest belongs to the authenticated user and has not already been completed within the current calendar day reset window.

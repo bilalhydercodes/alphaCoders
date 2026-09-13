@@ -239,7 +239,7 @@ export const ScrollyVideoCanvas: React.FC<ScrollyVideoCanvasProps> = ({
     <section
       ref={containerRef}
       id="how-it-works"
-      aria-label="Lumi Interactive 3D Experience"
+      aria-label="Life RPG Interactive 3D Experience"
       className="relative w-full h-[380vh] bg-draft-paper scroll-mt-0"
     >
       <div id="meet-lumi" className="absolute top-0 pointer-events-none" />

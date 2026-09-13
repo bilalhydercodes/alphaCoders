@@ -23,7 +23,7 @@ interface LandingFooterProps {
 
 export const LandingFooter: React.FC<LandingFooterProps> = ({ onOpenAuth }) => {
   return (
-    <footer className="relative w-full overflow-hidden select-none" aria-label="Lumi Footer">
+    <footer className="relative w-full overflow-hidden select-none" aria-label="Life RPG Footer">
       {/* 1. Organic Cloudy SVG Horizon Transition from Ghost White (#F8F8FF) into Amethyst (#9966CC) */}
       <div className="w-full bg-[#F8F8FF] leading-none">
         <svg
@@ -109,7 +109,9 @@ export const LandingFooter: React.FC<LandingFooterProps> = ({ onOpenAuth }) => {
           {/* Clean Bottom Navigation & Brand Credit */}
           <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-semibold text-white/80">
             <div className="flex items-center gap-2">
-              <span className="font-extrabold text-white text-sm font-sans tracking-tight">Lumi</span>
+              <span className="font-extrabold text-white text-sm font-sans tracking-tight">Life RPG</span>
+              <span>·</span>
+              <span>with Lumi</span>
               <span>·</span>
               <span className="text-white/70">Turn daily routines into playable quests</span>
             </div>

@@ -1,4 +1,4 @@
-# Lumi — Chronicles of Mastery
+# Life RPG — Chronicles of Mastery
 
 > A gamified productivity system engineered to bridge the delayed gratification gap through RPG progression, character attributes, and an autonomous 3D companion.
 
@@ -25,7 +25,7 @@ Traditional to-do applications and habit trackers suffer from a fundamental cogn
 
 In the human prefrontal cortex, studying for an exam or exercising provides positive reinforcement only after weeks or months. Standard productivity tools replace this friction with sterile checklists, creating the "chore trap" that leads to abandonment—especially for ADHD and neurodivergent users.
 
-**Lumi** bridges this delayed gratification gap by coupling real-world task verification with immediate, multi-sensory feedback loops:
+**Life RPG** bridges this delayed gratification gap by coupling real-world task verification with immediate, multi-sensory feedback loops:
 1. **Procedural Web Audio API Synthesizer**: Zero-latency acoustic feedback using harmonic major triads and exponential gain decays—no external audio files or bandwidth overhead.
 2. **Ballistic 3D XP Particles**: Particle physics that erupt from completed tasks and arc across the viewport into the player's progression bars.
 3. **Tactile Spring Micro-Interactions**: 180ms physics-based checkmark drawing with tactile resistance.
@@ -234,4 +234,4 @@ The project is configured for single-click deployment on Vercel with PostgreSQL:
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License. Built for the Life RPG Challenge.

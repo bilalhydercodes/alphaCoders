@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('Seeding Lumi database...');
+  console.log('Seeding Life RPG database...');
 
   // 1. Seed Demo User
   const demoUser = await prisma.user.findFirst({ where: { username: 'demo' } });

@@ -59,7 +59,7 @@ export const KeyboardShortcutsModal: React.FC<KeyboardShortcutsModalProps> = ({
         </div>
 
         <p className="text-xs text-copy-muted mb-4 font-medium">
-          Lumi is built to be accessible via keyboard tab traversal. Use these shortcuts for swift guild navigation:
+          Life RPG is built to be accessible via keyboard tab traversal. Use these shortcuts for swift guild navigation:
         </p>
 
         <div className="flex flex-col gap-2 max-h-[340px] overflow-y-auto pr-1">

@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 
 export const runtime = 'nodejs';
-export const alt = 'Lumi — Turn Daily Habits into an RPG';
+export const alt = 'Life RPG with Lumi — Turn Daily Habits into an RPG';
 export const size = {
   width: 1200,
   height: 630,
@@ -67,13 +67,13 @@ export default async function Image() {
             >
               <span
                 style={{
-                  fontSize: '24px',
+                  fontSize: '22px',
                   fontWeight: 900,
-                  letterSpacing: '2px',
+                  letterSpacing: '1px',
                   color: '#FFFFFF',
                 }}
               >
-                LUMI
+                LIFE RPG
               </span>
               <span
                 style={{
@@ -84,7 +84,7 @@ export default async function Image() {
                   textTransform: 'uppercase',
                 }}
               >
-                Autonomous 3D Companion & Habit RPG
+                with 3D Companion Lumi
               </span>
             </div>
           </div>

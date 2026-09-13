@@ -31,7 +31,7 @@ export const PaperHero = forwardRef<HTMLDivElement, PaperHeroProps>(
 
             {/* Right: Architectural Contact Note */}
             <div className="font-draft-mono text-[10px] sm:text-[11px] text-[#7A6F8C] tracking-widest">
-              HELLO@LUMI.APP
+              HELLO@LIFERPG.APP
             </div>
           </div>
 
