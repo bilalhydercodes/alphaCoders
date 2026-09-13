@@ -33,6 +33,19 @@ const STARTER_QUESTS = [
 ];
 
 export async function POST(req: Request) {
+  // Early diagnostic: surface config issues immediately
+  if (!process.env.DATABASE_URL) {
+    console.error('FATAL: DATABASE_URL environment variable is not set');
+    return NextResponse.json(
+      { error: 'Server misconfiguration: DATABASE_URL not set. Please add it to Vercel Environment Variables.' },
+      { status: 500 }
+    );
+  }
+
+  if (!process.env.JWT_SECRET) {
+    console.warn('WARNING: JWT_SECRET not set, using insecure default');
+  }
+
   try {
     // 1. Find existing guest or demo user (case-safe with multiple fallbacks)
     let user = await prisma.user.findFirst({
@@ -256,10 +269,15 @@ export async function POST(req: Request) {
     });
 
     return response;
-  } catch (error) {
-    console.error('Guest authentication error:', error);
+  } catch (error: any) {
+    const message = error?.message || String(error);
+    console.error('Guest authentication error:', message, error);
     return NextResponse.json(
-      { error: 'Failed to authenticate guest session' },
+      {
+        error: 'Failed to authenticate guest session',
+        // Surface the real error so it shows in the browser/Vercel logs
+        detail: message,
+      },
       { status: 500 }
     );
   }
