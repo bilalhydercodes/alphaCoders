@@ -56,10 +56,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenShortcuts, activeTab, setA
             <div>
               <div className="flex items-center gap-1.5">
                 <span className="font-black text-copy tracking-tight text-base sm:text-lg">
-                  Life RPG
+                  Lumi
                 </span>
                 <span className="text-xs px-2 py-0.5 rounded-full bg-lavender-soft text-primary font-bold">
-                  Lumi
+                  Codex
                 </span>
               </div>
               <p className="text-xs text-copy-muted hidden sm:block">

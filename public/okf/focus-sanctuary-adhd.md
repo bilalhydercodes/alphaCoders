@@ -1,7 +1,7 @@
 ---
 concept: focus-sanctuary-adhd
 title: Focus Sanctuary & ADHD Neurodivergent Design Loops
-summary: Scientific breakdown of the delayed gratification gap, Pomodoro focus mechanics, and tactile dopamine compensation loops designed for ADHD users.
+summary: Scientific breakdown of the delayed gratification gap, Pomodoro focus mechanics, and tactile dopamine compensation loops designed for ADHD users in Lumi.
 domain: cognitive-behavioral-design
 last_updated: 2026-09-13
 related_concepts:
@@ -28,13 +28,13 @@ In the human prefrontal cortex:
 - Traditional to-do apps exacerbate this by replacing painful chores with sterile black-and-white checklists, offering zero physiological or emotional reinforcement.
 
 ```
-Real World:     [Effort Today] -------------------- (Months of Delay) -------------------> [Reward]
-Life RPG Loop:  [Effort Today] ===> [Instant Ballistic XP] + [Chime] + [Lumi Cheer] =====> [Dopamine]
+Real World:  [Effort Today] -------------------- (Months of Delay) -------------------> [Reward]
+Lumi Loop:   [Effort Today] ===> [Instant Ballistic XP] + [Chime] + [Lumi Cheer] =====> [Dopamine]
 ```
 
 ## 2. The 4 Immediate Dopamine Compensation Pillars
 
-Life RPG closes the delayed gratification gap by injecting four instantaneous multi-sensory feedback loops the exact millisecond a task is completed:
+Lumi closes the delayed gratification gap by injecting four instantaneous multi-sensory feedback loops the exact millisecond a task is completed:
 
 ### 1. Spring-Eased Physical Micro-Interactions
 The task checkbox uses an active spring-physics curve (180ms duration) with dynamic SVG path drawing, giving physical resistance and satisfying tactile feedback.
@@ -43,7 +43,7 @@ The task checkbox uses an active spring-physics curve (180ms duration) with dyna
 Upon quest verification, an array of ballistic 3D particle sprites erupt from the completed item and arc across the screen toward the player's XP bar and Gold pouch, visually embodying the physical transfer of energy.
 
 ### 3. Procedural Zero-Latency Web Audio API Synthesis
-Rather than playing compressed `.mp3` or `.wav` files (which suffer from network latency and repetitive acoustic fatigue), Life RPG generates sound **procedurally in real time** via the browser's native `AudioContext`:
+Rather than playing compressed `.mp3` or `.wav` files (which suffer from network latency and repetitive acoustic fatigue), Lumi generates sound **procedurally in real time** via the browser's native `AudioContext`:
 - **Task Complete**: Synthesized harmonic 8-bit major triad (440Hz -> 554Hz -> 659Hz) with exponential gain decay.
 - **Level Up**: Multi-oscillator brass fanfare with filtered white-noise fireworks.
 - **Mute Accessibility**: Toggleable globally via the speaker button or pressing `M`.

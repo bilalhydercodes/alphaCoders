@@ -1,14 +1,14 @@
 ---
 concept: character-attributes
 title: 5 Core Real-World Attributes (INT, STR, AGI, VIT, SPI)
-summary: Detailed specification of the 5 character attributes in Life RPG that map real-world activities to balanced RPG character growth.
+summary: Detailed specification of the 5 character attributes in Lumi that map real-world activities to balanced character growth.
 domain: cognitive-behavioral-design
 last_updated: 2026-09-13
 related_concepts:
   - progression-engine.md
   - focus-sanctuary-adhd.md
 extraction_keywords:
-  - character stats life rpg
+  - character stats lumi
   - 5 attributes habit tracker
   - intellect strength agility vitality spirit
   - habit categorization rpg
@@ -20,7 +20,7 @@ extraction_keywords:
 
 Traditional task managers treat all tasks as homogeneous checklist items: answering an email, bench pressing 200 pounds, and meditating for 20 minutes look visually identical. This creates cognitive flattening, where users gravitate toward trivial administrative tasks to check boxes rather than undertaking high-value deep work or physical health habits.
 
-Life RPG introduces **Character Attribute Alignment**: every task feeds one of five distinct attributes, providing immediate feedback on whether a user's life is balanced or skewed.
+Lumi introduces **Character Attribute Alignment**: every task feeds one of five distinct attributes, providing immediate feedback on whether a user's life is balanced or skewed.
 
 ```
        [INTELLECT]

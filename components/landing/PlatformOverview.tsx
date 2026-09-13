@@ -10,7 +10,7 @@ export const PlatformOverview: React.FC<PlatformOverviewProps> = ({ onOpenAuth }
   return (
     <section
       id="about-platform"
-      aria-label="About Life RPG Platform"
+      aria-label="About Lumi Platform"
       className="relative z-20 w-full bg-draft-paper py-16 sm:py-24 px-4 sm:px-8 md:px-12 lg:px-16 select-none"
     >
       <div className="max-w-[1200px] mx-auto relative z-10">
@@ -24,7 +24,7 @@ export const PlatformOverview: React.FC<PlatformOverviewProps> = ({ onOpenAuth }
             Instead of dry to-do lists, your habits, study sessions, and projects directly level up an in-game character with real attributes and tangible momentum.
           </p>
           <p id="what-is-gamified-habit-tracker" className="mt-4 text-base sm:text-lg text-[#5C5070] font-medium leading-relaxed max-w-2xl">
-            A gamified habit tracker is a productivity app that applies game mechanics — experience points, levels, streaks, and virtual rewards — to real-world tasks like studying, exercising, and daily routines. Life RPG takes this further with a non-linear leveling engine, 5 trainable character attributes (Intellect, Strength, Agility, Vitality, Spirit), boss raids driven by task completion, and Lumi, an autonomous 3D companion who reacts to your progress in real time.
+            A gamified habit tracker is a productivity app that applies game mechanics — experience points, levels, streaks, and virtual rewards — to real-world tasks like studying, exercising, and daily routines. Lumi takes this further with a non-linear leveling engine, 5 trainable character attributes (Intellect, Strength, Agility, Vitality, Spirit), boss raids driven by task completion, and an autonomous 3D companion who reacts to your progress in real time.
           </p>
         </div>
 
@@ -81,7 +81,7 @@ export const PlatformOverview: React.FC<PlatformOverviewProps> = ({ onOpenAuth }
 
         {/* SEO/AEO Semantic Block */}
         <article className="text-sm text-[#5C5070]/80 leading-relaxed max-w-3xl mt-12">
-          <h3 id="how-it-works" className="font-semibold text-[#1F1730] mb-2">How Life RPG works</h3>
+          <h3 id="how-it-works" className="font-semibold text-[#1F1730] mb-2">How Lumi works</h3>
           <ol className="list-decimal pl-5 space-y-1">
             <li>Create a bounty (task) and assign it to one of 5 attributes</li>
             <li>Complete the task to earn XP, gold, and deal damage to the guild boss</li>

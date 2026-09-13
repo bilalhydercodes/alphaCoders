@@ -73,4 +73,4 @@ root
 Save production export to:
 `public/assets/lumi/Lumi.glb`
 
-The Life RPG engine automatically detects and hot-swaps this file if present. If absent, the engine seamlessly renders the built-in procedural rigged 3D character.
+The Lumi 3D engine automatically detects and hot-swaps this file if present. If absent, the engine seamlessly renders the built-in procedural rigged 3D character.

@@ -49,8 +49,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <LumiMascot mood="content" size={38} />
           </div>
           <div className="hidden lg:block">
-            <h1 className="text-xl font-black text-copy tracking-tight">Life RPG</h1>
-            <p className="text-xs font-bold text-primary">with Lumi</p>
+            <h1 className="text-xl font-black text-copy tracking-tight">Lumi</h1>
+            <p className="text-xs font-bold text-primary">Chronicles of Mastery</p>
           </div>
         </div>
 

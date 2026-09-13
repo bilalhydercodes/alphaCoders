@@ -36,7 +36,7 @@ export const LandingFeatures: React.FC = () => {
             Gamified productivity features that keep you consistent
           </h2>
           <p className="text-base sm:text-lg text-white/90 font-medium mt-4 leading-relaxed max-w-2xl">
-            Every system in Life RPG connects your productive habits, study sessions, and milestones into an active role-playing engine.
+            Every system in Lumi connects your productive habits, study sessions, and milestones into an active role-playing engine.
           </p>
         </div>
 

@@ -1,7 +1,7 @@
 ---
 concept: dungeon-raids-economy
 title: Guild Boss Raids & The Emporium Virtual Economy
-summary: Mechanics of the Sloth Behemoth cooperative raid boss and the in-game virtual gold economy in Life RPG.
+summary: Mechanics of the Sloth Behemoth cooperative raid boss and the in-game virtual gold economy in Lumi.
 domain: game-design
 last_updated: 2026-09-13
 related_concepts:
@@ -19,7 +19,7 @@ extraction_keywords:
 
 ## 1. Cooperative Dungeon Raid Bosses
 
-A frequent failure of gamified apps is solipsism: personal productivity occurs in a vacuum without collective stakes. Life RPG unites personal discipline with cooperative gaming through **Dungeon Raid Bosses**.
+A frequent failure of gamified apps is solipsism: personal productivity occurs in a vacuum without collective stakes. Lumi unites personal discipline with cooperative gaming through **Dungeon Raid Bosses**.
 
 ### The Sloth Behemoth & Procrastination Hydra
 

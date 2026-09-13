@@ -22,14 +22,14 @@ export const LandingNav: React.FC<LandingNavProps> = ({ onOpenAuth, onOpenDashbo
           <a
             href="#"
             className="flex items-center gap-2 group cursor-pointer focus-visible:outline-2 focus-visible:outline-[#9966CC] rounded-none"
-            aria-label="Life RPG Home"
+            aria-label="Lumi Home"
           >
             {/* Square sharp icon container */}
             <div className="w-8 h-8 bg-[#EADFFF] border border-[#2E2438] rounded-none flex items-center justify-center shrink-0">
               <LumiMascot mood="content" size={19} />
             </div>
             <span className="text-[14px] font-black text-[#1F1730] tracking-tight ml-0.5 font-sans">
-              Life RPG
+              Lumi
             </span>
           </a>
         </div>

@@ -11,15 +11,17 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://life-rpg.app'),
-  title: 'Life RPG with Lumi · Level Up Your Real Life',
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://alpha-coders-xi.vercel.app'),
+  title: 'Lumi · Level Up Your Real Life',
   description:
     'Bridge the delayed gratification gap. Turn real-world habits, study sprints, and fitness into an engaging RPG progression with your autonomous 3D companion Lumi.',
   keywords: [
-    'Life RPG',
+    'Lumi',
+    'Lumi Habit Tracker',
+    'Lumi RPG',
     'Gamified Productivity',
     'Habit Tracker RPG',
-    '3D Lumi Companion',
+    '3D Companion',
     'Task Manager Game',
     'ADHD Productivity Tool',
     'Pomodoro Focus Sanctuary',
@@ -33,19 +35,19 @@ export const metadata: Metadata = {
     'task manager with rewards',
     'habit tracker with streaks',
   ],
-  authors: [{ name: 'Life RPG Adventurers Guild' }],
+  authors: [{ name: 'Lumi Guild' }],
   openGraph: {
-    title: 'Life RPG with Lumi · Turn Daily Habits into an Epic Quest',
+    title: 'Lumi · Turn Daily Habits into an Epic Quest',
     description:
       'Ditch the chore trap. Earn XP, train 5 real-world attributes, and celebrate every milestone with your living 3D companion Lumi.',
-    url: 'https://life-rpg.app',
-    siteName: 'Life RPG',
+    url: 'https://alpha-coders-xi.vercel.app',
+    siteName: 'Lumi',
     images: [
       {
         url: '/opengraph-image',
         width: 1200,
         height: 630,
-        alt: 'Life RPG with Lumi — Turn Habits into an RPG',
+        alt: 'Lumi — Turn Daily Habits into an RPG',
       },
     ],
     locale: 'en_US',
@@ -53,7 +55,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Life RPG with Lumi · Level Up Your Real Life',
+    title: 'Lumi · Level Up Your Real Life',
     description:
       'Transform mundane to-do lists into rewarding RPG progression with instant feedback loops and a living 3D companion.',
     images: ['/opengraph-image'],
@@ -74,8 +76,8 @@ const jsonLd = {
   '@graph': [
     {
       '@type': 'SoftwareApplication',
-      '@id': 'https://life-rpg.app/#software',
-      name: 'Life RPG with Lumi',
+      '@id': 'https://alpha-coders-xi.vercel.app/#software',
+      name: 'Lumi',
       applicationCategory: 'ProductivityApplication',
       operatingSystem: 'Web, iOS, Android, macOS, Windows',
       datePublished: '2025-02-15',
@@ -90,9 +92,9 @@ const jsonLd = {
         ratingValue: '4.8',
         ratingCount: '127',
       },
-      screenshot: 'https://life-rpg.app/opengraph-image',
+      screenshot: 'https://alpha-coders-xi.vercel.app/opengraph-image',
       description:
-        'Transform real-world daily tasks, habits, and self-improvement into an immersive RPG adventure with immediate dopamine loops and a 3D living mascot.',
+        'Transform real-world daily tasks, habits, and self-improvement into an immersive RPG adventure with immediate dopamine loops and an autonomous 3D living mascot.',
       featureList: [
         'Non-linear RPG leveling progression engine',
         '5 Real-life character attributes: Intellect, Strength, Agility, Vitality, Spirit',
@@ -104,23 +106,23 @@ const jsonLd = {
     },
     {
       '@type': 'Organization',
-      '@id': 'https://life-rpg.app/#organization',
-      name: 'Life RPG Guild',
-      url: 'https://life-rpg.app',
+      '@id': 'https://alpha-coders-xi.vercel.app/#organization',
+      name: 'Lumi Guild',
+      url: 'https://alpha-coders-xi.vercel.app',
       creator: {
         '@type': 'Organization',
-        name: 'Life RPG Guild',
+        name: 'Lumi Guild',
         url: 'https://github.com/bilalhydercodes/alphaCoders',
       },
     },
     {
       '@type': 'WebSite',
-      '@id': 'https://life-rpg.app/#website',
-      url: 'https://life-rpg.app',
-      name: 'Life RPG',
+      '@id': 'https://alpha-coders-xi.vercel.app/#website',
+      url: 'https://alpha-coders-xi.vercel.app',
+      name: 'Lumi',
       potentialAction: {
         '@type': 'SearchAction',
-        target: 'https://life-rpg.app/search?q={search_term_string}',
+        target: 'https://alpha-coders-xi.vercel.app/search?q={search_term_string}',
         'query-input': 'required name=search_term_string',
       },
     },

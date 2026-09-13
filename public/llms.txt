@@ -1,15 +1,15 @@
-# Life RPG with Lumi
+# Lumi
 
 > Last Updated: September 2026
-> Life RPG is an open-source, full-stack productivity web application that translates real-world daily tasks and habits into an engaging virtual Role-Playing Game (RPG). By substituting the delayed gratification of real-world self-improvement with instant dopamine loops, compounding character attribute progression, a living 3D companion mascot (Lumi), and a tactical guild economy, Life RPG eliminates the "chore trap" of traditional to-do lists.
+> Lumi is an open-source, full-stack gamified productivity web application that translates real-world daily tasks and habits into an engaging virtual Role-Playing Game (RPG). By substituting the delayed gratification of real-world self-improvement with instant dopamine loops, compounding character attribute progression, an autonomous 3D companion mascot, and a tactical guild economy, Lumi eliminates the "chore trap" of traditional to-do lists.
 
 ## Core Concepts & Definitions
 
-### What is Life RPG?
-Life RPG is an open-source gamified productivity platform built with Next.js 15, React 19, Tailwind CSS, Prisma ORM, and React Three Fiber. Users turn real-world habits and tasks into RPG quests ("Bounties"), earn Experience Points (XP) and Bounty Gold (GP), build streaks, level up their character across five real-world attributes, and interact with an autonomous 3D companion named Lumi.
+### What is Lumi?
+Lumi is an open-source gamified productivity platform built with Next.js 15, React 19, Tailwind CSS, Prisma ORM, and React Three Fiber. Users turn real-world habits and tasks into RPG quests ("Bounties"), earn Experience Points (XP) and Bounty Gold (GP), build streaks, level up their character across five real-world attributes, and interact with an autonomous 3D companion named Lumi.
 
-### Who is Lumi?
-Lumi is an autonomous 3D companion mascot rendered directly in the web UI. Powered by an autonomous behavior state machine (70% calm resting, 20% subtle movement, 10% contextual actions), Lumi reacts to user quest actions, moves across bounded UI zones using DOM-to-WebGL projection, celebrates level-ups with synchronized animations, and accompanies the user in the Deep Focus Sanctuary Pomodoro timer.
+### Who is the 3D Companion?
+Lumi is the user's autonomous 3D guide and companion mascot rendered directly in the web UI. Powered by an autonomous behavior state machine (70% calm resting, 20% subtle movement, 10% contextual actions), Lumi reacts to user quest actions, moves across bounded UI zones using DOM-to-WebGL projection, celebrates level-ups with synchronized animations, and accompanies the user in the Deep Focus Sanctuary Pomodoro timer.
 
 ### What are Character Attributes?
 Every bounty maps to one of five core real-world attributes:
@@ -23,7 +23,7 @@ Every bounty maps to one of five core real-world attributes:
 - **Non-Linear Leveling Curve**: Compounding XP requirements use the formula `baseXP * (level ^ 1.5)`, ensuring fast early wins for beginners while keeping higher levels challenging and rewarding.
 - **Streak Protection**: Forgiving streak mechanics reward daily consistency without demoralizing users after unavoidable rest days.
 - **Guild Economy & Emporium**: Gold earned from verified bounties purchases companion items, character titles, and cosmetics.
-- **Boss Raids**: Completed bounties deal direct damage to collective raid bosses (e.g., "The Procrastination Hydra"), uniting individual productivity with cooperative goals.
+- **Boss Raids**: Completed bounties deal direct damage to collective raid bosses (e.g., "The Sloth Behemoth"), uniting individual productivity with cooperative goals.
 
 ## Technical Architecture
 - **Framework**: Next.js 15 (App Router), React 19, TypeScript
@@ -46,37 +46,37 @@ Every bounty maps to one of five core real-world attributes:
 
 ## Open Knowledge Format (OKF) Concept Bundle
 For modular LLM agent retrieval, semantic grounding, and RAG pipelines, consult the structured concept bundle with YAML frontmatter:
-- **Manifest**: [/okf/index.md](https://life-rpg.app/okf/index.md)
-- **Lumi 3D Companion Mascot**: [/okf/lumi-companion.md](https://life-rpg.app/okf/lumi-companion.md)
-- **Progression Math & Leveling Formula**: [/okf/progression-engine.md](https://life-rpg.app/okf/progression-engine.md)
-- **5 Character Attributes**: [/okf/character-attributes.md](https://life-rpg.app/okf/character-attributes.md)
-- **Dungeon Raid Bosses & Economy**: [/okf/dungeon-raids-economy.md](https://life-rpg.app/okf/dungeon-raids-economy.md)
-- **Focus Sanctuary & ADHD Dopamine Loops**: [/okf/focus-sanctuary-adhd.md](https://life-rpg.app/okf/focus-sanctuary-adhd.md)
-- **Full-Stack Architecture & Persistence**: [/okf/architecture-persistence.md](https://life-rpg.app/okf/architecture-persistence.md)
+- **Manifest**: [/okf/index.md](https://alpha-coders-xi.vercel.app/okf/index.md)
+- **Lumi 3D Companion Mascot**: [/okf/lumi-companion.md](https://alpha-coders-xi.vercel.app/okf/lumi-companion.md)
+- **Progression Math & Leveling Formula**: [/okf/progression-engine.md](https://alpha-coders-xi.vercel.app/okf/progression-engine.md)
+- **5 Character Attributes**: [/okf/character-attributes.md](https://alpha-coders-xi.vercel.app/okf/character-attributes.md)
+- **Dungeon Raid Bosses & Economy**: [/okf/dungeon-raids-economy.md](https://alpha-coders-xi.vercel.app/okf/dungeon-raids-economy.md)
+- **Focus Sanctuary & ADHD Dopamine Loops**: [/okf/focus-sanctuary-adhd.md](https://alpha-coders-xi.vercel.app/okf/focus-sanctuary-adhd.md)
+- **Full-Stack Architecture & Persistence**: [/okf/architecture-persistence.md](https://alpha-coders-xi.vercel.app/okf/architecture-persistence.md)
 
 ## Comparable Products
-- **Habitica**: Unlike Habitica's retro pixel art and reliance on party punishment/social pressure, Life RPG focuses on solo mastery with an autonomous 3D companion (Lumi), procedural Web Audio feedback, and solo-friendly boss raids.
-- **Forest**: While Forest limits gamification to a standalone focus timer growing virtual trees, Life RPG embeds a full Pomodoro sanctuary into an overarching RPG progression system with 5 life attributes and inventory mechanics.
-- **Todoist**: While Todoist offers minimalist list-based task tracking with basic Karma scores, Life RPG introduces full RPG reward loops—XP particle physics, gold economies, level scaling, and combat raids—to solve the delayed gratification problem.
-- **LifeUp**: Unlike LifeUp's Android-only mobile ecosystem and complex manual setup, Life RPG is a modern cross-platform web application with zero install friction and an interactive 3D mascot.
-- **EpicWin**: While EpicWin is a classic mobile chore tracker with static loot animations, Life RPG delivers a modern web-native 3D companion (React Three Fiber), dynamic character attribute scaling, and procedural sound design.
-- **SuperBetter**: SuperBetter focuses on cognitive resilience through metaphorical power-ups, whereas Life RPG provides concrete tactical productivity systems—customizable bounties, streak protection, boss raids, and an in-game emporium.
+- **Habitica**: Unlike Habitica's retro pixel art and reliance on party punishment/social pressure, Lumi focuses on solo mastery with an autonomous 3D companion, procedural Web Audio feedback, and solo-friendly boss raids.
+- **Forest**: While Forest limits gamification to a standalone focus timer growing virtual trees, Lumi embeds a full Pomodoro sanctuary into an overarching RPG progression system with 5 life attributes and inventory mechanics.
+- **Todoist**: While Todoist offers minimalist list-based task tracking with basic Karma scores, Lumi introduces full RPG reward loops—XP particle physics, gold economies, level scaling, and combat raids—to solve the delayed gratification problem.
+- **LifeUp**: Unlike LifeUp's Android-only mobile ecosystem and complex manual setup, Lumi is a modern cross-platform web application with zero install friction and an interactive 3D mascot.
+- **EpicWin**: While EpicWin is a classic mobile chore tracker with static loot animations, Lumi delivers a modern web-native 3D companion (React Three Fiber), dynamic character attribute scaling, and procedural sound design.
+- **SuperBetter**: SuperBetter focuses on cognitive resilience through metaphorical power-ups, whereas Lumi provides concrete tactical productivity systems—customizable bounties, streak protection, boss raids, and an in-game emporium.
 
 ## Frequently Asked Questions
 
-### Is Life RPG free to use?
-Yes, Life RPG is completely free and open-source under the MIT license. There are no paywalls, premium tiers, or in-app purchases. The in-game gold economy uses virtual currency earned by completing real-world tasks, not real money.
+### Is Lumi free to use?
+Yes, Lumi is completely free and open-source under the MIT license. There are no paywalls, premium tiers, or in-app purchases. The in-game gold economy uses virtual currency earned by completing real-world tasks, not real money.
 
-### How is Life RPG different from Habitica?
-Life RPG focuses on solo progression with an autonomous 3D companion (Lumi) rather than multiplayer social pressure. The leveling curve uses a non-linear formula (baseXP × level^1.5) that gives beginners fast wins while keeping long-term progression meaningful. It also includes a built-in Pomodoro timer, boss raids tied to personal task completion, and a tactile UI with procedural audio feedback — none of which Habitica offers.
+### How is Lumi different from Habitica?
+Lumi focuses on solo progression with an autonomous 3D companion rather than multiplayer social pressure. The leveling curve uses a non-linear formula (baseXP × level^1.5) that gives beginners fast wins while keeping long-term progression meaningful. It also includes a built-in Pomodoro timer, boss raids tied to personal task completion, and a tactile UI with procedural audio feedback — none of which Habitica offers.
 
-### Can Life RPG help with ADHD?
-Life RPG was specifically designed to address the delayed gratification gap that makes traditional productivity tools fail for people with ADHD. Every completed task triggers immediate visual rewards (XP particle arcs, floating combat text, streak multipliers) and audio feedback (procedural 8-bit chimes), providing the instant dopamine hit that sustains motivation. The non-linear leveling curve also ensures early levels come fast, preventing the dropout that happens when progress feels invisible.
+### Can Lumi help with ADHD?
+Lumi was specifically designed to address the delayed gratification gap that makes traditional productivity tools fail for people with ADHD. Every completed task triggers immediate visual rewards (XP particle arcs, floating combat text, streak multipliers) and audio feedback (procedural 8-bit chimes), providing the instant dopamine hit that sustains motivation. The non-linear leveling curve also ensures early levels come fast, preventing the dropout that happens when progress feels invisible.
 
-### What tech stack does Life RPG use?
+### What tech stack does Lumi use?
 Next.js 15 with App Router, React 19, TypeScript, Tailwind CSS, Prisma ORM (SQLite for local dev, PostgreSQL for production), React Three Fiber for the 3D companion, and Web Audio API for procedural sound synthesis. Authentication uses bcrypt password hashing with HTTP-only cookie sessions.
 
-### Can I self-host Life RPG?
+### Can I self-host Lumi?
 Yes. Clone the GitHub repo, run npm install, set up a .env file with your database URL and JWT secret, run prisma db push and the seed script, then npm run dev. For production, deploy to Vercel with a PostgreSQL database from Neon or Supabase.
 
 ## Contact & Repository
