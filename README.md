@@ -76,6 +76,14 @@ Built to lead in modern AI retrieval and agentic search systems:
 - **Comprehensive Machine Readability**: Full JSON-LD graph (`SoftwareApplication`, `Organization`, `WebSite`, `FAQPage`), explicit crawler allowances in `robots.ts` (`GPTBot`, `PerplexityBot`, `ClaudeBot`, etc.), and structured `llms.txt`.
 - **Dynamic Open Graph Generation**: Native 1200x630px social card via `next/og` (`/opengraph-image`).
 
+### 7. Universal Multi-Screen Responsiveness & Viewport Resilience
+Engineered to deliver an uncompromising user experience across all device form factors:
+- **Mobile-First Responsive Coverage (320px to 4K)**: Full fluid adaptation spanning ultra-narrow handhelds (iPhone SE, Galaxy Fold 320px width), mid-tier mobile viewports, tablets, laptops, and ultra-wide desktop monitors.
+- **Dedicated Handheld Navigation**: Desktop left rail smoothly transitions into a fixed mobile bottom navigation bar (`h-16`) with native iOS safe-area insets (`pb-[env(safe-area-inset-bottom)]`), single-row 7-tab distribution, and bottom viewport padding (`pb-24`) to eliminate content clipping.
+- **Keyboard-Safe Bounded Modals**: All modal surfaces (Bounty Creator, Pomodoro Focus Sanctuary, Level-Up Celebration, Keyboard Cheatsheet, Quest Map Challenge) enforce `max-h-[90vh]` with internal scroll mechanics, ensuring action buttons and form inputs remain fully visible when on-screen virtual keyboards are active.
+- **Dynamic 3D Canvas Adaptation**: WebGL companion instances automatically calibrate height and pixel density (`dpr={[1, 2]}`) based on screen dimensions (e.g. mobile 150px vs desktop 280px on authentication and dashboard rails) to conserve mobile GPU battery and prevent content displacement.
+- **Zero Horizontal Layout Shift (CLS)**: Global overflow barriers (`overflow-x: hidden`, `max-w-[100vw]`), fluid typography scaling (`text-[34px]` up to `text-[106px]`), and responsive flex-wrap chip containers ensure zero side-scrolling jitter or clipped metrics on narrow viewports.
+
 ---
 
 ## Technical Specifications
@@ -85,7 +93,8 @@ Built to lead in modern AI retrieval and agentic search systems:
 | **Framework** | Next.js 15 (App Router) + React 19 | Server Component rendering, zero-latency crawling, streaming boundaries |
 | **Language** | TypeScript 5.8 | Strict end-to-end type safety across API routes and client state |
 | **Styling** | Tailwind CSS 3.4 + Plus Jakarta Sans | High-contrast design tokens, WCAG AA/AAA compliant color palette |
-| **3D Engine** | Three.js + React Three Fiber + Drei | Low-overhead WebGL rendering of companion character models |
+| **Responsiveness** | Mobile-First Flex/Grid + Safe-Area Insets | Fluid multi-screen support from 320px handhelds to 4K desktop displays |
+| **3D Engine** | Three.js + React Three Fiber + Drei | Low-overhead WebGL rendering of companion character models with dynamic DPR |
 | **ORM & Database** | Prisma 6.4 + PostgreSQL (Neon) | Relational schema with user data isolation, atomic mutations, SQLite local fallback |
 | **Audio Engine** | Web Audio API (`AudioContext`) | Procedural 8-bit sound synthesis with zero external audio assets |
 | **Security** | `bcryptjs` + JWT | Salted password hashing with `httpOnly` secure session cookies |
