@@ -1,122 +1,182 @@
-# 🌟 Life RPG with Lumi — Chronicles of Mastery
+# Life RPG with Lumi — Chronicles of Mastery
 
-> *Small steps. Big quests. Level up yourself.*
+> A gamified productivity system engineered to bridge the delayed gratification gap through RPG progression, character attributes, and an autonomous 3D companion.
 
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat&logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue?style=flat&logo=typescript)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.4-38bdf8?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
 [![Prisma ORM](https://img.shields.io/badge/Prisma-6.4-2D3748?style=flat&logo=prisma)](https://www.prisma.io/)
-[![SQLite / Postgres](https://img.shields.io/badge/Database-SQLite%20%7C%20Postgres-003B57?style=flat&logo=sqlite)](https://www.sqlite.org/)
-
-**Life RPG with Lumi** is a gamified productivity web application designed to solve the **delayed gratification** problem of traditional habit trackers. By turning real-world tasks (studying, gym, coding, chores) into guild quests with immediate dopamine loops, RPG leveling, character attributes, a virtual economy, and dungeon boss battles, it transforms discipline into an engaging adventure alongside **Lumi**, your supportive companion.
-
----
-
-## 🎮 Live Demo & Walkthrough Video
-
-- **Live URL**: *(Deployable with 1-click on Vercel / Render)*
-- **Demo Walkthrough Video (90–180s)**: See [Video Walkthrough Script](#-90180-second-video-walkthrough-script) below for exact recording timestamps and narration.
-- **Instant Demo Account**: On the login screen, click **"Instant Demo Explorer Login"** for 1-click immediate access with pre-seeded quests and gear!
+[![PostgreSQL / Neon](https://img.shields.io/badge/Database-PostgreSQL%20%7C%20Neon-003B57?style=flat&logo=postgresql)](https://neon.tech/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
 
-## 💜 Creative Direction & The "Lumi" Experience
+## Live Deployment & Quick Access
 
-The application follows the design system laid out in `design.md.md` and `lumi-experience-design.md`:
-- **Theme**: *"Quiet Mastery"* — an indie-game adventurer’s codex rather than sterile enterprise SaaS.
-- **Palette**: Deep Amethyst (`#9966CC`), Ghost White (`#F8F8FF`), Gold (`#F5B700` strictly reserved for currency/rewards), and Emerald Success (`#4FCE6B`).
-- **Lumi Dynamic Companion**:
-  - **7 Ambient Mood States**: Content (Default), Radiant (High streak), Sleepy (Inactive 24h+), Concerned (Streak at risk), Wilting (Streak reset), Focused (Pomodoro active), Sleeping (Night mode).
-  - **Moment Reactions**: Level-Up fanfare, Quest hop cheer, Gold coin catch, Self-Care heart hug, and Deep Work focus.
-- **Tactile Sound Engine**: Procedural **Web Audio API** synthesizer delivering zero-latency 8-bit chimes, coin clinks, and level-up fanfare without external audio files. (Muted by default, toggleable via speaker icon or `M` key).
-- **Juice & Motion**: Spring-eased checkmark draw-on (180ms), floating combat reward text (`+50 XP`, `+25 GP`, `-50 DMG`), continuous level-up overflow animation, and full-screen celebration modal with confetti.
+- **Production URL**: [https://alpha-coders-xi.vercel.app/](https://alpha-coders-xi.vercel.app/)
+- **1-Click Instant Demo**: On the sign-in modal, select **"Instant Demo Explorer Login"** for immediate access with pre-seeded quests, gear, and character attributes—no credentials required.
+- **Source Repository**: [https://github.com/bilalhydercodes/alphaCoders.git](https://github.com/bilalhydercodes/alphaCoders.git)
 
 ---
 
-## 🏰 Core Features Checklist
+## Problem Statement & Scientific Foundation
 
-| System | Implementation Details |
-|---|---|
-| **User Authentication & Security** | Secure password hashing (`bcryptjs`), JWT httpOnly session cookies, user-scoped data isolation. |
-| **Relational Database & True Persistence** | Prisma ORM with SQLite (local) / PostgreSQL (production). Data survives page reloads, browser restarts, and cross-device sessions. |
-| **Server-Side Anti-Cheat** | XP, Gold, Streaks, Stat multipliers, and Shop purchases are calculated exclusively on the backend to prevent client-side tampering. |
-| **Non-Linear Leveling Engine** | $XP_{\text{needed}}(L) = \lfloor 100 \times L^{1.5} \rfloor$. Progress starts fast for immediate dopamine and scales smoothly. |
-| **5 Character Attributes** | Quests train **Intellect** (Coding/Study), **Strength** (Gym/Fitness), **Agility** (Habits/Routines), **Vitality** (Sleep/Diet/Self-care), and **Spirit** (Mindfulness/Creativity). |
-| **Daily Streak System** | Consecutive daily quest completions award a scaling streak multiplier: up to **+50% bonus XP and Gold**! |
-| **The Guild Emporium (Shop)** | Spend earned Gold on equipment, potions (Elixirs restore HP), companion decor, and stat-boosting relics. |
-| **Dungeon Boss Raid** | Every quest completed strikes **The Sloth Behemoth** for damage equal to your Quest XP. Defeating bosses unlocks victory loot! |
-| **Focus Mode (Pomodoro)** | 25-minute deep focus timer with Lumi on her purple laptop. Awards Intellect XP and Gold on completion. |
-| **Accessibility (a11y)** | 100% keyboard navigable (`Tab`, `Space`, `Enter`, `Q`, `1-4`, `M`, `F`, `Esc`, `?`), 44px+ touch targets, 2px focus outlines, semantic HTML. |
+Traditional to-do applications and habit trackers suffer from a fundamental cognitive design flaw: **the neurobiological discount rate of delayed rewards**.
+
+In the human prefrontal cortex, studying for an exam or exercising provides positive reinforcement only after weeks or months. Standard productivity tools replace this friction with sterile checklists, creating the "chore trap" that leads to abandonment—especially for ADHD and neurodivergent users.
+
+**Life RPG** bridges this delayed gratification gap by coupling real-world task verification with immediate, multi-sensory feedback loops:
+1. **Procedural Web Audio API Synthesizer**: Zero-latency acoustic feedback using harmonic major triads and exponential gain decays—no external audio files or bandwidth overhead.
+2. **Ballistic 3D XP Particles**: Particle physics that erupt from completed tasks and arc across the viewport into the player's progression bars.
+3. **Tactile Spring Micro-Interactions**: 180ms physics-based checkmark drawing with tactile resistance.
+4. **Floating Combat Indicators**: Real-time ARPG visual markers (`+60 XP`, `+35 GP`, `-156 DMG`) confirming immediate reward delivery.
 
 ---
 
-## ⌨️ Keyboard Hotkeys
+## Architectural Highlights & Engineering Innovations
+
+### 1. Autonomous 3D Companion Mascot (Lumi)
+Lumi is a WebGL-rendered 3D companion built with Three.js, `@react-three/fiber`, and `@react-three/drei`, operating on an autonomous probabilistic state engine:
+- **70% Calm Resting**: Natural breathing, blinking, and ambient idle curiosity while the user works uninterrupted.
+- **20% Subtle Movements**: Posture shifts, interface scans, and laptop interactions.
+- **10% Contextual Reactions**: Instant choreography on bounty completion, level-ups, and focus sprints.
+- **7 Dynamic Ambient Moods**: Content (default), Radiant (7+ day streak), Sleepy (24h+ inactive), Concerned (streak expiring), Wilting (streak reset), Focused (Pomodoro active), and Sleeping (night mode).
+- **DOM-to-WebGL Spatial Projection**: Calculates bounding rects of interface elements (`data-lumi-zone`) and interpolates Lumi's 3D coordinates along Bezier trajectories to navigate across the screen.
+
+### 2. Non-Linear Leveling Engine & Server-Side Anti-Cheat
+Progress avoids arbitrary linear grinding and punishing exponential walls by implementing a sub-quadratic power curve:
+
+$$XP_{\text{needed}}(L) = \left\lfloor 100 \times L^{1.5} \right\rfloor$$
+
+- **Dynamic Streak Multipliers**: Scales linearly with consistency up to a $+50\%$ bonus cap: $\text{Multiplier}(\text{streak}) = 1.0 + \min(0.50, \; 0.05 \times \text{streak})$.
+- **Atomic Verification**: XP, Gold, streak calculations, and inventory transactions execute exclusively within backend Prisma database transactions to prevent client-side state manipulation.
+
+### 3. Five Real-World Character Attributes
+Tasks are categorized across five distinct human dimensions to prevent cognitive flattening and burnout:
+- **Intellect (INT)**: Reading, programming, research, academic synthesis.
+- **Strength (STR)**: Resistance training, calisthenics, manual labor (amplifies raid boss damage).
+- **Agility (AGI)**: Cardiovascular conditioning, quick chores, rapid execution sprints.
+- **Vitality (VIT)**: Sleep hygiene, nutrition, hydration (increases maximum player HP).
+- **Spirit (SPI)**: Meditation, journaling, emotional resilience, mindfulness.
+- **Visual Codex**: Rendered via an interactive SVG radar pentagram with proactive deficit warnings.
+
+### 4. Cooperative Boss Raids & Guild Economy
+- **The Sloth Behemoth**: A persistent collective raid boss instance (10,000 HP). Authenticated quest completions strike the boss for damage scaled by base XP and Strength attribute scores.
+- **Zero-Fiat Virtual Economy**: The Guild Emporium uses 100% in-game earned Bounty Gold (GP) with zero real-money transactions, microtransactions, or pay-to-win mechanics.
+
+### 5. Deep Focus Sanctuary (Pomodoro Engine)
+- Integrated 25-minute deep work sprint with ambient binaural sound synthesis.
+- Synchronized companion behavior (Lumi sits and works on her purple laptop).
+- Automatic award of Intellect XP and Bounty Gold upon sprint completion.
+
+### 6. Frontier SEO & Answer Engine Optimization (AEO)
+Built to lead in modern AI retrieval and agentic search systems:
+- **Server-Side Rendering (SSR)**: Converted root routing to Next.js Server Components, ensuring all semantic headings, FAQs, and structured data are pre-rendered in initial HTML without client-side loading screens.
+- **Google Open Knowledge Format (OKF) Bundle**: A modular `/public/okf/` knowledge base with YAML frontmatter designed for agentic RAG extraction.
+- **Comprehensive Machine Readability**: Full JSON-LD graph (`SoftwareApplication`, `Organization`, `WebSite`, `FAQPage`), explicit crawler allowances in `robots.ts` (`GPTBot`, `PerplexityBot`, `ClaudeBot`, etc.), and structured `llms.txt`.
+- **Dynamic Open Graph Generation**: Native 1200x630px social card via `next/og` (`/opengraph-image`).
+
+---
+
+## Technical Specifications
+
+| Layer | Technology | Architectural Function |
+|---|---|---|
+| **Framework** | Next.js 15 (App Router) + React 19 | Server Component rendering, zero-latency crawling, streaming boundaries |
+| **Language** | TypeScript 5.8 | Strict end-to-end type safety across API routes and client state |
+| **Styling** | Tailwind CSS 3.4 + Plus Jakarta Sans | High-contrast design tokens, WCAG AA/AAA compliant color palette |
+| **3D Engine** | Three.js + React Three Fiber + Drei | Low-overhead WebGL rendering of companion character models |
+| **ORM & Database** | Prisma 6.4 + PostgreSQL (Neon) | Relational schema with user data isolation, atomic mutations, SQLite local fallback |
+| **Audio Engine** | Web Audio API (`AudioContext`) | Procedural 8-bit sound synthesis with zero external audio assets |
+| **Security** | `bcryptjs` + JWT | Salted password hashing with `httpOnly` secure session cookies |
+| **Accessibility** | Semantic HTML + Keyboard Manager | Full keyboard navigation (`Tab`, `Space`, `Enter`, `Q`, `1-7`, `M`, `F`, `Esc`, `?`) |
+
+---
+
+## Keyboard Shortcuts
 
 | Hotkey | Action |
 |---|---|
-| `Q` or `N` | Post a new Bounty (New Quest modal) |
-| `1` | Switch to Quests Board tab |
-| `2` | Switch to Character Codex & Stats tab |
-| `3` | Switch to Guild Emporium (Shop) tab |
-| `4` | Switch to Dungeon Raid Boss tab |
-| `F` | Open Focus Mode Pomodoro timer |
-| `M` | Toggle procedural Web Audio sound FX (Mute / Unmute) |
-| `Esc` | Close any active modal or menu |
-| `?` | View keyboard shortcuts cheatsheet |
+| `Q` or `N` | Post a new bounty (Create Quest modal) |
+| `1` | Switch to Quest Map & Chronicle |
+| `2` | Switch to Bounty Board & Habit Tracker |
+| `3` | Switch to Guild League Leaderboard |
+| `4` | Switch to Guild Emporium (Shop) |
+| `5` | Switch to Character Codex & Radar Stats |
+| `6` | Switch to Adventurer Profile |
+| `7` | Switch to Guild Settings |
+| `F` | Open Deep Focus Sanctuary (Pomodoro timer) |
+| `M` | Toggle procedural sound synthesis (Mute / Unmute) |
+| `Esc` | Close active modal, dialog, or focus session |
+| `?` | Display keyboard shortcuts cheatsheet |
 
 ---
 
-## 🛠️ Tech Stack & Architecture
+## Project Structure
 
 ```
 ├── app/
 │   ├── api/
-│   │   ├── auth/ (register, login, logout, me)
-│   │   ├── quests/ (CRUD, complete with anti-cheat)
-│   │   ├── shop/ (items, buy)
-│   │   ├── inventory/ (items, equip/use)
-│   │   └── boss/ (active raid boss, strike log)
-│   ├── globals.css (design tokens, tactile animations)
-│   ├── layout.tsx (metadata, viewport, auth provider)
-│   └── page.tsx (responsive dashboard & tab router)
+│   │   ├── auth/           # Registration, login, logout, me, guest sessions
+│   │   ├── quests/         # Bounty CRUD and server-side verification
+│   │   ├── shop/           # Guild Emporium item catalog and purchases
+│   │   ├── inventory/      # Player item management and equipping
+│   │   └── boss/           # Persistent raid boss instance and combat logs
+│   ├── dashboard/          # Dedicated authenticated dashboard route
+│   ├── opengraph-image.tsx # Dynamic 1200x630 social card generator (next/og)
+│   ├── layout.tsx          # Root layout, JSON-LD schemas, font optimization
+│   ├── page.tsx            # Server Component landing page with SSR delivery
+│   ├── robots.ts           # Search and AI crawler access rules
+│   └── sitemap.ts          # Prioritized XML sitemap with OKF endpoints
 ├── components/
-│   ├── Navbar.tsx (level, XP bar, gold chip, streak)
-│   ├── LumiCompanion.tsx (mascot widget with dynamic moods)
-│   ├── QuestBoard.tsx (bounties, spring checkmarks, floating text)
-│   ├── QuestModal.tsx (create/edit quest modal)
-│   ├── CharacterCodex.tsx (paper doll gear, attribute bars)
-│   ├── GuildEmporium.tsx (shop & virtual economy)
-│   ├── DungeonRaid.tsx (raid boss HP & damage logs)
-│   ├── LevelUpModal.tsx (confetti, fanfare, reward reveal)
-│   ├── FocusTimerModal.tsx (pomodoro timer with Lumi)
-│   └── KeyboardShortcutsModal.tsx (a11y cheat sheet)
+│   ├── dashboard/          # Isolated dashboard client engine and state router
+│   ├── landing/            # Pre-rendered landing sections, features, and FAQ
+│   ├── icons/              # Scalable SVG iconography
+│   ├── lumi/               # 3D mascot provider, spatial projection, debug panel
+│   ├── CharacterCodex.tsx  # Equipment paper doll and SVG radar pentagram
+│   ├── DungeonRaid.tsx     # Raid boss health bar and combat log stream
+│   ├── FocusTimerModal.tsx # Pomodoro focus sanctuary with audio synthesis
+│   ├── GuildEmporium.tsx   # Virtual economy store and equipment purchase
+│   ├── GuildLeague.tsx     # Division rankings from Bronze to Legend
+│   ├── LevelUpModal.tsx    # Celebration screen with confetti and fanfare
+│   └── QuestBoard.tsx      # Tactile task list with spring checkmarks
 ├── context/
-│   └── AuthContext.tsx (state management & optimistic updates)
+│   └── AuthContext.tsx     # Authentication state, sound controls, user data
 ├── lib/
-│   ├── prisma.ts (database singleton)
-│   ├── auth.ts (JWT & bcrypt security)
-│   ├── progression.ts (RPG mathematical formulas)
-│   └── sound.ts (Web Audio API procedural sound synth)
+│   ├── auth.ts             # JWT signature verification and password hashing
+│   ├── prisma.ts           # Prisma client singleton
+│   ├── progression.ts      # Sub-quadratic leveling and streak formulas
+│   └── sound.ts            # Procedural Web Audio API synthesizer
 ├── prisma/
-│   ├── schema.prisma (relational data models)
-│   └── seed.mjs (starter gear, elixirs, and raid bosses)
-└── public/lumi/ (high-res Lumi sprites and cropped mood assets)
+│   ├── schema.prisma       # Relational models (User, Quest, HabitLog, Inventory)
+│   ├── seed.mjs            # Seed data (starter equipment, elixirs, raid bosses)
+│   └── migrations/         # PostgreSQL production migrations
+└── public/
+    ├── llms.txt            # Machine-readable product spec and competitive matrix
+    └── okf/                # Google Open Knowledge Format concept bundle
+        ├── index.md
+        ├── lumi-companion.md
+        ├── progression-engine.md
+        ├── character-attributes.md
+        ├── dungeon-raids-economy.md
+        ├── focus-sanctuary-adhd.md
+        └── architecture-persistence.md
 ```
 
 ---
 
-## 🚀 Setup & Local Installation
+## Local Development & Setup
 
 ### Prerequisites
-- **Node.js**: v18+ (tested on Node v24)
-- **npm** or **pnpm**
+- Node.js v18+ (tested on Node v20 and v24)
+- npm or pnpm
 
-### Step-by-Step Setup
+### Installation Steps
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-username/life-rpg-lumi.git
-   cd life-rpg-lumi
+   git clone https://github.com/bilalhydercodes/alphaCoders.git
+   cd alphaCoders
    ```
 
 2. **Install dependencies**:
@@ -124,64 +184,45 @@ The application follows the design system laid out in `design.md.md` and `lumi-e
    npm install
    ```
 
-3. **Configure Environment Variables**:
-   Copy `.env.example` to `.env`:
+3. **Configure environment variables**:
+   Create a `.env` file from the provided template:
    ```bash
    cp .env.example .env
    ```
-   *(For local development, SQLite works out of the box with `DATABASE_URL="file:./dev.db"`).*
+   *(For local development, SQLite runs out of the box with `DATABASE_URL="file:./dev.db"`).*
 
-4. **Initialize Database & Seed Data**:
+4. **Initialize database schema and seed items**:
    ```bash
    npx prisma db push
    node prisma/seed.mjs
    ```
 
-5. **Run the Development Server**:
+5. **Start development server**:
    ```bash
    npm run dev
    ```
-   Open [http://localhost:3000](http://localhost:3000) in your browser.
+   Navigate to `http://localhost:3000` in your browser.
 
-6. **Verify Production Build**:
+6. **Verify production build**:
    ```bash
    npm run build
    ```
 
 ---
 
-## 🌐 Deploying to Production
+## Production Deployment
 
-### Deploying to Vercel (Recommended)
-1. Push your code to a GitHub repository.
-2. Import the project into [Vercel](https://vercel.com).
-3. Connect a PostgreSQL database (e.g., [Neon](https://neon.tech), [Supabase](https://supabase.com), or Vercel Postgres).
-4. In `prisma/schema.prisma`, update the datasource provider:
-   ```prisma
-   datasource db {
-     provider = "postgresql"
-     url      = env("DATABASE_URL")
-   }
-   ```
-5. Set the `DATABASE_URL` and `JWT_SECRET` environment variables in Vercel settings.
-6. Deploy! Vercel automatically runs `npm run build` which invokes `prisma generate`.
+The project is configured for single-click deployment on Vercel with PostgreSQL:
+1. Connect the repository to [Vercel](https://vercel.com).
+2. Provision a serverless PostgreSQL instance via [Neon](https://neon.tech) or Vercel Postgres.
+3. Set environment variables:
+   - `DATABASE_URL`: Your PostgreSQL connection string.
+   - `JWT_SECRET`: A cryptographically secure secret string.
+   - `NEXT_PUBLIC_APP_URL`: Production domain URL.
+4. Deploy. Vercel automatically runs `prisma generate` during `npm run build`.
 
 ---
 
-## 📹 90–180 Second Video Walkthrough Script
+## License
 
-For the official submission video recording (under 100MB, 90–180 seconds):
-
-| Timestamp | Action | Narration / Key Point |
-|---|---|---|
-| **0:00 - 0:25** | **Hero & Sign Up / Login** | Introduce *Life RPG with Lumi*. Show the 1-click Demo login or create account `hero@guild.com`. Explain how the app turns real-world delay into instant game feedback. |
-| **0:25 - 0:50** | **Quest Board & Tactile Micro-Interactions** | Navigate the Quest Board. Check off a task ("25-Minute Deep Focus"). Highlight the 180ms spring checkmark, floating `+50 XP / +25 GP` combat text, audio chime, and Lumi’s cheer reaction. |
-| **0:50 - 1:15** | **Leveling Up Celebration** | Check off another high-XP quest to cross the level threshold. Showcase the full-screen **Level Up modal**, Lumi's jumping celebration pose, confetti explosion, brass fanfare, and stat point increase. |
-| **1:15 - 1:35** | **Hard Refresh & True Persistence Proof** | Press `Ctrl + F5` (hard refresh). Show that level, XP, Gold, streak, and completed status remain **100% persisted** from the backend database (not temporary localStorage). |
-| **1:35 - 1:55** | **Emporium Shop & Character Codex** | Switch to the Guild Emporium (`3` key). Buy the "Amethyst Silk Scarf" with Gold. Switch to Codex (`2` key) to show character attributes (INT, STR, AGI, VIT, SPI) and equip the item. |
-| **1:55 - 2:15** | **Dungeon Raid Boss & Focus Mode** | Switch to Raid Boss (`4` key). Show *The Sloth Behemoth* taking damage from completed quests. Press `F` to demonstrate the 25-minute Pomodoro timer featuring Lumi on her purple laptop. |
-
----
-
-## 📜 License
-MIT License. Built for the Life RPG Challenge. Powered by Next.js, Prisma, and Lumi the Companion.
+This project is licensed under the MIT License. Built for the Life RPG Challenge.
