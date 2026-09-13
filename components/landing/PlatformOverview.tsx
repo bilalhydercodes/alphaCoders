@@ -17,11 +17,14 @@ export const PlatformOverview: React.FC<PlatformOverviewProps> = ({ onOpenAuth }
         {/* Main Headline */}
         <div className="max-w-4xl">
           <h2 className="text-3xl sm:text-5xl md:text-6xl font-semibold text-[#1F1730] tracking-[-0.035em] leading-[1.04] font-headline">
-            A workspace that turns your daily life into a playable role-playing game.
+            Turn daily habits into an RPG — earn XP for real-life tasks
           </h2>
 
           <p className="mt-4 text-base sm:text-lg text-[#5C5070] font-medium leading-relaxed max-w-2xl">
             Instead of dry to-do lists, your habits, study sessions, and projects directly level up an in-game character with real attributes and tangible momentum.
+          </p>
+          <p id="what-is-gamified-habit-tracker" className="mt-4 text-base sm:text-lg text-[#5C5070] font-medium leading-relaxed max-w-2xl">
+            A gamified habit tracker is a productivity app that applies game mechanics — experience points, levels, streaks, and virtual rewards — to real-world tasks like studying, exercising, and daily routines. Life RPG takes this further with a non-linear leveling engine, 5 trainable character attributes (Intellect, Strength, Agility, Vitality, Spirit), boss raids driven by task completion, and Lumi, an autonomous 3D companion who reacts to your progress in real time.
           </p>
         </div>
 
@@ -36,7 +39,7 @@ export const PlatformOverview: React.FC<PlatformOverviewProps> = ({ onOpenAuth }
               </span>
             </div>
             <h3 className="text-xl sm:text-2xl font-semibold text-[#1F1730] tracking-tight font-headline">
-              Tasks become quests
+              Turn to-do lists into game quests
             </h3>
             <p className="mt-3 text-sm text-[#5C5070] leading-relaxed font-normal">
               Turn overwhelming to-dos into manageable quests with clear difficulty tiers, XP, and gold rewards. Every task checked off advances your campaign.
@@ -52,7 +55,7 @@ export const PlatformOverview: React.FC<PlatformOverviewProps> = ({ onOpenAuth }
               </span>
             </div>
             <h3 className="text-xl sm:text-2xl font-semibold text-[#1F1730] tracking-tight font-headline">
-              Real character stats
+              5 real-life character attributes
             </h3>
             <p className="mt-3 text-sm text-[#5C5070] leading-relaxed font-normal">
               Reading builds Intellect. Workouts raise Vitality. Focused coding builds Strength. Your character stats physically mirror your real-world routine.
@@ -68,13 +71,24 @@ export const PlatformOverview: React.FC<PlatformOverviewProps> = ({ onOpenAuth }
               </span>
             </div>
             <h3 className="text-xl sm:text-2xl font-semibold text-[#1F1730] tracking-tight font-headline">
-              Lumi keeps momentum
+              Lumi — your 3D study companion
             </h3>
             <p className="mt-3 text-sm text-[#5C5070] leading-relaxed font-normal">
               A living companion on your screen that tracks your streaks, reacts to your focus sessions, and prevents burnout with well-timed breaks.
             </p>
           </div>
         </div>
+
+        {/* SEO/AEO Semantic Block */}
+        <article className="text-sm text-[#5C5070]/80 leading-relaxed max-w-3xl mt-12">
+          <h3 id="how-it-works" className="font-semibold text-[#1F1730] mb-2">How Life RPG works</h3>
+          <ol className="list-decimal pl-5 space-y-1">
+            <li>Create a bounty (task) and assign it to one of 5 attributes</li>
+            <li>Complete the task to earn XP, gold, and deal damage to the guild boss</li>
+            <li>Level up your character and unlock gear in the Guild Emporium</li>
+            <li>Track your growth across Intellect, Strength, Agility, Vitality, and Spirit</li>
+          </ol>
+        </article>
 
         {/* Clean CTA Row with Brand Amethyst (#9966CC) */}
         <div className="mt-10 pt-6 flex items-center justify-start">

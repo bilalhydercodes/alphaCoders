@@ -33,6 +33,21 @@ const FAQ_ITEMS: FaqItem[] = [
     answer:
       'Yes. Life RPG runs on a full-stack relational architecture using Prisma ORM with SQLite or PostgreSQL database persistence. User accounts are protected with secure bcrypt password hashing and HTTP-only session cookies, ensuring historical quest completions and character stats persist reliably across any device.',
   },
+  {
+    question: 'Is Life RPG free to use?',
+    answer:
+      'Yes, completely. Life RPG is open-source under the MIT license with no paywalls, subscriptions, or in-app purchases. The in-game gold economy runs on virtual currency you earn by completing real tasks — it never costs real money.',
+  },
+  {
+    question: 'How is Life RPG different from Habitica or Forest?',
+    answer:
+      'Habitica relies on multiplayer social accountability and pixel art. Forest locks you out of your phone. Life RPG takes a different approach: solo RPG progression with an autonomous 3D companion (Lumi) who reacts to your behavior in real time, a non-linear leveling curve tuned for fast early wins, built-in Pomodoro focus sessions, boss raids powered by your task completions, and procedural audio feedback on every interaction. The design is built around solving delayed gratification, not social pressure or restriction.',
+  },
+  {
+    question: 'Can I use Life RPG for studying or managing ADHD?',
+    answer:
+      'That is exactly what it was built for. Every completed task triggers instant visual and audio rewards — floating XP numbers, streak multipliers, 8-bit celebration chimes — giving you the immediate dopamine hit that traditional planners withhold. The non-linear leveling system front-loads early progress so you feel momentum from day one, and the Focus Sanctuary Pomodoro timer awards bonus XP for sustained deep work sessions.',
+  },
 ];
 
 export const LandingFaq: React.FC = () => {
@@ -101,11 +116,18 @@ export const LandingFaq: React.FC = () => {
                   </span>
                 </button>
 
-                {isOpen && (
-                  <div className="px-6 pb-5 pt-1 text-sm text-[#5C5070] font-normal leading-relaxed border-t border-[#E2D9F3]/50">
-                    <p>{item.answer}</p>
+                <div
+                  className={`grid transition-[grid-template-rows] duration-200 ease-in-out ${
+                    isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+                  }`}
+                  aria-hidden={!isOpen}
+                >
+                  <div className="overflow-hidden min-h-0">
+                    <div className="px-6 pb-5 pt-1 text-sm text-[#5C5070] font-normal leading-relaxed border-t border-[#E2D9F3]/50">
+                      <p>{item.answer}</p>
+                    </div>
                   </div>
-                )}
+                </div>
               </div>
             );
           })}

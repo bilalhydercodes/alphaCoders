@@ -33,7 +33,7 @@ export const LandingFeatures: React.FC = () => {
             <span>Core Game Mechanics</span>
           </div>
           <h2 className="text-3xl sm:text-5xl md:text-6xl font-semibold text-white tracking-[-0.035em] leading-[1.04] font-headline">
-            Features built for real-life mastery
+            Gamified productivity features that keep you consistent
           </h2>
           <p className="text-base sm:text-lg text-white/90 font-medium mt-4 leading-relaxed max-w-2xl">
             Every system in Life RPG connects your productive habits, study sessions, and milestones into an active role-playing engine.

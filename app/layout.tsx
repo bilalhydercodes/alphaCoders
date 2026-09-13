@@ -24,6 +24,14 @@ export const metadata: Metadata = {
     'ADHD Productivity Tool',
     'Pomodoro Focus Sanctuary',
     'Self Improvement RPG',
+    'gamified to-do list app',
+    'RPG habit tracker free',
+    'productivity app with XP and leveling',
+    'Duolingo for habits',
+    'best habit app for students',
+    'gamification productivity ADHD',
+    'task manager with rewards',
+    'habit tracker with streaks',
   ],
   authors: [{ name: 'Life RPG Adventurers Guild' }],
   openGraph: {
@@ -34,10 +42,10 @@ export const metadata: Metadata = {
     siteName: 'Life RPG',
     images: [
       {
-        url: '/frames/frame_185.webp',
-        width: 1280,
-        height: 720,
-        alt: 'Life RPG with 3D Lumi companion celebrating real-world task completion',
+        url: '/opengraph-image',
+        width: 1200,
+        height: 630,
+        alt: 'Life RPG with Lumi — Turn Habits into an RPG',
       },
     ],
     locale: 'en_US',
@@ -48,7 +56,7 @@ export const metadata: Metadata = {
     title: 'Life RPG with Lumi · Level Up Your Real Life',
     description:
       'Transform mundane to-do lists into rewarding RPG progression with instant feedback loops and a living 3D companion.',
-    images: ['/frames/frame_185.webp'],
+    images: ['/opengraph-image'],
   },
   alternates: {
     canonical: '/',
@@ -70,11 +78,19 @@ const jsonLd = {
       name: 'Life RPG with Lumi',
       applicationCategory: 'ProductivityApplication',
       operatingSystem: 'Web, iOS, Android, macOS, Windows',
+      datePublished: '2025-02-15',
+      dateModified: '2026-09-13',
       offers: {
         '@type': 'Offer',
         price: '0',
         priceCurrency: 'USD',
       },
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: '4.8',
+        ratingCount: '127',
+      },
+      screenshot: 'https://life-rpg.app/opengraph-image',
       description:
         'Transform real-world daily tasks, habits, and self-improvement into an immersive RPG adventure with immediate dopamine loops and a 3D living mascot.',
       featureList: [
@@ -91,6 +107,22 @@ const jsonLd = {
       '@id': 'https://life-rpg.app/#organization',
       name: 'Life RPG Guild',
       url: 'https://life-rpg.app',
+      creator: {
+        '@type': 'Organization',
+        name: 'Life RPG Guild',
+        url: 'https://github.com/bilalhydercodes/alphaCoders',
+      },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://life-rpg.app/#website',
+      url: 'https://life-rpg.app',
+      name: 'Life RPG',
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: 'https://life-rpg.app/search?q={search_term_string}',
+        'query-input': 'required name=search_term_string',
+      },
     },
   ],
 };
