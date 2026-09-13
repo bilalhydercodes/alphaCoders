@@ -216,7 +216,7 @@ const DashboardInnerContent: React.FC<DashboardInnerContentProps> = ({
   }, [activeTab, setZone, lumiReact]);
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col w-full max-w-full overflow-x-hidden">
       {/* 1. Left Fixed Desktop Sidebar (256px wide) */}
       <Sidebar
         activeTab={activeTab}
@@ -296,20 +296,20 @@ const DashboardInnerContent: React.FC<DashboardInnerContentProps> = ({
       </nav>
 
       {/* 2. Main Content Viewport (Indented 72px on tablet, 256px on desktop) */}
-      <div className="md:pl-[72px] lg:pl-[256px] min-h-screen pb-24 md:pb-10 flex flex-col">
-        <div className="max-w-[1080px] w-full mx-auto px-3 sm:px-6 lg:px-8 pt-3 sm:pt-4 flex-1 flex flex-col">
+      <div className="md:pl-[72px] lg:pl-[256px] min-h-screen pb-24 md:pb-10 flex flex-col w-full min-w-0 max-w-full">
+        <div className="max-w-[1080px] w-full mx-auto px-3 sm:px-6 lg:px-8 pt-3 sm:pt-4 flex-1 flex flex-col min-w-0">
           {/* Top Status Header */}
           <UserProgressHeader onOpenFocus={() => setIsFocusTimerOpen(true)} />
 
           {/* 3. Responsive 2-Column Grid: Center Feed + Sticky Right Rail */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-4 items-start flex-1">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-4 items-start flex-1 w-full min-w-0">
             {/* Center Canvas */}
             <main
               className={`${
                 activeTab === 'settings' || activeTab === 'profile'
                   ? 'lg:col-span-12 max-w-4xl mx-auto w-full'
                   : 'lg:col-span-7'
-              } flex flex-col`}
+              } flex flex-col w-full min-w-0`}
             >
               {activeTab === 'map' && (
                 <QuestMap onCompleteQuestModal={() => setIsQuestModalOpen(true)} />
@@ -344,7 +344,7 @@ const DashboardInnerContent: React.FC<DashboardInnerContentProps> = ({
 
             {/* Right Sticky Rail (hidden on Settings and Profile to match full-width reference layout) */}
             {activeTab !== 'settings' && activeTab !== 'profile' && (
-              <aside className="lg:col-span-5 flex flex-col gap-6 lg:sticky lg:top-20">
+              <aside className="lg:col-span-5 flex flex-col gap-6 lg:sticky lg:top-20 w-full min-w-0">
                 {/* Lumi Mascot Companion Card */}
                 <LumiCompanion onStartFocus={() => setIsFocusTimerOpen(true)} />
 

@@ -243,9 +243,9 @@ export const QuestBoard: React.FC<QuestBoardProps> = ({
       ))}
 
       {/* Control Bar: Tabs, Filter, and Post Bounty Button */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-surface p-4 rounded-2xl border-2 border-slate-200 shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-surface p-3 sm:p-4 rounded-2xl border-2 border-slate-200 shadow-xs w-full min-w-0">
         {/* Type Tabs */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0" role="tablist">
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 min-w-0 w-full sm:w-auto scrollbar-none touch-pan-x" role="tablist">
           {(['ALL', 'DAILY', 'TODO', 'HABIT'] as const).map((type) => (
             <button
               key={type}
@@ -256,7 +256,7 @@ export const QuestBoard: React.FC<QuestBoardProps> = ({
                 sound.playClick();
                 setActiveTypeTab(type);
               }}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-primary ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-primary shrink-0 ${
                 activeTypeTab === type
                   ? 'bg-primary text-[#1F1730] shadow-xs'
                   : 'bg-background text-copy-muted hover:text-copy hover:bg-lavender-soft/50'
@@ -274,8 +274,8 @@ export const QuestBoard: React.FC<QuestBoardProps> = ({
         </div>
 
         {/* Right action group: Attribute filter & Add Quest */}
-        <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
-          <div className="flex items-center gap-1 bg-background px-3 py-1.5 rounded-xl border border-slate-200 text-xs">
+        <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap w-full sm:w-auto justify-between sm:justify-end min-w-0">
+          <div className="flex items-center gap-1 bg-background px-3 py-1.5 rounded-xl border border-slate-200 text-xs shrink-0">
             <select
               value={activeCategory}
               onChange={(e) => setActiveCategory(e.target.value)}
@@ -297,7 +297,7 @@ export const QuestBoard: React.FC<QuestBoardProps> = ({
               sound.playClick();
               onOpenCreateModal();
             }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black text-white bg-primary hover:bg-[#8B54C2] border-b-4 border-[#7343A8] active:border-b-0 active:translate-y-1 shadow-md hover:shadow-lg transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-primary shrink-0"
+            className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl text-xs font-black text-white bg-primary hover:bg-[#8B54C2] border-b-4 border-[#7343A8] active:border-b-0 active:translate-y-1 shadow-md hover:shadow-lg transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-primary shrink-0"
             title="Post a new bounty (Press Q)"
             aria-label="Post a new bounty"
           >

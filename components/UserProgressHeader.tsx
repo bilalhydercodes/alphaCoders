@@ -24,11 +24,11 @@ export const UserProgressHeader: React.FC<UserProgressHeaderProps> = ({ onOpenFo
   const userMaxHp = (user as any).maxHp ?? 100;
 
   return (
-    <header className="sticky top-0 z-30 bg-background/95 backdrop-blur-md pb-4 pt-2">
-      <div className="flex items-center justify-between gap-2 sm:gap-3 max-w-full overflow-x-auto scrollbar-none pb-1">
+    <header className="sticky top-0 z-30 bg-background/95 backdrop-blur-md pb-4 pt-2 w-full min-w-0 max-w-full">
+      <div className="flex items-center justify-between gap-1.5 sm:gap-3 w-full min-w-0 max-w-full overflow-x-auto scrollbar-none pb-1 touch-pan-x">
         {/* Level & XP Gauge */}
         <div
-          className="flex items-center gap-2 sm:gap-2.5 bg-surface border-2 border-slate-200 rounded-2xl px-2.5 sm:px-3.5 py-1 sm:py-1.5 shadow-xs min-h-[40px] sm:min-h-[44px] shrink-0"
+          className="flex items-center gap-2 sm:gap-2.5 bg-surface border-2 border-slate-200 rounded-2xl px-2 sm:px-3.5 py-1 sm:py-1.5 shadow-xs min-h-[38px] sm:min-h-[44px] shrink-0"
           role="progressbar"
           aria-valuenow={xpPercent}
           aria-valuemin={0}
@@ -43,7 +43,7 @@ export const UserProgressHeader: React.FC<UserProgressHeaderProps> = ({ onOpenFo
               <span>LVL {user.level}</span>
               <span className="text-primary ml-2">{xpPercent}%</span>
             </div>
-            <div className="w-16 sm:w-28 h-1.5 sm:h-2 bg-lavender-soft rounded-full overflow-hidden border border-primary/20">
+            <div className="w-14 sm:w-28 h-1.5 sm:h-2 bg-lavender-soft rounded-full overflow-hidden border border-primary/20">
               <div
                 className="h-full bg-primary rounded-full transition-all duration-300"
                 style={{ width: `${xpPercent}%` }}
@@ -53,14 +53,14 @@ export const UserProgressHeader: React.FC<UserProgressHeaderProps> = ({ onOpenFo
         </div>
 
         {/* Currency & Vitals Group */}
-        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+        <div className="flex items-center gap-1 sm:gap-2.5 shrink-0">
           {/* Health Heart */}
           <div
-            className="flex items-center gap-1 sm:gap-1.5 bg-surface border-2 border-slate-200 rounded-2xl px-2 sm:px-3 py-1 sm:py-1.5 shadow-xs min-h-[40px] sm:min-h-[44px] shrink-0"
+            className="flex items-center gap-1 sm:gap-1.5 bg-surface border-2 border-slate-200 rounded-2xl px-1.5 sm:px-3 py-1 sm:py-1.5 shadow-xs min-h-[38px] sm:min-h-[44px] shrink-0"
             title={`Health: ${userHp}/${userMaxHp} HP`}
             aria-label={`Health: ${userHp}/${userMaxHp} HP`}
           >
-            <IconHeart size={18} filled className="text-danger sm:w-5 sm:h-5" />
+            <IconHeart size={16} filled className="text-danger sm:w-5 sm:h-5" />
             <span className="text-xs font-black text-copy hidden sm:inline">{userHp}</span>
           </div>
 
@@ -68,42 +68,42 @@ export const UserProgressHeader: React.FC<UserProgressHeaderProps> = ({ onOpenFo
           <button
             type="button"
             onClick={onOpenFocus}
-            className="flex items-center gap-1 sm:gap-1.5 bg-surface border-2 border-slate-200 hover:border-primary/40 rounded-2xl px-2 sm:px-3 py-1 sm:py-1.5 shadow-xs min-h-[40px] sm:min-h-[44px] transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-primary shrink-0"
+            className="flex items-center gap-1 sm:gap-1.5 bg-surface border-2 border-slate-200 hover:border-primary/40 rounded-2xl px-1.5 sm:px-3 py-1 sm:py-1.5 shadow-xs min-h-[38px] sm:min-h-[44px] transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-primary shrink-0"
             title="Focus Energy (Start Pomodoro Sprint)"
             aria-label="Focus Energy"
           >
-            <IconEnergy size={18} filled className="text-primary sm:w-5 sm:h-5" />
+            <IconEnergy size={16} filled className="text-primary sm:w-5 sm:h-5" />
             <span className="text-xs font-black text-copy">5/5</span>
           </button>
 
           {/* Streak Flame (with animated breathing) */}
           <div
-            className="flex items-center gap-1 sm:gap-1.5 bg-surface border-2 border-slate-200 rounded-2xl px-2 sm:px-3 py-1 sm:py-1.5 shadow-xs min-h-[40px] sm:min-h-[44px] shrink-0"
+            className="flex items-center gap-1 sm:gap-1.5 bg-surface border-2 border-slate-200 rounded-2xl px-1.5 sm:px-3 py-1 sm:py-1.5 shadow-xs min-h-[38px] sm:min-h-[44px] shrink-0"
             title={`${user.streak} Day Guild Streak`}
             aria-label={`${user.streak} Day Streak`}
           >
-            <IconStreakFlame size={18} filled className="text-accent animate-flame-breathe sm:w-5 sm:h-5" />
+            <IconStreakFlame size={16} filled className="text-accent animate-flame-breathe sm:w-5 sm:h-5" />
             <span className="text-xs font-black text-copy">{user.streak}d</span>
           </div>
 
           {/* Gold Coins */}
           <div
-            className="flex items-center gap-1 sm:gap-1.5 bg-surface border-2 border-accent/40 rounded-2xl px-2 sm:px-3 py-1 sm:py-1.5 shadow-xs min-h-[40px] sm:min-h-[44px] shrink-0"
+            className="flex items-center gap-1 sm:gap-1.5 bg-surface border-2 border-accent/40 rounded-2xl px-1.5 sm:px-3 py-1 sm:py-1.5 shadow-xs min-h-[38px] sm:min-h-[44px] shrink-0"
             title="Bounty Gold (GP)"
             aria-label={`${user.gold} Gold Coins`}
           >
-            <IconGoldCoin size={18} filled className="text-accent sm:w-5 sm:h-5" />
+            <IconGoldCoin size={16} filled className="text-accent sm:w-5 sm:h-5" />
             <span className="text-xs font-black text-copy">{user.gold}</span>
           </div>
 
           {/* XP Gems - Target for Ballistic Arc */}
           <div
             id="header-xp-pill"
-            className="flex items-center gap-1 sm:gap-1.5 bg-surface border-2 border-primary/30 rounded-2xl px-2 sm:px-3 py-1 sm:py-1.5 shadow-xs min-h-[40px] sm:min-h-[44px] transition-transform duration-200 shrink-0"
+            className="flex items-center gap-1 sm:gap-1.5 bg-surface border-2 border-primary/30 rounded-2xl px-1.5 sm:px-3 py-1 sm:py-1.5 shadow-xs min-h-[38px] sm:min-h-[44px] transition-transform duration-200 shrink-0"
             title="Experience Points (XP)"
             aria-label={`${user.xp} Experience Points`}
           >
-            <IconXpGem size={18} filled className="text-primary sm:w-5 sm:h-5" />
+            <IconXpGem size={16} filled className="text-primary sm:w-5 sm:h-5" />
             <span className="text-xs font-black text-primary">{user.xp}</span>
           </div>
         </div>

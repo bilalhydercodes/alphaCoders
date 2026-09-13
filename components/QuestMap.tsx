@@ -198,9 +198,9 @@ export const QuestMap: React.FC<QuestMapProps> = ({ onCompleteQuestModal }) => {
   };
 
   return (
-    <div className="flex flex-col items-center w-full max-w-xl mx-auto pb-16 px-2 sm:px-4 overflow-x-hidden">
+    <div className="flex flex-col items-center w-full min-w-0 max-w-xl mx-auto pb-16 px-2 sm:px-4 overflow-x-hidden">
       {units.map((unit) => (
-        <section key={unit.id} className="w-full flex flex-col items-center mb-12">
+        <section key={unit.id} className="w-full min-w-0 flex flex-col items-center mb-12">
           {/* Unit Banner */}
           <div
             className={`w-full rounded-2xl bg-gradient-to-r ${unit.themeColor} text-white p-4 sm:p-6 shadow-sm flex items-center justify-between gap-4 mb-6`}
@@ -219,7 +219,7 @@ export const QuestMap: React.FC<QuestMapProps> = ({ onCompleteQuestModal }) => {
           </div>
 
           {/* Stepping Stone Nodes on Sinusoidal Trail */}
-          <div className="relative w-full flex flex-col items-center">
+          <div className="relative w-full min-w-0 flex flex-col items-center overflow-x-hidden py-1">
             {unit.nodes.map((node, idx) => (
               <QuestMapNode
                 key={node.id}

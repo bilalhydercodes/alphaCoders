@@ -26,8 +26,8 @@ interface QuestMapNodeProps {
 }
 
 export const QuestMapNode: React.FC<QuestMapNodeProps> = ({ node, index, onClick }) => {
-  // Sinusoidal S-curve displacement for organic path layout
-  const horizontalOffset = Math.round(Math.sin(index * 0.75) * 54);
+  // Sinusoidal S-curve displacement for organic path layout (calibrated for 320px+ mobile screens)
+  const horizontalOffset = Math.round(Math.sin(index * 0.75) * 44);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (node.status === 'locked') return;
